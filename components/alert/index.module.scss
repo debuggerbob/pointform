@@ -1,0 +1,43 @@
+
+.alert {
+    color: #333c48;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 1s ease-in-out;
+
+    &__text {
+        color: #333c48;
+    }
+
+    &__close {
+        background-color: transparent;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        color: #333c48;
+        cursor: pointer;
+        
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+.default {
+    background-color: #e5effa;
+    border: 1px solid #5ea0eb;
+}
+
+.error {
+    background-color: #fcedea;
+    border: 1px solid #eb4e2c;
+}
+
+.none {
+    display: none;
+}

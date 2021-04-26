@@ -1,0 +1,70 @@
+// Plus Jakarta Sans
+@font-face {
+	font-family: "Jakarta Sans";
+	font-style: normal;
+	font-weight: 200;
+	font-display: swap;
+	src: local(""),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-ExtraLight.woff2")
+			format("woff2"),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-ExtraLight.woff")
+			format("woff"),
+		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-ExtraLight.ttf")
+			format("truetype");
+}
+
+@font-face {
+	font-family: "Jakarta Sans";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local(""),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Regular.woff2")
+			format("woff2"),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Regular.woff")
+			format("woff"),
+		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-Regular.ttf")
+			format("truetype");
+}
+
+@font-face {
+	font-family: "Jakarta Sans";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: local(""),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Medium.woff2")
+			format("woff2"),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Medium.woff")
+			format("woff"),
+		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-Medium.ttf")
+			format("truetype");
+}
+
+@font-face {
+	font-family: "Jakarta Sans";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local(""),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Bold.woff2")
+			format("woff2"),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Bold.woff")
+			format("woff"),
+		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-Bold.ttf")
+			format("truetype");
+}
+
+@font-face {
+	font-family: "Jakarta Sans";
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+	src: local(""),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-ExtraBold.woff2")
+			format("woff2"),
+		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-ExtraBold.woff")
+			format("woff"),
+		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-ExtraBold.ttf")
+			format("truetype");
+}

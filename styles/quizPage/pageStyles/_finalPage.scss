@@ -1,0 +1,89 @@
+.completed_wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-top: 1rem;
+	overflow: hidden;
+
+	.underline {
+		display: block;
+		height: 3px;
+		background: $main-color2;
+		margin-bottom: 3rem;
+	}
+
+	.row1 {
+		margin-bottom: 4rem;
+		span {
+			font: $heading-font;
+			font-weight: 600;
+			font-size: 14px;
+		}
+		h2 {
+			padding: 5px 0 0.8rem;
+			font: $body-font;
+			font-size: 28px;
+			font-weight: 800;
+		}
+		p {
+			color: #4d4d4d;
+			font-weight: 400;
+		}
+	}
+
+	.row2 {
+		h3 {
+			font: $heading-font;
+			font-weight: 800;
+			font-size: 23px;
+			margin-bottom: 12px;
+		}
+
+		.total_score {
+			display: flex;
+			align-items: center;
+			margin-bottom: 0.4rem;
+
+			.marks {
+				display: block;
+				padding-left: 0.5rem;
+
+				.marks_archived {
+					font-size: 21px;
+				}
+				.total_marks {
+					font-size: 14px;
+				}
+			}
+		}
+		.correct_ans {
+			display: flex;
+			align-items: center;
+			margin-bottom: 0.4rem;
+
+			span {
+				display: block;
+				padding-left: 0.5rem;
+			}
+		}
+		.incorrect_ans {
+			display: flex;
+			align-items: center;
+			margin-bottom: 0.4rem;
+
+			span {
+				display: block;
+				padding-left: 0.5rem;
+			}
+		}
+	}
+
+	a {
+		font-weight: 600;
+		font-size: 0.9rem;
+		text-decoration: none;
+		justify-content: center;
+		margin: 6.5rem auto;
+		color: #ffffff;
+	}
+}

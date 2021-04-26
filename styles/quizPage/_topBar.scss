@@ -1,0 +1,56 @@
+.topbar {
+	h2 {
+		text-align: right;
+		font-size: 0.85em;
+		font-weight: 400;
+
+		a {
+			font: inherit;
+			font-weight: 500;
+			text-decoration: none;
+			padding-left: 2px;
+		}
+	}
+
+	.section1 {
+		position: sticky;
+		top: 0;
+		width: 100%;
+
+		.question_number h2 {
+			text-align: right;
+			font-size: 18px;
+			font-weight: 700;
+			span {
+				padding-left: 3px;
+
+				&.span1 {
+					font-size: 15px;
+				}
+				&.span2 {
+					font-size: 13px;
+				}
+			}
+		}
+
+		.progress_bar {
+			position: relative;
+			height: 2.5px;
+
+			.main_line {
+				position: absolute;
+				width: 100%;
+				height: 1px;
+				background: rgba($color: $main-color2, $alpha: 0.3);
+				bottom: 0;
+			}
+
+			.overlay {
+				position: absolute;
+				width: 10%;
+				height: 2.5px;
+				background: $main-color2;
+			}
+		}
+	}
+}

@@ -1,0 +1,62 @@
+{
+    "name": "pointform",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "next",
+        "start": "next start",
+        "build": "next build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/debuggerbob/pointform.git"
+    },
+    "contributors": [
+        {
+            "name": "Yash Raj",
+            "url": "https://github.com/regularatom"
+        },
+        {
+            "name": "Ruthvik",
+            "url": "https://github.com/ruthv1k"
+        }
+    ],
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/debuggerbob/pointform/issues"
+    },
+    "homepage": "https://github.com/debuggerbob/pointform#readme",
+    "dependencies": {
+        "@types/cookie": "^0.4.0",
+        "aws-sdk": "^2.887.0",
+        "axios": "^0.21.1",
+        "cookie": "^0.4.1",
+        "dotenv": "^8.2.0",
+        "firebase": "^8.4.1",
+        "firebase-admin": "^9.6.0",
+        "gsap": "^3.6.0",
+        "isomorphic-unfetch": "^3.1.0",
+        "jsonwebtoken": "^8.5.1",
+        "mock-aws-s3": "^4.0.2",
+        "mongodb": "^3.6.5",
+        "net": "^1.0.2",
+        "next": "^10.0.9",
+        "next-connect": "^0.10.1",
+        "nookies": "^2.5.2",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-google-recaptcha": "^2.1.0",
+        "sass": "^1.32.2",
+        "swr": "^0.5.5",
+        "ua-parser-js": "^0.7.24",
+        "uuid": "^8.3.2",
+        "yup": "^0.32.9"
+    },
+    "devDependencies": {
+        "@types/node": "^14.14.19",
+        "@types/react": "^17.0.0",
+        "@types/ua-parser-js": "^0.7.35",
+        "typescript": "^4.1.3"
+    }
+}

@@ -1,0 +1,18 @@
+@import "../common";
+
+@import "../quizPage/topBar";
+@import "../quizPage/bottomBar";
+@import "./pageStyles/quiz";
+@import "./pageStyles/finalPage";
+
+// Main styling
+// --------------------
+.main {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: 1.5em;
+	max-width: 550px;
+	min-height: 100vh;
+	margin: auto;
+}

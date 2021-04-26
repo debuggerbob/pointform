@@ -1,0 +1,112 @@
+@import "@/styles/variables";
+
+$linear_gradient: linear-gradient(45deg, #182952, #2b3595, #7045af, #e14594);
+$animation_time: 8s;
+@keyframes gradient {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 100%;
+    }
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    opacity: 0;
+
+    .loading_container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .text {
+            font-size: 21px;
+        }
+    }
+
+    .sidebar {
+        flex-basis: 60%;
+
+        background: $linear_gradient;
+        background-size: 600% 100%;
+        animation: gradient $animation_time linear infinite;
+        animation-direction: alternate;
+    }
+
+    &__wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-basis: 40%;
+        height: 100%;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            svg {
+                display: block;
+                width: 80px;
+                margin-bottom: 30px;
+            }
+
+            .path {
+                stroke-dasharray: 1000;
+                stroke-dashoffset: 0;
+                &.circle {
+                    animation: dash 1.6s ease-in-out;
+                }
+                &.check {
+                    stroke-dashoffset: -100;
+                    animation: dash-check 1.5s 0.6s ease-in-out forwards;
+                }
+            }
+
+            @keyframes dash {
+                0% {
+                    stroke-dashoffset: 1000;
+                }
+                100% {
+                    stroke-dashoffset: 0;
+                }
+            }
+
+            @keyframes dash-check {
+                0% {
+                    stroke-dashoffset: -100;
+                }
+                100% {
+                    stroke-dashoffset: 900;
+                }
+            }
+
+            .response_text {
+                font-size: 21px;
+                word-wrap: break-word;
+                text-align: center;
+                line-height: 140%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 599px) {
+    .container {
+        flex-direction: column;
+
+        .sidebar {
+            flex-basis: 30%;
+        }
+
+        &__wrapper {
+            flex-basis: 70%;
+        }
+    }
+}
