@@ -1,0 +1,276 @@
+@import "@/styles/variables";
+
+.header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 24px;
+
+	&__wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		min-height: 48px;
+
+		&__col_1 {
+			display: flex;
+			align-items: center;
+
+			&__back_btn {
+				margin-right: 5px;
+			}
+
+			&__quiz_title {
+				input {
+					height: 34px;
+					padding: 5px 8px 10px;
+					border: 1px solid transparent;
+					font-size: 16px;
+					border-radius: 3px;
+					transition: 0.1s ease-in-out;
+
+					&:focus {
+						border-color: #d9d9d9;
+					}
+				}
+			}
+		}
+
+		&__col_2 {
+			&__nav {
+				&__item_wrapper {
+					display: flex;
+					align-items: center;
+					list-style: none;
+					justify-content: center;
+
+					.item {
+						margin: 0 4px;
+
+						&__btn {
+							cursor: pointer;
+
+							.step_indicator {
+								display: block;
+								margin: 5px 0;
+								color: #787878;
+							}
+
+							.underline {
+								display: block;
+								height: 2px;
+								background-color: transparent;
+								opacity: 0;
+								transition: 0.4s ease;
+								transform: translateX(-20%);
+							}
+
+							&.active {
+								.step_indicator {
+									color: #000;
+								}
+
+								.underline {
+									transform: translateX(0);
+									opacity: 1;
+									background-color: $primary-color;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		&__col_3 {
+			display: flex;
+			align-items: center;
+
+			&__publish_wrapper {
+				margin-right: 20px;
+
+				.publish_btn {
+					border: 1px solid $primary-color;
+					background-color: #fff;
+					border-radius: 4px;
+					width: 86px;
+					height: 34px;
+					color: $primary-color;
+					cursor: pointer;
+					transition: 0.2s ease;
+
+					&:hover,
+					&:focus {
+						background-color: $primary-color;
+						color: #fff;
+					}
+				}
+			}
+
+			&__profile_btn {
+				div {
+					margin-right: 0;
+
+					svg {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 599px) {
+	.header {
+		margin-top: 17px;
+
+		&__wrapper {
+			&__col_1 {
+				order: 1;
+				flex-basis: calc(50% - 25px);
+				justify-content: flex-start;
+				margin: 0 0 17px 5%;
+
+				&__back_btn {
+					flex-basis: 24px;
+				}
+
+				&__quiz_title {
+					flex-basis: calc(100% - 24px);
+
+					input {
+						width: 100%;
+					}
+				}
+			}
+
+			&__col_2 {
+				order: 3;
+				flex-basis: 100%;
+				background-color: #f9f9f9;
+				border-top: 1px solid #e5e4e4;
+
+				&__nav {
+					&__item_wrapper {
+						height: 45px;
+						box-shadow: 0px 3px 8px 0
+							rgba($color: #303030, $alpha: 0.07);
+
+						.item {
+							padding: 0 20px;
+
+							&:nth-child(2) {
+								margin: 0 10px;
+							}
+						}
+					}
+				}
+			}
+
+			&__col_3 {
+				order: 2;
+				margin: 0 5% 17px 0;
+				flex-basis: calc(30% - 17px);
+				justify-content: flex-end;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 600px) {
+	.header {
+		&__wrapper {
+			&__col_1 {
+				margin: 0 0 0 32px;
+
+				&__quiz_title {
+					width: 100px;
+
+					input {
+						width: 100%;
+					}
+				}
+			}
+
+			&__col_2 {
+				flex-grow: 2;
+
+				&__nav {
+					&__item_wrapper {
+						max-width: 700px;
+						margin: 0 auto;
+
+						.item {
+							margin: 0 5%;
+
+							a {
+								font-size: 16px;
+							}
+						}
+					}
+				}
+			}
+
+			&__col_3 {
+				margin: 0 32px 0 0;
+
+				&__publish_wrapper {
+					margin-left: auto;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	.header {
+		&__wrapper {
+			&__col_1 {
+				&__quiz_title {
+					width: 150px;
+				}
+			}
+
+			&__col_3 {
+				&__publish_wrapper {
+					margin-right: 32px;
+				}
+
+				&__profile_btn {
+					div {
+						svg {
+							display: block;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (min-width: 1100px) {
+	.header {
+		&__wrapper {
+			margin: 0 32px;
+
+			&__col_1 {
+				margin: 0;
+			}
+
+			&__col_3 {
+				margin: 0;
+
+				&__profile_btn {
+					div {
+						span {
+							display: block;
+							font-size: 16px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

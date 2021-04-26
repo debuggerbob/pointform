@@ -1,0 +1,188 @@
+@import "@/styles/variables";
+
+$linear_gradient: linear-gradient(45deg, #182952, #2b3595, #7045af, #e14594);
+$animation_time: 8s;
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+
+    &__wrapper {
+        height: 100%;
+
+        .top_container {
+            padding: 24px 5%;
+
+            background: $linear_gradient;
+            background-size: 600% 100%;
+            animation: gradient $animation_time linear infinite;
+            animation-direction: alternate;
+
+            @keyframes gradient {
+                0% {
+                    background-position: 0%;
+                }
+                100% {
+                    background-position: 100%;
+                }
+            }
+
+            &__text {
+                .heading {
+                    margin-top: 70px;
+
+                    path {
+                        fill: #fff;
+                    }
+
+                    margin-bottom: 18px;
+                }
+
+                .description {
+                    margin-bottom: 18px;
+                    &__1,
+                    &__2 {
+                        font-size: 16px;
+                        line-height: 150%;
+                        color: rgba($color: #fff, $alpha: 0.8);
+                    }
+                }
+            }
+        }
+
+        .form_container {
+            height: calc(100% - 260px);
+
+            .form {
+                padding: 40px 5%;
+
+                &__input {
+                    margin-bottom: 30px;
+
+                    label {
+                        display: block;
+                        color: #605b5b;
+                        font-weight: 500;
+                        font-size: 16px;
+                        padding-bottom: 10px;
+                    }
+
+                    input {
+                        width: 100%;
+                        height: 40px;
+                        border-radius: 4px;
+                        padding: 8px;
+                        border: 1px solid #d6d6d6;
+                        transition: 0.2s ease;
+                        color: #000;
+                        font-size: 18px;
+
+                        &:focus {
+                            border-color: #2b3595;
+                        }
+                    }
+
+                    span {
+                        display: block;
+                        color: rgba($color: #ff0f0f, $alpha: 0.8);
+                        opacity: 0;
+                        transition: 0.2s ease;
+                    }
+                }
+
+                &__submit {
+                    width: 100%;
+                    display: inline-flex;
+
+                    margin-top: 10px;
+
+                    button {
+                        display: flex;
+                        align-items: center;
+                        margin-top: 0;
+                        margin-left: auto;
+                        width: 120px;
+                        min-height: 40px;
+                        border-radius: 4px;
+                        padding: 0 18px;
+
+                        &:hover,
+                        &:focus {
+                            svg {
+                                transform: translateX(20px);
+                            }
+                        }
+
+                        span {
+                            font-size: 16px;
+                            font-weight: 400;
+                        }
+
+                        svg {
+                            transform: translateX(15px);
+                            z-index: 30;
+                            transition: inherit;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .container {
+        display: flex;
+        overflow: hidden;
+        align-items: center;
+
+        .sidebar {
+            width: 40%;
+            height: 100%;
+
+            background: $linear_gradient;
+            background-size: 600% 100%;
+            animation: gradient $animation_time linear infinite;
+            animation-direction: alternate;
+        }
+
+        &__wrapper {
+            width: 60%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 24px;
+
+            .top_container {
+                background: transparent;
+
+                &__text {
+                    .heading {
+                        path {
+                            fill: url(#svg_gradient);
+                            fill-opacity: 0.7;
+                        }
+                    }
+
+                    .description {
+                        p {
+                            color: #878787;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        .sidebar {
+            width: 60%;
+        }
+
+        &__wrapper {
+            width: 40%;
+        }
+    }
+}

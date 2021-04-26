@@ -1,0 +1,107 @@
+.content {
+	margin: 2rem 0 1.5rem;
+	display: flex;
+	flex-basis: calc(100% - 26.5px);
+	flex-direction: column;
+	position: relative;
+
+	&__wrapper {
+		// For user Details
+		.user_details {
+			margin-top: 20%;
+			div {
+				margin-bottom: 45px;
+
+				label {
+					display: block;
+					padding-bottom: 10px;
+					font-weight: 500;
+				}
+
+				input {
+					border: none;
+					box-shadow: rgba($color: #7a7a7a, $alpha: 0.3) 0px 1px;
+					padding-bottom: 6px;
+					transition: 0.1s ease-out;
+					width: 100%;
+					color: rgb(120, 120, 120);
+					font-weight: 600;
+					font-size: 1.1rem;
+
+					&:focus {
+						box-shadow: rgb(120, 120, 120) 0px 2px;
+					}
+
+					&::placeholder {
+						color: rgba($color: #7a7a7a, $alpha: 0.5);
+					}
+				}
+			}
+		}
+
+		// For questions
+		.question_wrapper {
+			.question {
+				font-size: 1.35rem;
+				line-height: 36px;
+				font-weight: 500;
+				margin-bottom: 1.4rem;
+			}
+
+			.options_wrapper {
+				padding-top: 1.7rem;
+				input {
+					display: none;
+
+					&:checked {
+						+ .option {
+							color: #fff;
+							border-color: $secondary-color;
+							&::before {
+								width: 100%;
+								z-index: -1;
+							}
+						}
+					}
+				}
+
+				.option {
+					position: relative;
+					display: flex;
+					align-items: center;
+					min-height: 51px;
+					border: 2px solid $teritary-color;
+					border-left: none;
+					max-width: 100% !important;
+					margin-bottom: 21px;
+					padding: 15px;
+					line-height: 150%;
+					transition: 0.2s ease-out, border-color 0.05s ease-out;
+					color: #424242;
+					font-size: 15px;
+
+					&::before {
+						content: "";
+						position: absolute;
+						width: 3px;
+						height: calc(100% + 4px);
+						left: 0;
+						background: $secondary-color;
+						transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+					}
+
+					label {
+						width: 100%;
+					}
+
+					&.selected {
+						span {
+							z-index: 1;
+							color: #fff;
+						}
+					}
+				}
+			}
+		}
+	}
+}

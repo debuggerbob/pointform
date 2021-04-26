@@ -1,0 +1,78 @@
+@import "../../styles/variables";
+
+.checkbox {
+	position: relative;
+	display: flex;
+
+	margin: 1rem 0;
+
+	input {
+		opacity: 0;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		cursor: pointer;
+
+		&:checked + span {
+			border: 1px solid rgba($color: $primary-color, $alpha: 0.9);
+
+			&::before {
+				width: 13px;
+			}
+
+			svg {
+				opacity: 1;
+			}
+		}
+	}
+
+	label {
+		font-size: 14px;
+		line-height: 23px;
+		a {
+			position: relative;
+			z-index: 10;
+			padding-left: 0.3rem;
+			color: rgba($color: $primary-color, $alpha: 0.9);
+			font: inherit;
+			text-decoration: none;
+
+			&:hover,
+			&:focus {
+				border-bottom: 1px solid $primary-color;
+			}
+		}
+	}
+
+	span {
+		display: flex;
+		align-items: center;
+		width: 14px;
+		height: 14px;
+		top: 5px;
+		color: #222222;
+		border: 1px solid #959595;
+		margin-right: 12px;
+		position: relative;
+		transition: 0.2s ease;
+
+		&::before {
+			content: "";
+			position: absolute;
+			width: 0px;
+			height: 100%;
+			left: 0px;
+			background: #0f62fe;
+			transition: inherit;
+			z-index: -1;
+		}
+
+		svg {
+			padding: 1px;
+			opacity: 0;
+			transition: inherit;
+			transition-delay: 0.07s;
+		}
+	}
+}

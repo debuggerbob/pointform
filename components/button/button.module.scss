@@ -1,0 +1,45 @@
+@import "@/styles/variables";
+
+.button {
+    position: relative;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 39px;
+    cursor: pointer;
+    border: none;
+    color: #ffffff;
+    background: $primary-color;
+    font-size: 18px;
+    font-family: $jakarta;
+    font-weight: 500;
+    transition: 0.35s ease;
+    overflow: hidden;
+    font-family: $jakarta;
+
+    &::before {
+        content: "";
+        width: 200%;
+        height: 200%;
+        position: absolute;
+        top: 0;
+        left: -5%;
+        transform: translateX(-100%) skew(-10deg);
+        background: #2821f0;
+        transition: inherit;
+        z-index: 1;
+    }
+
+    &:hover,
+    &:focus {
+        &::before {
+            left: 100%;
+        }
+    }
+
+    span {
+        position: relative;
+        z-index: 2;
+        font: inherit;
+        font-family: $jakarta;
+    }
+}

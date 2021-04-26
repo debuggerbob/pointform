@@ -1,0 +1,60 @@
+.btn {
+	border: none;
+	width: 100%;
+	max-width: 144px;
+	height: 42px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.primary_btn {
+	background: $primary-color;
+}
+
+.teritary_btn {
+	background: rgba($color: $primary-color, $alpha: 0.45);
+}
+
+.bottom_bar {
+	display: flex;
+	justify-content: flex-end;
+	margin: auto 0 35px;
+
+	button {
+		span {
+			color: #fff8f0;
+			padding: 0 7px;
+			font-size: 15px;
+		}
+
+		svg {
+			width: 15px;
+			height: 15px;
+		}
+	}
+
+	.prev_btn {
+		flex-basis: calc(50% - 1.25rem);
+		max-width: 144px;
+		margin-right: 2.5rem;
+
+		span {
+			margin-right: auto;
+		}
+		svg {
+			margin-left: 15px;
+		}
+	}
+
+	.next_btn {
+		flex-basis: calc(50% - 1.25rem);
+		max-width: 144px;
+		span {
+			margin-left: auto;
+		}
+		svg {
+			margin-right: 15px;
+		}
+	}
+}

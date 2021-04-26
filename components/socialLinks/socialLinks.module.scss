@@ -1,0 +1,56 @@
+@import "../../styles/variables";
+
+.social_links {
+	display: flex;
+	align-items: center;
+	padding: 1.5rem 0;
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+
+	&__circle {
+		display: block;
+		min-width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: $primary-color;
+		margin-right: 13px;
+	}
+
+	&__heading {
+		font-weight: 500;
+		font-size: 16px;
+		color: #262627;
+		margin-right: 9px;
+		min-width: max-content;
+	}
+
+	&__underline {
+		display: block;
+		min-width: 10px;
+		width: 100%;
+		max-width: 150px;
+		height: 1px;
+		background: #828282;
+	}
+
+	&__links_wrapper {
+		display: flex;
+		align-items: center;
+
+		.link {
+			padding: 10px 12px;
+
+			svg path {
+				transition: 0.2s ease;
+			}
+
+			&:hover,
+			&:focus {
+				svg path {
+					fill: $main-color2;
+				}
+			}
+		}
+	}
+}

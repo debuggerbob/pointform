@@ -1,0 +1,70 @@
+@import "../common";
+@import "../fonts";
+
+.login_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    &__wrapper {
+        width: 100%;
+        max-width: 430px;
+        padding: 1rem;
+
+        &__heading {
+            font-size: 1.7rem;
+            font-weight: 500;
+            padding-bottom: 45px;
+        }
+
+        .form {
+            &__field {
+                display: flex;
+                flex-direction: column;
+
+                &:first-child {
+                    margin-bottom: 43px;
+                }
+
+                label {
+                    color: #323232;
+                    padding-bottom: 12px;
+                }
+
+                input {
+                    border: 1.5px solid #6d7777;
+                    padding: 0.5rem;
+                    min-height: 45px;
+                    transition: border 0.3s ease,
+                        outline 0.15s cubic-bezier(0.2, 0, 0.38, 0.9);
+                    font-weight: 500;
+                    font-size: 18px;
+                    outline: 1.5px solid transparent;
+
+                    &:focus {
+                        outline: 1.5px solid #0f62fe;
+
+                        border: 1.5px solid $primary-color;
+                    }
+                }
+            }
+        }
+    }
+
+    &__link {
+        margin: 50px 0 0;
+        p {
+            a {
+                text-decoration: none;
+
+                &:hover,
+                &:focus {
+                    border-bottom: 1px solid
+                        rgba($color: $primary-color, $alpha: 0.8);
+                }
+            }
+        }
+    }
+}

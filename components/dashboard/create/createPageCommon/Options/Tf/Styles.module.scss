@@ -1,0 +1,56 @@
+.true_false {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 50px;
+    padding: 0 10px;
+
+    .true {
+        margin-right: 1.2rem;
+    }
+
+    .score_input {
+        margin-top: 1rem;
+        input {
+            padding: 2px 0 2px 5px;
+            width: 130px;
+        }
+    }
+
+    button {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-width: 130px;
+        min-height: 125px;
+        border: 1px solid #d0d0d0;
+        background: #f3f3f3;
+        border-radius: 4px;
+        transition: 0.2s ease;
+        cursor: pointer;
+
+        &:hover {
+            background: #fff;
+        }
+
+        svg {
+            margin-bottom: 16px;
+            transition: inherit;
+        }
+
+        .text {
+            font-size: 16px;
+            transition: inherit;
+        }
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .true_false {
+        .true {
+            margin-right: 3rem;
+        }
+    }
+}
