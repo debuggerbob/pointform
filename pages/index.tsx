@@ -66,7 +66,7 @@ export default function Index({ isConnected }) {
                         </p>
 
                         <div className={styles.col1__cta_wrapper}>
-                            <Link href="/">
+                            <Link href="/login">
                                 <a className={styles.cta}>
                                     <span>Get Started</span>
                                 </a>
