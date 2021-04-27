@@ -44,8 +44,8 @@ export default function Signup() {
                     await signup(
                         emailRef.current?.value,
                         passRef.current?.value
-                    ).then((reg) => {
-                        console.log(reg)
+                    )
+                    .then((reg) => {
                         const data = {
                             uid: reg.user.uid,
                             name: usernameRef.current?.value,
@@ -58,12 +58,13 @@ export default function Signup() {
                             },
                             body: JSON.stringify(data),
                         })
-                            .then(() => router.push("/dashboard"))
-                            .catch((error) => {
-                                console.log(error);
-                                setMessage(error.message);
-                            });
-                    }).catch(error => {
+                        .then(() => router.push("/dashboard"))
+                        .catch((error) => {
+                            console.log(error);
+                            setMessage(error.message);
+                        });
+                    })
+                    .catch(error => {
                         setLoading(false)
                         setMessage(error.message)
                     })
