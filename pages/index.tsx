@@ -42,7 +42,7 @@ export default function Index({ isConnected }) {
             <main className={styles.main}>
                 <section className={styles.section1}>
                     <div className={styles.col1}>
-                        <h2 className={styles.col1__tagline}>
+                        <h2 className={`${styles.col1__tagline}`}>
                             Make interactive,
                             <span className={styles.bottom_text}>
                                 Custom tailored
