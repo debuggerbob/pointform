@@ -1,14 +1,16 @@
-import React from "react";
+import { useEffect, useState } from 'react'
 import nookies from "nookies";
 import { useRouter } from "next/router";
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from "next";
 import Head from "next/head";
+import Image from 'next/image'
 
 import { UAParser } from "ua-parser-js";
 
 // Auth
 import { firestore, auth } from "@/lib/firebaseAdmin";
 import { findUserNameByCID } from "@/lib/db";
+import { useAuth } from '@/context/AuthContext'
 
 /* Main Components */
 import { Home } from "@/dashboard/home";
@@ -24,6 +26,7 @@ import styles from "@/styles/dashboard/index.module.scss";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
+
         const cookies = nookies.get(ctx);
         const token = await auth.verifyIdToken(cookies.token);
         const { uid, email } = token;
@@ -41,6 +44,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
             },
         };
     } catch (err) {
+        console.log(err)
         return {
             redirect: {
                 permanent: false,
@@ -51,11 +55,26 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }
 };
 
-export default function AuthenticatedPage(
+export default function Dashboard(
     user: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
     const { pageId } = useRouter().query;
     const userAgent = new UAParser().getDevice().type;
+    const [sentEmails, setSentEmails] = useState(0)
+    const [message, setMessage] = useState(null)
+    const [verificationPending, setVerificationPending] = useState(true)
+    const { currentUser } = useAuth()
+
+
+    useEffect(() => {
+        if(!currentUser.emailVerified && sentEmails < 4) {
+            // uncomment this when u are ready to get the mail
+            // currentUser.sendEmailVerification().then(() => setSentEmails(sentEmails+1)).catch(error => setMessage(error))
+        } else {
+            // set this to true while designing
+            setVerificationPending(false)
+        }
+    }, [currentUser])
 
     /* Nested Ternary Operator to check the current active page. */
     let currentActivePage =
@@ -67,7 +86,6 @@ export default function AuthenticatedPage(
 
     return (
         <>
-            {/* Set the title of the page according to the active page. */}
             <Head>
                 <title>Pointform - {currentActivePage}</title>
             </Head>
@@ -75,7 +93,7 @@ export default function AuthenticatedPage(
                 <>
                     <Header styles={styles} creator={user.data} />
 
-                    <main className={styles.main}>
+                    <main className={`${styles.main} ${ verificationPending ? "filter blur-sm" : ""}`}>
                         <Sidebar
                             styles={styles}
                             currentActivePage={currentActivePage}
@@ -92,6 +110,21 @@ export default function AuthenticatedPage(
             ) : (
                 <Create creatorData={user.data} userAgent={userAgent} />
             )}
+            {
+            verificationPending ? (
+            <div className="absolute top-0 left-0 flex justify-center h-screen w-screen items-center bg-blend-darken">
+                <div className="bg-gray-50 flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg text-left shadow p-8">
+                    <h2 className="text-2xl text-gray-800">
+                        Please Verify your email
+                    </h2>
+                    <div className="my-8 text-center">
+                        <Image className="" src="/images/verification.svg" alt="Verification Pending" width="320px" height="auto" />
+                    </div>
+                    <p className="text-xl">Sorry to keep you waiting, please check your email to verify your account.</p>
+                </div>
+            </div>
+            ) : <></>
+            }
         </>
     );
 }
