@@ -97,11 +97,11 @@ export default function ErrorPage() {
     return (
         <>
             <Head>
-                <title>Page not found! - Atom Forms</title>
+                <title>Page not found! - Pointform</title>
             </Head>
             <div className={styles.container}>
                 <nav className={styles.nav}>
-                    <h1>Atom Forms</h1>
+                    <h1>Pointform</h1>
                 </nav>
 
                 <main className={styles.main}>
