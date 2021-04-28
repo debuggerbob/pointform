@@ -65,9 +65,9 @@ export default function Login() {
             />
 
             <div className="bg-white h-screen flex flex-col justify-center align-center text-center">
-                <div className="text-left lg:w-1/3 md:w-9/12 sm:w-10/12 lg:mx-auto md:mx-auto">
+                <div className="text-left px-6 lg:w-1/3 md:w-9/12 lg:mx-auto lg:px-0 md:mx-auto">
                     <h2 className="text-4xl text-gray-800">
-                        Log in to <span className="text-4xl font-bold text-green-500">Point</span>form
+                        Log in to <span className="text-4xl font-bold text-indigo-600">Point</span>form
                     </h2>
                     <div className="mt-4">
                         <p className="text-gray-800">
@@ -89,7 +89,7 @@ export default function Login() {
                                 type="email"
                                 id="user_email"
                                 name="user_email"
-                                className="p-4 mt-3 border-2 border-gray-200 rounded-md w-full outline-none focus:border-green-500"
+                                className="p-4 mt-3 border-2 border-gray-200 rounded-md w-full outline-none focus:border-indigo-600"
                                 ref={emailRef}
                             />
                         </div>
@@ -98,7 +98,7 @@ export default function Login() {
                                 <label htmlFor="user_password" className="text-black-800 font-medium">Password</label>
                                 <div className="text-right">
                                     <p className="text-blue-500">
-                                        <Link href="/forgot">
+                                        <Link href="/password/reset">
                                             <a className="font-medium">Forgot Password?</a>
                                         </Link>
                                     </p>
@@ -108,7 +108,7 @@ export default function Login() {
                                 type="password"
                                 id="user_password"
                                 name="user_password"
-                                className="p-4 mt-3 border-2 border-gray-200 rounded-md w-full outline-none focus:border-green-500"
+                                className="p-4 mt-3 border-2 border-gray-200 rounded-md w-full outline-none focus:border-indigo-600"
                                 ref={passRef}
                             />
                         </div>
