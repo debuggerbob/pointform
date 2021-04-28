@@ -16,6 +16,7 @@ import { useAuth } from '@/context/AuthContext'
 import { Home } from "@/dashboard/home";
 import { Quizzes } from "@/components/dashboard/quizzes/";
 import { Create } from "@/components/dashboard/create/";
+import { Settings } from "@/components/dashboard/settings"
 
 /* Common Components */
 import { Header } from "@/dashboard/common/Header";
@@ -32,7 +33,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         const { uid, email } = token;
 
         let username = "User";
-        username = await findUserNameByCID(uid);
+        // username = await findUserNameByCID(uid);
 
         return {
             props: {
@@ -44,7 +45,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
             },
         };
     } catch (err) {
-        console.log(err)
         return {
             redirect: {
                 permanent: false,
@@ -67,8 +67,8 @@ export default function Dashboard(
 
 
     useEffect(() => {
-        if(!currentUser.emailVerified && sentEmails < 4) {
-            // uncomment this when u are ready to get the mail
+        if(!currentUser?.emailVerified && sentEmails < 4) {
+            // uncomment this when u want to get the mail
             // currentUser.sendEmailVerification().then(() => setSentEmails(sentEmails+1)).catch(error => setMessage(error))
         } else {
             // set this to true while designing
@@ -82,7 +82,9 @@ export default function Dashboard(
             ? "Dashboard"
             : pageId[0] === "quizzes"
             ? "Quiz"
-            : "Create";
+            : pageId[0] === "create"
+            ? "Create"
+            : "Settings"
 
     return (
         <>
@@ -91,9 +93,19 @@ export default function Dashboard(
             </Head>
             {currentActivePage != "Create" ? (
                 <>
+
+                    {/* Email Verification */}
+                    {verificationPending ? 
+                    (
+                    <div className="flex justify-center h-20 md:h-10 lg:h-10 py-6 px-4 w-full items-center bg-gradient-to-r from-indigo-300 via-indigo-600 to-indigo-900 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ffffff"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                        <p className="text-base ml-2">Please check your email inbox to verify your account.</p>
+                    </div>
+                    ) : <></>}
+
                     <Header styles={styles} creator={user.data} />
 
-                    <main className={`${styles.main} ${ verificationPending ? "filter blur-sm" : ""}`}>
+                    <main className={styles.main}>
                         <Sidebar
                             styles={styles}
                             currentActivePage={currentActivePage}
@@ -101,6 +113,8 @@ export default function Dashboard(
                         <div className={styles.content}>
                             {currentActivePage === "Dashboard" ? (
                                 <Home creatorData={user.data} />
+                            ) : currentActivePage === "Settings" ? (
+                                <Settings creatorData={user.data} />
                             ) : (
                                 <Quizzes creatorData={user.data} />
                             )}
@@ -110,21 +124,6 @@ export default function Dashboard(
             ) : (
                 <Create creatorData={user.data} userAgent={userAgent} />
             )}
-            {
-            verificationPending ? (
-            <div className="absolute top-0 left-0 flex justify-center h-screen w-screen items-center bg-blend-darken">
-                <div className="bg-gray-50 flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg text-left shadow p-8">
-                    <h2 className="text-2xl text-gray-800">
-                        Please Verify your email
-                    </h2>
-                    <div className="my-8 text-center">
-                        <Image className="" src="/images/verification.svg" alt="Verification Pending" width="320px" height="auto" />
-                    </div>
-                    <p className="text-xl">Sorry to keep you waiting, please check your email to verify your account.</p>
-                </div>
-            </div>
-            ) : <></>
-            }
         </>
     );
 }
