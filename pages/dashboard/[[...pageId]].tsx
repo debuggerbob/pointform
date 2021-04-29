@@ -14,7 +14,7 @@ import { useAuth } from '@/context/AuthContext'
 
 /* Main Components */
 import { Home } from "@/dashboard/home";
-import { Quizzes } from "@/components/dashboard/quizzes/";
+import { Responses } from "@/components/dashboard/responses";
 import { Create } from "@/components/dashboard/create/";
 import { Settings } from "@/components/dashboard/settings"
 
@@ -80,8 +80,8 @@ export default function Dashboard(
     let currentActivePage =
         pageId === undefined
             ? "Dashboard"
-            : pageId[0] === "quizzes"
-            ? "Quiz"
+            : pageId[0] === "responses"
+            ? "Responses"
             : pageId[0] === "create"
             ? "Create"
             : "Settings"
@@ -116,7 +116,7 @@ export default function Dashboard(
                             ) : currentActivePage === "Settings" ? (
                                 <Settings creatorData={user.data} />
                             ) : (
-                                <Quizzes creatorData={user.data} />
+                                <Responses creatorData={user.data} />
                             )}
                         </div>
                     </main>

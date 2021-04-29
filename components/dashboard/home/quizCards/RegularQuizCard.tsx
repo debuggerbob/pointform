@@ -87,7 +87,7 @@ export const RegularQuizCard: React.FC<Props> = ({
 	const handleFormDelete = async () => {
 		setDeletingStatus(true);
 
-		let res = await fetch("http://localhost:3000/api/quiz", {
+		let res = await fetch(`/api/quiz`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -109,82 +109,49 @@ export const RegularQuizCard: React.FC<Props> = ({
 
 	return (
 		<>
-			<div ref={ref} className={styles.quiz_card}>
-				<div className={styles.quiz}>
-					<div className={styles.quiz__top}>
-						<h4 className={styles.quiz__top__quiz_title}>
-							{quizTitle}
-						</h4>
-
-						<div className={styles.quiz__top__image}>
-							<Image
-								src='/images/background.jpg'
-								alt='My Cool quiz'
-								width={125}
-								height={120}
-							/>
-						</div>
-						<span className={styles.quiz__top__overlay}></span>
+			<div ref={ref} className="relative my-4 lg:my-0 md:my-0">
+				<div className="flex flex-col bg-gradient-to-br from-blue-400 via-indigo-500 to-blue-600 text-white w-150 h-200 rounded-md p-4 lg:mr-4 md:mr-4 mb-4">
+					<div className="flex justify-center items-center h-3/4">
+						<h3 className="text-lg">{quizTitle.substring(0, 25)}...</h3>
 					</div>
-
-					<div className={styles.quiz__bottom}>
-						<div className={styles.section1}>
-							<h5 className={styles.section1__responses}>
-								<span
-									className={
-										styles.section1__responses__count
-									}>
-									{responses}
-								</span>
-								Responses
-							</h5>
-
-							<span className={styles.section1__updated_at}>
-								{updatedAt}
-							</span>
-						</div>
-
-						<div className={styles.section_btn}>
-							<button onClick={handleFooterMenuClick}>
-								<svg width={4} height={15} fill='none'>
-									<path
-										d='M1.59 9.09a1.59 1.59 0 100-3.181 1.59 1.59 0 000 3.182zM1.59 3.182A1.59 1.59 0 101.59 0a1.59 1.59 0 000 3.182zM1.59 15a1.59 1.59 0 100-3.182 1.59 1.59 0 000 3.182z'
-										fill='#878787'
-									/>
-								</svg>
-							</button>
-						</div>
+					<div className="h-1/4 flex justify-end">
+						<button onClick={handleFooterMenuClick} className="text-white w-10 h-10 flex items-center justify-center focus:outline-none">
+							<svg width={4} height={15}>
+								<path
+									d='M1.59 9.09a1.59 1.59 0 100-3.181 1.59 1.59 0 000 3.182zM1.59 3.182A1.59 1.59 0 101.59 0a1.59 1.59 0 000 3.182zM1.59 15a1.59 1.59 0 100-3.182 1.59 1.59 0 000 3.182z'
+									fill='#ffffff'
+								/>
+							</svg>
+						</button>
 					</div>
 				</div>
-
-				{/* Footer menu
-                -------------------*/}
-				<div className={styles.footer_menu}>
-					<ul ref={footer_menu} className={styles.footer_menu__list}>
-						<li>
-							<button>
+				
+				<div className="absolute left-0 shadow z-30">
+					<ul ref={footer_menu} className="bg-white opacity-0 w-0 h-200 list-none p-0 shadow rounded-md">
+						<li className="my-2">
+							<button className="border-0 bg-transparent cursor-pointer text-gray-800">
 								<span>Rename</span>
 							</button>
 						</li>
 
-						<li>
+						<li className="my-2">
 							<Link href='/share'>
-								<a>
+								<a className="text-gray-800">
 									<span>Share</span>
 								</a>
 							</Link>
 						</li>
 
-						<li>
+						<li className="my-2">
 							<Link href='/results'>
-								<a>
+								<a className="text-gray-800">
 									<span>Results</span>
 								</a>
 							</Link>
 						</li>
 
-						<li>
-							<button onClick={handleFooterMenuDelete}>
+						<li className="my-2">
+							<button onClick={handleFooterMenuDelete} className="border-0 bg-transparent cursor-pointer text-gray-800">
 								<span>Delete</span>
 							</button>
 						</li>

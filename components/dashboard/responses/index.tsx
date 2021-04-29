@@ -16,9 +16,9 @@ interface Props {
 	};
 }
 
-export const Quizzes: React.FC<Props> = ({ creatorData }) => {
+export const Responses: React.FC<Props> = ({ creatorData }) => {
 	const router = useRouter();
-	const [quizzes, setQuizzes] = useState([]);
+	const [forms, setForms] = useState([]);
 
 	console.log('c', creatorData)
 	
@@ -34,18 +34,18 @@ export const Quizzes: React.FC<Props> = ({ creatorData }) => {
 
 	useEffect(() => {
 		if (quiz) {
-			setQuizzes(quiz.data);
+			setForms(quiz.data);
 			refreshData();
 		}
 	}, [quiz]);
 
 	return (
 		<>
-			<h1 className={styles.heading}>Your Quizzes</h1>
+			<h1 className="text-2xl text-gray-800">Your Quizzes</h1>
 
 			<ul className={styles.quiz_list__content}>
-				{quizzes && quizzes.length > 0
-					? quizzes.map((quiz) => (
+				{forms && forms.length > 0
+					? forms.map((quiz) => (
 						<QuizListItem
 							key={quiz.id}
 							quizTitle={quiz.title}
@@ -54,7 +54,7 @@ export const Quizzes: React.FC<Props> = ({ creatorData }) => {
 							acceptingResponses={quiz.acceptingResponses}
 						/>
 						))
-					: "No quizzes found!"}
+					: "No forms found!"}
 			</ul>
 		</>
 	);

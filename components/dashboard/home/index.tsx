@@ -64,32 +64,30 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
 
 	return (
 		<>
-			<h1 className={styles.heading}>{greeting}</h1>
-			<div className={styles.recents_container}>
-				<h2 aria-hidden='true' className={styles.aria_hidden}>
-					Quizzes
-				</h2>
-				<h3 className={styles.recents_container__heading}>Recent</h3>
+			<h1 className="text-2xl text-gray-800 mb-6">{greeting}</h1>
+			<h2 aria-hidden='true' className="sr-only">
+				Recent
+			</h2>
+			<h3 className="text-xl text-gray-600 mb-4">Recent</h3>
 
-				<div className={styles.recents_container__quizzes}>
-					<NewQuizCard />
-					{quizzes && quizzes.length > 0
-						? quizzes.map((item) => (
-								<RegularQuizCard
-									key={item.qvid}
-									qvid={item.qvid}
-									quizTitle={item.title}
-									responses={item.responses}
-									refreshData={refreshData}
-									updatedAt={item.lastUpdated}
-								/>
-						  ))
-						: ""}
-				</div>
+			<div className="flex items-center justify-between pr-4 md:pr-0 lg:pr-0 lg:justify-start md:justify-start flex-wrap w-full">
+				<NewQuizCard />
+				{quizzes && quizzes.length > 0
+					? quizzes.map((item) => (
+							<RegularQuizCard
+								key={item.qvid}
+								qvid={item.qvid}
+								quizTitle={item.title}
+								responses={item.responses}
+								refreshData={refreshData}
+								updatedAt={item.lastUpdated}
+							/>
+						))
+					: ""}
 			</div>
 
 			<div className={styles.quiz_list}>
-				<h3 className={styles.quiz_list__heading}>Your Quizzes</h3>
+				<h3 className={styles.quiz_list__heading}>Your Forms</h3>
 
 				<ul className={styles.quiz_list__content}>
 					{quizzes && quizzes.length > 0
