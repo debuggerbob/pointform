@@ -1,10 +1,6 @@
-interface Props {
-	customClass: string;
-}
-
-export const BannerPhone: React.FC<Props> = ({ customClass }) => {
+export const BannerPhone: React.FC = () => {
 	return (
-		<svg className={customClass} viewBox='0 0 1081 2085' fill='none'>
+		<svg  viewBox='0 0 1081 2085' fill='none'>
 			<g filter='url(#filter0_d)'>
 				<rect
 					x='53'

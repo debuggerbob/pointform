@@ -1,16 +1,15 @@
 import Link from "next/link";
-import styles from "./socialLinks.module.scss";
 
 export const SocialLinks = () => {
 	return (
-		<div className={styles.social_links}>
-			<span className={styles.social_links__circle}></span>
-			<h4 className={styles.social_links__heading}>Our Socials</h4>
-			<span className={styles.social_links__underline}></span>
+		<div className="flex items-center py-6 mb-4 p-6 lg:p-10 md:p-10 w-full lg:ml-6">
+			<span className="flex items-center w-2 h-2 rounded-full p-1 bg-indigo-600 mx-2"></span>
+			<h4 className="font-medium text-base text-gray-800 mx-2">Our Socials</h4>
+			<span className="block w-3/12 h-xsm bg-gray-800"></span>
 
-			<div className={styles.social_links__links_wrapper}>
+			<div className="flex items-center">
 				<Link href='/'>
-					<a className={styles.link}>
+					<a className="py-2 px-3">
 						<svg
 							width='17'
 							height='17'
@@ -37,7 +36,7 @@ export const SocialLinks = () => {
 				</Link>
 
 				<Link href='/'>
-					<a className={styles.link}>
+					<a className="py-2 px-3">
 						<svg
 							width='22'
 							height='21'
@@ -60,7 +59,7 @@ export const SocialLinks = () => {
 				</Link>
 
 				<Link href='/'>
-					<a className={styles.link}>
+					<a className="py-2 px-3">
 						<svg
 							width='19'
 							height='17'
