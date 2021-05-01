@@ -2,7 +2,7 @@ import { array, object, number, string, date, mixed } from "yup";
 
 export const ParticipantSchema = object({
 	participantId: string().required().min(6).max(500),
-	qvid: string().required(),
+	fvid: string().required(),
 	name: string().required(),
 	institute: string().required(),
 	questions: array(

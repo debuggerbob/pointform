@@ -18,53 +18,53 @@ export async function addUserInfo(info) {
     await db.collection(process.env.HAKUNA_MATATA_SJ).add(info)
 }
 
-export async function findQuizByCID(userId) {
-    const quiz = await db.collection(process.env.HAKUNA_MATATA_RY).where('userId', '==', userId).get()
-    if(quiz.empty) return false
+export async function findFormByCID(userId) {
+    const form = await db.collection(process.env.HAKUNA_MATATA_RY).where('userId', '==', userId).get()
+    if(form.empty) return false
     else return true
 }
 
-export async function getQuizByCID(userId) {
+export async function getFormByCID(userId) {
     let data = []
-    const quiz = await db.collection(process.env.HAKUNA_MATATA_RY).where('userId', '==', userId).get()
-    if (quiz.empty) {
+    const forms = await db.collection(process.env.HAKUNA_MATATA_RY).where('userId', '==', userId).get()
+    if (forms.empty) {
         return;
     }  
-    quiz.forEach(doc => {
+    forms.forEach(doc => {
         data.push(doc.data())
     })
     return data
 }
 
-export async function findQuizByQVID(qvid) {
-    const quiz = await db.collection(process.env.HAKUNA_MATATA_RY).where('qvid', '==', qvid).get()
-    if(quiz.empty) return false
+export async function findFormByFVID(fvid) {
+    const form = await db.collection(process.env.HAKUNA_MATATA_RY).where('fvid', '==', fvid).get()
+    if(form.empty) return false
     else return true
 }
 
-export async function getQuizByQVID(qvid) {
+export async function getFormByFVID(fvid) {
     let data
-    const quiz = await db.collection(process.env.HAKUNA_MATATA_RY).where('qvid', '==', qvid).get()
-    if (quiz.empty) {
+    const forms = await db.collection(process.env.HAKUNA_MATATA_RY).where('fvid', '==', fvid).get()
+    if (forms.empty) {
         return;
     }  
-    quiz.forEach(doc => {
+    forms.forEach(doc => {
         data = doc.data()
     })
     return data
 }
 
-export async function createQuiz(quiz) {
-    await db.collection(process.env.HAKUNA_MATATA_RY).add(quiz)
+export async function createForm(form) {
+    await db.collection(process.env.HAKUNA_MATATA_RY).add(form)
 }
 
-export async function updateQuiz(qvid, quiz) {
-    await db.collection(process.env.HAKUNA_MATATA_RY).where('qvid', '==', qvid).get()
+export async function updateForm(fvid, form) {
+    await db.collection(process.env.HAKUNA_MATATA_RY).where('fvid', '==', fvid).get()
         .then(response => {
             let batch = db.batch()
             response.docs.forEach((doc) => {
                 const refDoc = db.collection(process.env.HAKUNA_MATATA_RY).doc(doc.id)
-                batch.update(refDoc, {...quiz})
+                batch.update(refDoc, {...form})
             })
             batch.commit().then(() => {
                 return true
@@ -72,8 +72,8 @@ export async function updateQuiz(qvid, quiz) {
         })
 }
 
-export async function deleteQuiz(qvid) {
-    await db.collection(process.env.HAKUNA_MATATA_RY).where('qvid', '==', qvid).get()
+export async function deleteForm(fvid) {
+    await db.collection(process.env.HAKUNA_MATATA_RY).where('fvid', '==', fvid).get()
         .then(response => {
             let batch = db.batch()
             response.docs.forEach((doc) => {
@@ -90,7 +90,7 @@ export async function createResponse(participant) {
     await db.collection(process.env.HAKUNA_MATATA_TS).add(participant)
 }
 
-export function validateQuiz(
+export function validateForm(
     schema: OptionalObjectSchema<ObjectShape>,
     handler: NextApiHandler
 ) {
@@ -117,7 +117,7 @@ export function validateQuiz(
     }
 }
 
-export function validateQuizResponse(
+export function validateFormResponse(
     schema: OptionalObjectSchema<ObjectShape>,
     handler: NextApiHandler
 ) {

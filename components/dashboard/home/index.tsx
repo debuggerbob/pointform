@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 
 /* Main Components */
-import { NewQuizCard } from "./quizCards/NewQuizCard";
-import { RegularQuizCard } from "./quizCards/RegularQuizCard";
-import { QuizListItem } from "../common/ListOfQuizzes";
+import { NewFormCard } from "./formCards/NewFormCard";
+import { RegularFormCard } from "./formCards/RegularFormCard";
+import { FormsList } from "../common/ListOfForms";
 
 /* Styles */
 import styles from "@/styles/dashboard/index.module.scss";
@@ -19,18 +19,18 @@ interface Props {
 
 export const Home: React.FC<Props> = ({ creatorData }) => {
 	const router = useRouter();
-	const [quizzes, setQuizzes] = useState([]);
+	const [forms, setForms] = useState([]);
 	const [greeting, setGreeting] = useState<string>("");
 
 	console.log(creatorData)
 
 	const fetcher = (args) => fetch(args).then((res) => res.json());
-	const { data: quiz, error } = useSWR(
-		`/api/quizzes/${creatorData?.uid}`,
+	const { data: form, error } = useSWR(
+		`/api/forms/${creatorData?.uid}`,
 		fetcher
 	);
 
-	console.log(quiz)
+	console.log(form)
 
 	const refreshData = () => {
 		router.replace(router.asPath);
@@ -55,12 +55,12 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
 
 	useEffect(() => {
 		setGreetings();
-		if (quiz) {
-			setQuizzes(quiz.data);
-			console.log(quizzes)
+		if (form) {
+			setForms(form.data);
+			console.log(forms)
 			refreshData();
 		}
-	}, [quiz]);
+	}, [form]);
 
 	return (
 		<>
@@ -71,12 +71,12 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
 			<h3 className="text-xl text-gray-600 mb-4">Recent</h3>
 
 			<div className="flex items-center justify-between pr-4 md:pr-0 lg:pr-0 lg:justify-start md:justify-start flex-wrap w-full">
-				<NewQuizCard />
-				{quizzes && quizzes.length > 0
-					? quizzes.map((item) => (
-							<RegularQuizCard
-								key={item.qvid}
-								qvid={item.qvid}
+				<NewFormCard />
+				{forms && forms.length > 0
+					? forms.map((item) => (
+							<RegularFormCard
+								key={item.fvid}
+								fvid={item.fvid}
 								quizTitle={item.title}
 								responses={item.responses}
 								refreshData={refreshData}
@@ -90,9 +90,9 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
 				<h3 className={styles.quiz_list__heading}>Your Forms</h3>
 
 				<ul className={styles.quiz_list__content}>
-					{quizzes && quizzes.length > 0
-						? quizzes.map((item) => (
-								<QuizListItem
+					{forms && forms.length > 0
+						? forms.map((item) => (
+								<FormsList
 									key={item._id}
 									quizTitle={item.title}
 									updatedAt={item.lastUpdated}
@@ -100,7 +100,7 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
 									acceptingResponses={item.acceptingResponses}
 								/>
 						  ))
-						: "No quizzes found!"}
+						: "No forms found!"}
 				</ul>
 			</div>
 		</>

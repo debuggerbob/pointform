@@ -2,7 +2,7 @@ import { array, object, number, string, date, bool } from "yup";
 
 export const QuizSchema = object({
     title: string().required().min(3).max(500),
-    qvid: string().required(),
+    fvid: string().required(),
     userId: string().required(),
     questions: array(
         object({

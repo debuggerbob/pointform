@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 
 // Components
-import { QuizListItem } from "../common/ListOfQuizzes";
+import { FormsList } from "../common/ListOfForms";
 
 // Styles
 import styles from "../../../styles/dashboard/index.module.scss";
@@ -23,8 +23,8 @@ export const Responses: React.FC<Props> = ({ creatorData }) => {
 	console.log('c', creatorData)
 	
 	const fetcher = (args) => fetch(args).then((res) => res.json());
-	const { data: quiz, error } = useSWR(
-		`/api/quizzes/${creatorData?.uid}`,
+	const { data: form, error } = useSWR(
+		`/api/forms/${creatorData?.uid}`,
 		fetcher
 	);
 
@@ -33,25 +33,25 @@ export const Responses: React.FC<Props> = ({ creatorData }) => {
 	};
 
 	useEffect(() => {
-		if (quiz) {
-			setForms(quiz.data);
+		if (form) {
+			setForms(form.data);
 			refreshData();
 		}
-	}, [quiz]);
+	}, [form]);
 
 	return (
 		<>
-			<h1 className="text-2xl text-gray-800">Your Quizzes</h1>
+			<h1 className="text-2xl text-gray-800">Your Forms</h1>
 
 			<ul className={styles.quiz_list__content}>
 				{forms && forms.length > 0
-					? forms.map((quiz) => (
-						<QuizListItem
-							key={quiz.id}
-							quizTitle={quiz.title}
-							updatedAt={quiz.lastUpdated}
-							responses={quiz.responses}
-							acceptingResponses={quiz.acceptingResponses}
+					? forms.map((form) => (
+						<FormsList
+							key={form.id}
+							quizTitle={form.title}
+							updatedAt={form.lastUpdated}
+							responses={form.responses}
+							acceptingResponses={form.acceptingResponses}
 						/>
 						))
 					: "No forms found!"}

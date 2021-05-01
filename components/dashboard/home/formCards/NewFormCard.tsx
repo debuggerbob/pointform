@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-export const NewQuizCard: React.FC = () => {
+export const NewFormCard: React.FC = () => {
 	return (
 		<div className="flex flex-col bg-gradient-to-br from-yellow-300 to-yellow-500 text-white w-200 h-200 rounded-md p-4 lg:mr-4 md:mr-4 mb-4">
 			<div className="flex flex-col justify-center items-center h-3/4">
 				<h4 className="text-lg font-medium mb-2">Create a</h4>
-				<h3 className="text-xl font-semibold">New Quiz</h3>
+				<h3 className="text-xl font-semibold">New Form</h3>
 			</div>
 			<div className="h-1/4 flex justify-end">
 				<Link href='/dashboard/create'>

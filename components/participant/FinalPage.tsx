@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import gsap from "gsap";
 
 // import styles from "./styles/Finalpage.module.scss";
@@ -7,7 +6,7 @@ import styles from "./styles/FinalPage.module.scss";
 interface Props {
     finalData: {
         participantId: string;
-        qvid: string;
+        fvid: string;
         name: string;
         institute: string;
         questions: { questionId: number; choosenAnswer: any }[];
@@ -22,20 +21,19 @@ export const FinalPage: React.FC<Props> = ({ finalData }) => {
     console.log("Final Data", finalData);
 
     const submitData = async () => {
-        try {
-            let res = await axios.post(
-                "http://localhost:3000/api/participant/submit",
-                finalData
-            );
-
-            await console.log(res);
-
-            (await res.status) === 200
+            await fetch(`/api/participant/submit`, {
+                method: 'POST',
+                headers: {
+                    accept: 'application/json'
+                },
+                body: JSON.stringify(finalData)
+            })
+            .then(res => 
+                res.ok
                 ? setSubmittedData(true)
-                : setSubmittedData(false);
-        } catch (error) {
-            console.log(error);
-        }
+                : setSubmittedData(false)
+            )
+            .catch(error => console.log(error))
     };
 
     useEffect(() => {

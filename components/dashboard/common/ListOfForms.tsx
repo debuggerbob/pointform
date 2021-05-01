@@ -8,7 +8,7 @@ interface Props {
 	acceptingResponses: boolean;
 }
 
-export const QuizListItem: React.FC<Props> = ({
+export const FormsList: React.FC<Props> = ({
 	quizTitle,
 	updatedAt,
 	responses,

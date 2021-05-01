@@ -6,8 +6,6 @@ import { UserForm } from "@/components/participant/form";
 import { Quiz } from "@/components/participant/Quiz";
 import { FinalPage } from "@/components/participant/FinalPage";
 
-import axios from "axios";
-
 type ApiResData = {
     _id: string;
     timestamps: string;
@@ -19,7 +17,7 @@ type ApiResData = {
         options: { optionId: number; value: string; score: number }[];
     }[];
     creatorId: string;
-    qvid: string;
+    fvid: string;
     title: string;
 };
 
@@ -188,7 +186,7 @@ export default function ParticipantPage({ resData }: { resData: ApiResData }) {
                     <FinalPage
                         finalData={{
                             participantId: localStorage.getItem("userId"),
-                            qvid: resData.qvid,
+                            fvid: resData.fvid,
                             name: superState.name,
                             institute: superState.institute,
                             questions: superState.userAnswers,
@@ -205,12 +203,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     let data: ApiResData;
 
     try {
-        data = await axios
-            .post("http://localhost:3000/api/participant/quiz", {
-                qvid: context.params.qvid,
+        data = 
+        await fetch(`participant/form`,{
+            method: 'POST',
+            headers: {
+                accept: 'application/json'
+            },
+            body: JSON.stringify({
+                fvid: context.params.fvid,
             })
-            .then((res) => res.data.data);
-
+        }).then(res => res.data)
         console.log(data.questions[0].options);
     } catch (e) {
         return {

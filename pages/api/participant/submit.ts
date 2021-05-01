@@ -1,6 +1,6 @@
 import { ParticipantSchema } from "@/schemas/Participant";
 import {
-	validateQuizResponse,
+	validateFormResponse,
 	createResponse,
 } from "@/lib/db";
 
@@ -19,4 +19,4 @@ const handle = async (req, res) => {
 	}
 };
 
-export default validateQuizResponse(ParticipantSchema, handle);
+export default validateFormResponse(ParticipantSchema, handle);

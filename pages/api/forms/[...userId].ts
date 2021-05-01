@@ -1,12 +1,12 @@
-import { getQuizByCID } from "@/lib/db"
+import { getFormByCID } from "@/lib/db"
 import { withAuth } from "@/middleware/withAuth"
 
 const handle = async (req, res) => {
     if(req.method === 'GET') {
-            const cid = req.query.userId[0]
-            const quizzes = await getQuizByCID(cid)
-            if(quizzes) {
-                res.status(200).json({ status: "success", data: quizzes })
+            const userId = req.query.userId[0]
+            const forms = await getFormByCID(userId)
+            if(forms) {
+                res.status(200).json({ status: "success", data: forms })
             } else {
                 res.status(404).json({ status: "error", message: "Resource Not Found!", errorType: "ResourceError" })
             }

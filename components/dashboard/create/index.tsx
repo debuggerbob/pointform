@@ -6,10 +6,10 @@ import gsap from "gsap";
 
 /* Main Components */
 import { ProfileMenu } from "@/components/profileMenu";
-import generateQVID from "@/lib/generateQVID";
+import generateFVID from "@/lib/generateFVID";
 
 /* Styles */
-import styles from "@/styles/createQuiz/index.module.scss";
+import styles from "@/styles/createForm/index.module.scss";
 
 const MobileComponent = dynamic(
     () => import("./Mobile/Index").then((module) => module.Mobile),
@@ -251,16 +251,16 @@ export const Create: React.FC<Props> = ({
         setCreatingQuiz(true);
 
         let title = localStorage.getItem("quiz_title");
-        let qvid = generateQVID();
-        localStorage.setItem(`${title}`, qvid);
+        let fvid = generateFVID();
+        localStorage.setItem(`${title}`, fvid);
         let uid = creatorData.uid;
         let data = {
             title: title,
-            qvid: qvid,
+            fvid: fvid,
             userId: uid,
         };
 
-        await fetch(`/api/quiz`, {
+        await fetch(`/api/form`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -281,18 +281,18 @@ export const Create: React.FC<Props> = ({
         setFormPublishStatus("Publishing...");
 
         let title = localStorage.getItem("quiz_title");
-        let qvid = localStorage.getItem(title);
+        let fvid = localStorage.getItem(title);
         let uid = creatorData.uid;
         let status = "published";
         let data = {
             title: title,
-            qvid: qvid,
+            fvid: fvid,
             userId: uid,
             questions: superState.questionList,
             status: status,
         };
 
-        await fetch(`/api/quiz`, {
+        await fetch(`/api/form`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

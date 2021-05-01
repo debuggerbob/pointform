@@ -11,7 +11,7 @@ import { ChooseQuestionType } from "../createPageCommon/ChooseQuestionType/Index
 /* Styles */
 import styles from "./styles/Index.module.scss";
 import useSWR from "swr";
-import generateQVID from "@/lib/generateQVID";
+import generateFVID from "@/lib/generateFVID";
 
 interface Props {
     superState: State;
@@ -27,13 +27,13 @@ export const Mobile: React.FC<Props> = ({ superState, dispatch }) => {
             method: "POST",
             body: JSON.stringify({
                 title: "Dummy Quiz",
-                qvid: generateQVID(),
+                fvid: generateFVID(),
                 userId: user.userId,
                 questions: superState.questionList,
             }),
         }).then((res) => res.json());
 
-    const { data: resp } = useSWR(`/api/quiz`, postFetcher);
+    const { data: resp } = useSWR(`/api/form`, postFetcher);
     console.log(resp);
 
     return (

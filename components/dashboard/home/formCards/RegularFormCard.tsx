@@ -6,15 +6,15 @@ import gsap from "gsap";
 import styles from "@/styles/dashboard/index.module.scss";
 
 interface Props {
-	qvid: string;
+	fvid: string;
 	quizTitle: string;
 	responses: number;
 	refreshData: () => void;
 	updatedAt: string;
 }
 
-export const RegularQuizCard: React.FC<Props> = ({
-	qvid,
+export const RegularFormCard: React.FC<Props> = ({
+	fvid,
 	quizTitle,
 	responses,
 	refreshData,
@@ -87,13 +87,13 @@ export const RegularQuizCard: React.FC<Props> = ({
 	const handleFormDelete = async () => {
 		setDeletingStatus(true);
 
-		let res = await fetch(`/api/quiz`, {
+		let res = await fetch(`/api/form`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				qvid: qvid,
+				fvid: fvid,
 			}),
 		});
 
