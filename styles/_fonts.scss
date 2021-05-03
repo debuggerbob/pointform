@@ -2,15 +2,12 @@
 @font-face {
 	font-family: "Jakarta Sans";
 	font-style: normal;
-	font-weight: 200;
+	font-weight: 300;
 	font-display: swap;
 	src: local(""),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-ExtraLight.woff2")
-			format("woff2"),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-ExtraLight.woff")
-			format("woff"),
-		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-ExtraLight.ttf")
-			format("truetype");
+		url("../fonts/jakartaSans/PlusJakartaSans-Light.woff2") format("woff2"),
+		url("../fonts/jakartaSans/PlusJakartaSans-Light.woff") format("woff"),
+		url("../fonts/jakartaSans/PlusJakartaSans-Light.ttf") format("truetype");
 }
 
 @font-face {
@@ -19,11 +16,10 @@
 	font-weight: 400;
 	font-display: swap;
 	src: local(""),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Regular.woff2")
+		url("../fonts/jakartaSans/PlusJakartaSans-Regular.woff2")
 			format("woff2"),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Regular.woff")
-			format("woff"),
-		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-Regular.ttf")
+		url("../fonts/jakartaSans/PlusJakartaSans-Regular.woff") format("woff"),
+		url("../fonts/jakartaSans/PlusJakartaSans-Regular.ttf")
 			format("truetype");
 }
 
@@ -33,11 +29,9 @@
 	font-weight: 500;
 	font-display: swap;
 	src: local(""),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Medium.woff2")
-			format("woff2"),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Medium.woff")
-			format("woff"),
-		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-Medium.ttf")
+		url("../fonts/jakartaSans/PlusJakartaSans-Medium.woff2") format("woff2"),
+		url("../fonts/jakartaSans/PlusJakartaSans-Medium.woff") format("woff"),
+		url("../fonts/jakartaSans/PlusJakartaSans-Medium.ttf")
 			format("truetype");
 }
 
@@ -47,24 +41,22 @@
 	font-weight: 700;
 	font-display: swap;
 	src: local(""),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Bold.woff2")
-			format("woff2"),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-Bold.woff")
-			format("woff"),
-		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-Bold.ttf")
-			format("truetype");
+		url("../fonts/jakartaSans/PlusJakartaSans-Bold.woff2") format("woff2"),
+		url("../fonts/jakartaSans/PlusJakartaSans-Bold.woff") format("woff"),
+		url("../fonts/jakartaSans/PlusJakartaSans-Bold.ttf") format("truetype");
 }
 
+/* pontano-sans-regular */
 @font-face {
-	font-family: "Jakarta Sans";
+	font-family: "Pontano Sans";
 	font-style: normal;
-	font-weight: 800;
+	font-weight: 400;
 	font-display: swap;
 	src: local(""),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-ExtraBold.woff2")
+		url("../fonts/pontanoSans/pontano-sans-v8-latin-regular.woff2")
 			format("woff2"),
-		url("../fonts/PlusJakarta_Sans-2.5/webfonts/PlusJakartaSans-ExtraBold.woff")
+		url("../fonts/pontanoSans/pontano-sans-v8-latin-regular.woff")
 			format("woff"),
-		url("../fonts/PlusJakarta_Sans-2.5/static/PlusJakartaSans-ExtraBold.ttf")
+		url("../fonts/pontanoSans/pontano-sans-v8-latin-regular.ttf")
 			format("truetype");
 }

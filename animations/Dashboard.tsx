@@ -12,11 +12,17 @@ export const toggleArrow = (node1: string, angle: number) => {
 
 // Toggle Menu
 // --------------------------
-export const toggle_menu = (node1: string, height: number, opacity: number) => {
+export const toggle_menu = (
+	node1: string,
+	height: number,
+	opacity: number,
+	pointerEvents: string
+) => {
 	return gsap.to(node1, {
 		duration: 0.35,
 		height: height,
 		opacity: opacity,
 		ease: "power3.inOut",
+		pointerEvents: pointerEvents,
 	});
 };

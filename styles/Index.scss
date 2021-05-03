@@ -6,25 +6,25 @@
 @import "./fonts";
 
 * {
-    margin: 0;
-    padding: 0;
-    outline: none;
-    box-sizing: border-box;
-    font-size: 14px;
-    font-family: $jakarta;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	box-sizing: border-box;
+	font-family: $jakarta;
+	outline: none !important;
 }
 
 html,
 body {
-    scroll-behavior: smooth !important;
-    text-rendering: optimizeLegibility;
+	scroll-behavior: smooth !important;
+	text-rendering: optimizeLegibility;
 }
 h1,
 h2,
 h3,
 h4 {
-    font-family: $jakarta;
-    font-weight: 600;
+	font-family: $jakarta;
+	font-weight: 600;
 }
 
 a,
@@ -32,22 +32,22 @@ p,
 span,
 input,
 label {
-    font-family: $jakarta;
-    font-weight: 400;
+	font-family: $jakarta;
+	font-weight: 400;
 }
 
 h1 {
-    font-size: 2.25em;
+	font-size: 2.25em;
 }
 
 h2 {
-    font-size: 1.5em;
+	font-size: 1.5em;
 }
 
 p {
-    font-size: 1em;
+	font-size: 1em;
 }
 
 ul {
-    list-style: none;
+	list-style: none;
 }
