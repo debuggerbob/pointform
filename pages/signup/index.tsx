@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,12 +8,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 // Auth
 import { useAuth } from "@/context/AuthContext";
 
-// Styles
-import styles from "../../styles/auth/signup.module.scss";
-
 // Components
-import { Checkbox } from "../../components/checkbox";
-import { FormButton } from "../../components/button/FormButton";
 import Alert from "@/components/alert";
 
 export default function Signup() {
@@ -21,14 +16,24 @@ export default function Signup() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const passRef = useRef<HTMLInputElement>(null);
+    const planRef = useRef<HTMLInputElement>(null)
     const [message, setMessage] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+    const [paidUser, setPaidUser] = useState(false)
+    const availablePlans = ["edu-elite", "busi-suite"]
     const recaptchaRef = useRef<ReCAPTCHA>();
 
     const { signup } = useAuth();
+    const plan = router.query.plan.toString()
+
+
+    useEffect(() => {
+        if(plan)
+            setPaidUser(true)
+    }, [])
 
     const formSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         const token = await recaptchaRef.current.executeAsync()
         recaptchaRef.current.reset();
@@ -58,7 +63,12 @@ export default function Signup() {
                             },
                             body: JSON.stringify(data),
                         })
-                        .then(() => router.push("/dashboard"))
+                        .then(() => {
+                            if(paidUser)
+                                router.push(`/checkout?plan=${plan}`)
+                            else
+                                router.push("/dashboard")
+                        })
                         .catch((error) => {
                             console.log(error);
                             setMessage(error.message);
@@ -109,6 +119,20 @@ export default function Signup() {
                     )}
 
                     <form onSubmit={formSubmit}>
+                        {
+                            !availablePlans.includes(plan)
+                            ?
+                            <div className="mt-6">
+                                <label htmlFor="user_plan" className="text-gray-900 font-medium">Choosen Plan</label>
+                                <select className="p-4 mt-3 border-2 bg-white border-gray-200 rounded-md w-full outline-none focus:border-indigo-600" name="user_plan" id="user_plan">
+                                    {
+                                        availablePlans.map(availablePlan => <option className="bg-white w-full text-dark py-4 border-gray-200" value={availablePlan} key={availablePlan}>{availablePlan}</option>)
+                                    }
+                                </select>
+                            </div>
+                            :
+                            <></>
+                        }
                         <div className="mt-6">
                             <label htmlFor="username" className="text-gray-900 font-medium">Username</label>
                             <input
@@ -145,7 +169,7 @@ export default function Signup() {
                                 onClick={formSubmit}
                                 className="w-full bg-gray-900 text-white p-4 rounded-md hover:bg-gray-800 delay-75"
                             >
-                                {loading ? "Creating..." : "Create an account"}
+                                {loading ? "Signing up..." : paidUser ? "Sign up and Upgrade" : "Sign up" }
                             </button>
                         </div>
                         <div className="mt-8 text-sm text-gray-600 text-center">

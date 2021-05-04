@@ -1,22 +1,42 @@
 import Head from "next/head"
-import Link from "next/link"
-import Router from "next/router"
+import { useRouter } from "next/router"
+import { useAuth } from "@/context/AuthContext"
+import { useEffect } from "react"
 
 function Pricing() {
 
-    const freePlanFeatures = ["10000 Responses", "Dashboard to manage", "Export responses to excel"]
+    const { currentUser } = useAuth()
+    const router = useRouter()
 
-    const eduPlanFeatures = ["Unlimited Responses", "Unilimited Forms", "Charts and Analytics", "Templates and Designs", "Provide Certificates", "Export to various formats", "Timer option for forms", "Built-in Edu form support"]
-
-    const businessPlanFeatures = ["Unlimited Responses", "Charts and Analytics", "Marketing templates", "Export to various formats"]
+    const plans = ["free", "edu-elite", "busi-suite"]
+    const features = {
+        free: ["10000 Responses", "Dashboard to manage", "Export responses to excel"],
+        edu: ["Unlimited Responses", "Unilimited Forms", "Charts and Analytics", "Templates and Designs", "Provide Certificates", "Export to various formats", "Timer option for forms", "Built-in Edu form support"],
+        business: ["Unlimited Responses", "Charts and Analytics", "Marketing templates", "Export to various formats"]
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(e.target.name !== "free_plan_true")
-            Router.push(`/login?user_plan=${e.target.name}&pricing_added=true`)
-        else 
-            Router.push(`/login`)
+        const chosenPlan = e.target.name
+        
+        if(plans.includes(chosenPlan))
+            if(currentUser)
+                if(chosenPlan === "free")
+                    router.push(`/dashboard`)
+                else
+                    router.push(`/checkout?plan=${chosenPlan}`)
+            else 
+                if(chosenPlan === "free")
+                    router.push(`/signup`)
+                else
+                    router.push(`/signup?plan=${chosenPlan}`)
+        else
+            router.reload()
     }
+
+    useEffect(() => {
+        router.prefetch('/checkout')
+    }, [])
 
     return (
         <>
@@ -34,8 +54,8 @@ function Pricing() {
                                     </div>
                                 </div>
                                 <ul className="list-none">
-                                    {freePlanFeatures.map(freePlanFeature => (
-                                        <li className="flex justify-start my-4">
+                                    {features.free.map(freePlanFeature => (
+                                        <li className="flex justify-start my-4" key={freePlanFeature.substring(0, 10)}>
                                             <img className="mr-2" src="/images/features_tick.svg" alt="Free Plan Features" />
                                             <span className="block font-medium text-gray-700">{freePlanFeature}</span>
                                         </li>
@@ -46,7 +66,7 @@ function Pricing() {
                                 </div>
                                 <button
                                     type="button"
-                                    name="free_plan_true"
+                                    name="free"
                                     onClick={handleSubmit}
                                     className="w-full bg-gray-900 text-white p-4 rounded-md hover:bg-gray-800 delay-75"
                                 >
@@ -63,8 +83,8 @@ function Pricing() {
                                     </div>
                                 </div>
                                 <ul className="list-none">
-                                    {eduPlanFeatures.map(eduPlanFeature => (
-                                        <li className="flex items-center justify-start my-4">
+                                    {features.edu.map(eduPlanFeature => (
+                                        <li className="flex items-center justify-start my-4" key={eduPlanFeature.substring(0, 10)}>
                                             <img className="mr-2" src="/images/features_tick.svg" alt="Edu Plan Features" />
                                             <span className="block font-medium text-gray-700">{eduPlanFeature}</span>
                                         </li>
@@ -75,7 +95,7 @@ function Pricing() {
                                 </div>
                                 <button
                                     type="button"
-                                    name="edu_plan_true"
+                                    name="edu-elite"
                                     onClick={handleSubmit}
                                     className="w-full bg-gray-900 text-white p-4 rounded-md hover:bg-gray-800 delay-75"
                                 >
@@ -92,8 +112,8 @@ function Pricing() {
                                     </div>
                                 </div>
                                 <ul className="list-none">
-                                    {businessPlanFeatures.map(businessPlanFeature => (
-                                        <li className="flex items-center justify-start my-4">
+                                    {features.business.map(businessPlanFeature => (
+                                        <li className="flex items-center justify-start my-4" key={businessPlanFeature.substring(0, 10)}>
                                             <img className="mr-2" src="/images/features_tick.svg" alt="Business Plan Features" />
                                             <span className="block font-medium text-gray-700">{businessPlanFeature}</span>
                                         </li>
@@ -104,7 +124,7 @@ function Pricing() {
                                 </div>
                                 <button
                                     type="button"
-                                    name="business_plan_true"
+                                    name="busi-suite"
                                     onClick={handleSubmit}
                                     className="w-full bg-gray-900 text-white p-4 rounded-md hover:bg-gray-800 delay-75"
                                 >
