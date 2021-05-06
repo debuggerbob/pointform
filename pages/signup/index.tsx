@@ -25,7 +25,7 @@ export default function Signup() {
     const [loading, setLoading] = useState(false);
     const recaptchaRef = useRef<ReCAPTCHA>();
 
-    const { signup } = useAuth();
+    const { signup, updateUserName } = useAuth();
 
     const formSubmit = async (e) => {
         e.preventDefault();
@@ -42,28 +42,11 @@ export default function Signup() {
             .then(async (res) => {
                 if (res.ok) {
                     await signup(
+                        usernameRef.current?.value,
                         emailRef.current?.value,
                         passRef.current?.value
                     )
-                    .then((reg) => {
-                        const data = {
-                            uid: reg.user.uid,
-                            name: usernameRef.current?.value,
-                        };
-
-                        fetch("/api/user", {
-                            method: "POST",
-                            headers: {
-                                accept: "application/json",
-                            },
-                            body: JSON.stringify(data),
-                        })
-                        .then(() => router.push("/dashboard"))
-                        .catch((error) => {
-                            console.log(error);
-                            setMessage(error.message);
-                        });
-                    })
+                    .then(() =>  router.push('/dashboard'))
                     .catch(error => {
                         setLoading(false)
                         setMessage(error.message)

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext"
 import useSWR from "swr";
 
 /* Main Components */
@@ -19,6 +20,7 @@ interface Props {
 
 export const Home: React.FC<Props> = ({ creatorData }) => {
 	const router = useRouter();
+	const { currentUser } = useAuth();
 	const [forms, setForms] = useState([]);
 	const [greeting, setGreeting] = useState<string>("");
 

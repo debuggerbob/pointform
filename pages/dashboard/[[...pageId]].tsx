@@ -28,12 +28,10 @@ import styles from "@/styles/dashboard/index.module.scss";
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
 
-        const cookies = nookies.get(ctx);
-        const token = await auth.verifyIdToken(cookies.token);
+        const cookies = nookies.get(ctx)
+        const token = await auth.verifyIdToken(cookies.token)
         const { uid, email } = token;
-
-        let username = "User";
-        // username = await findUserNameByCID(uid);
+        const username = await auth.getUser(uid).then(record => record.displayName)
 
         return {
             props: {

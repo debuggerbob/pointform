@@ -12,8 +12,13 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password);
+    function signup(name, email, password) {
+        return auth.createUserWithEmailAndPassword(email, password)
+            .then((reg) => {
+                const user = reg.user
+                user.updateProfile({ displayName: name })
+            })
+            .catch((error) => console.log(error))
     }
 
     function login(email, password) {
@@ -27,6 +32,10 @@ export function AuthProvider({ children }) {
 
     function passwordReset(email) {
         return auth.sendPasswordResetEmail(email);
+    }
+
+    function updateUserName(name) {
+        return currentUser.updateProfile({ displayName: name })
     }
 
     function updateEmail(email) {
@@ -61,6 +70,7 @@ export function AuthProvider({ children }) {
         signup,
         logout,
         passwordReset,
+        updateUserName,
         updateEmail,
         updatePassword,
     };
