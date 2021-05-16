@@ -7,7 +7,7 @@ import * as ani from "animations/Dashboard";
 import styles from "./Styles.module.scss";
 
 // Auth
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from '@/context/AuthContext'
 import { useRouter } from "next/router";
 
 interface Props {
@@ -17,28 +17,28 @@ interface Props {
 export const ProfileMenu: React.FC<Props> = ({ currentUsername }) => {
 	const menu_link_container = useRef();
 	const arrow = useRef();
-	const router = useRouter();
+	const router = useRouter()
 	const ref = useRef<HTMLDivElement>(null);
 	const [clicked, setClicked] = useState<boolean>(false);
 
 	const [firstName, ...second] = currentUsername.split(" ");
-	const { logout } = useAuth();
+	const { logout } = useAuth()
 
 	const handleClick = () => {
 		clicked === false ? setClicked(true) : setClicked(false);
 	};
 
-	const handleLogout = async () => {
-		await logout();
-		router.push("/");
-	};
+	const handleLogout = async () => {  
+		await logout()
+		router.push('/')
+	}
 
 	useEffect(() => {
 		if (clicked) {
-			ani.toggle_menu(menu_link_container.current, 325, 1, "all");
+			ani.toggle_menu(menu_link_container.current, 325, 1);
 			ani.toggleArrow(arrow.current, 180);
 		} else if (!clicked) {
-			ani.toggle_menu(menu_link_container.current, 0, 0, "none");
+			ani.toggle_menu(menu_link_container.current, 0, 0);
 			ani.toggleArrow(arrow.current, 0);
 		}
 

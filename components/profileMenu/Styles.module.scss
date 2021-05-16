@@ -97,12 +97,10 @@
 
 @media (max-width: 599px) {
 	.menu {
+		margin-right: 16px;
+
 		&__profile {
 			&__name {
-				display: none;
-			}
-
-			svg {
 				display: none;
 			}
 		}
@@ -111,6 +109,8 @@
 
 @media (min-width: 600px) {
 	.menu {
+		margin-right: 32px;
+
 		&__profile {
 			&__name {
 				font-size: 16 px;

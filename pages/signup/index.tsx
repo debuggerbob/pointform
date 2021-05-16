@@ -25,7 +25,7 @@ export default function Signup() {
     const [loading, setLoading] = useState(false);
     const recaptchaRef = useRef<ReCAPTCHA>();
 
-    const { signup, updateUserName } = useAuth();
+    const { signup } = useAuth();
 
     const formSubmit = async (e) => {
         e.preventDefault();

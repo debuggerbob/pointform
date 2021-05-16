@@ -1,4 +1,3 @@
-import { QuizSchema } from "@/schemas/Quiz"
 import { validateForm, createForm, updateForm, deleteForm, findFormByFVID } from "@/lib/db"
 import { withAuth } from "@/middleware/withAuth"
 
@@ -51,4 +50,10 @@ const handle = async (req, res) => {
     }
 }
 
-export default validateForm(QuizSchema, withAuth(handle))
+export const config = {
+    api: {
+      externalResolver: true,
+    },
+}
+
+export default validateForm(withAuth(handle))
