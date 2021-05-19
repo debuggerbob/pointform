@@ -1,6 +1,8 @@
 import { useContext, useState, useEffect, createContext } from "react";
-import { auth } from "@/lib/firebase";
+import firebase, { auth } from "@/lib/firebase";
 import nookies from "nookies";
+import Router from "next/router";
+
 
 const AuthContext = createContext(null);
 
@@ -22,7 +24,32 @@ export function AuthProvider({ children }) {
     }
 
     function login(email, password) {
-        return auth.signInWithEmailAndPassword(email, password);
+        return auth.signInWithEmailAndPassword(email, password)
+    }
+
+    function loginWithProvider(provider, redirect) {
+        setLoading(true)
+        return auth
+            .signInWithPopup(provider)
+            .then((result) => {
+                const user = result.user
+                setCurrentUser(user)
+                setLoading(false)
+                if (redirect) {
+                    Router.push(redirect)
+                }
+            })
+            .catch((error) => console.log(error))
+    }
+
+    function loginWithGoogle(redirect) {
+        const provider = new firebase.auth.GoogleAuthProvider()
+        return loginWithProvider(provider, redirect)
+    }
+
+    function loginWithTwitter(redirect) {
+        const provider = new firebase.auth.TwitterAuthProvider()
+        return loginWithProvider(provider, redirect)
     }
 
     function logout() {
@@ -67,6 +94,8 @@ export function AuthProvider({ children }) {
     const pass = {
         currentUser,
         login,
+        loginWithGoogle,
+        loginWithTwitter,
         signup,
         logout,
         passwordReset,

@@ -19,7 +19,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const recaptchaRef = useRef<ReCAPTCHA>();
 
-    const { login } = useAuth();
+    const { login, loginWithGoogle } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -116,12 +116,21 @@ export default function Login() {
                             <button
                                 type="submit"
                                 onClick={handleSubmit}
-                                className="w-full bg-gray-900 text-white p-4 rounded-md hover:bg-gray-800 delay-75"
+                                className="w-full bg-gray-900 text-white p-4 rounded-md hover:bg-gray-800 delay-75 font-semibold"
                             >
                                 {loading ? "Logging in..." : "Log in"}
                             </button>
                         </div>
                     </form>
+                    <div className="mt-8 border-t border-gray-300">
+                        <button
+                            type="button"
+                            onClick={() => loginWithGoogle('/dashboard')}
+                            className="mt-8 w-full bg-gray-800 text-white p-4 rounded-md hover:bg-gray-900 delay-75 font-semibold"
+                        >
+                            {loading ? "Logging in..." : "Log in with Google"}
+                        </button>
+                    </div>
                 </div>
             </div>
         </>
