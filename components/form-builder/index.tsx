@@ -14,6 +14,10 @@ import generateFVID from "@/lib/generateFVID";
 /* Styles */
 import styles from "@/styles/createForm/index.module.scss";
 
+import { ToggleType, UpdateType } from "@/types/form-builder";
+import { Toggle, Update } from "@/store/form-builder/action";
+import { FormReducer, InitialState } from "@/store/form-builder/reducer";
+
 interface Props {
     quizTitle?: string;
     userAgent: string;
@@ -24,51 +28,6 @@ interface Props {
     };
 }
 
-export type question = {
-    questionId: number;
-    questionType: string;
-    question: string;
-    required: boolean;
-    options: {
-        optionId: number;
-        value: string;
-        score: number;
-    }[];
-    showScore: boolean;
-};
-
-type State = {
-    quizTitle: string;
-    questionList: question[];
-    currentQuestionId: number;
-    showChooseQuestionScreen: boolean;
-};
-
-export type Action =
-    | { type: "showChooseQuestion" }
-    | { type: "changeQuizTitle"; title: string }
-    | { type: "addQuestion"; questionType: string }
-    | { type: "addQuestionAtIndex"; index: number; questionType: string }
-    | { type: "deleteQuestion"; questionId: number }
-    | { type: "addMcqOption"; questionIndex: number }
-    | { type: "deleteMcqOption"; currentIdx: number; optionId: number }
-    | { type: "showScore"; currentIdx: number }
-    | { type: "isRequired"; currentIdx: number }
-    | { type: "changeQuestionTitle"; questionIndex: number; value: string }
-    | {
-          type: "changeOptionValue";
-          currentIndex: number;
-          optionIndex: number;
-          value: string;
-      }
-    | {
-          type: "changeScoreValue";
-          currentIdx: number;
-          optionIdx: number;
-          score: number;
-      }
-    | { type: "setCurrentQuestionId"; id: number };
-
 export const Create: React.FC<Props> = ({
     userAgent,
     creatorData,
@@ -76,160 +35,7 @@ export const Create: React.FC<Props> = ({
 }) => {
     const router = useRouter();
 
-    const reducer = (state: State, action: Action) => {
-        switch (action.type) {
-            case "changeQuizTitle": {
-                // Store title to localstorage
-                localStorage.setItem("quiz_title", action.title);
-
-                return {
-                    ...state,
-                    quizTitle: action.title,
-                };
-            }
-
-            case "addQuestion": {
-                const questionData = {
-                    questionId: Math.random(),
-                    questionType: action.questionType,
-                    question: "",
-                    options: [],
-                    showScore: false,
-                    required: false,
-                };
-
-                if (action.questionType === "MCQ") {
-                    questionData.options = [
-                        {
-                            optionId: Math.random(),
-                            value: "",
-                            score: 0,
-                        },
-                    ];
-                } else if (action.questionType === "TF") {
-                    questionData.options = [
-                        { optionId: Math.random(), value: "true", score: 0 },
-                        { optionId: Math.random(), value: "false", score: 0 },
-                    ];
-                }
-
-                return {
-                    ...state,
-                    questionList: [...state.questionList, questionData],
-                };
-            }
-
-            case "addQuestionAtIndex": {
-                state.questionList.splice(action.index, 0, {
-                    questionId: Math.random(),
-                    questionType: action.questionType,
-                    question: "",
-                    options: [{ optionId: Math.random(), value: "", score: 0 }],
-                    showScore: false,
-                    required: false,
-                });
-
-                return { ...state };
-            }
-
-            case "deleteQuestion": {
-                state.questionList = state.questionList.filter((item) => {
-                    return item.questionId != action.questionId;
-                });
-
-                if (state.currentQuestionId != 0) {
-                    state.currentQuestionId -= 1;
-                }
-
-                return { ...state };
-            }
-
-            case "showChooseQuestion": {
-                return {
-                    ...state,
-                    showChooseQuestionScreen: !state.showChooseQuestionScreen,
-                };
-            }
-
-            case "addMcqOption": {
-                let quesObject = state.questionList[action.questionIndex];
-
-                quesObject.options = [
-                    ...quesObject.options,
-                    { optionId: Math.random(), value: "", score: 0 },
-                ];
-
-                return { ...state };
-            }
-
-            case "deleteMcqOption": {
-                let quesObject = state.questionList[action.currentIdx];
-
-                quesObject.options = quesObject.options.filter((item) => {
-                    return item.optionId != action.optionId;
-                });
-
-                return { ...state };
-            }
-
-            case "showScore": {
-                let quesObject = state.questionList[action.currentIdx];
-
-                quesObject.showScore = !quesObject.showScore;
-
-                return { ...state };
-            }
-
-            case "isRequired": {
-                let quesObject = state.questionList[action.currentIdx];
-
-                quesObject.required = !quesObject.required;
-
-                return { ...state };
-            }
-
-            case "changeQuestionTitle": {
-                state.questionList[action.questionIndex].question =
-                    action.value;
-
-                return { ...state };
-            }
-
-            case "changeOptionValue": {
-                let quesObject = state.questionList[action.currentIndex];
-
-                quesObject.options[action.optionIndex].value = action.value;
-
-                return { ...state };
-            }
-
-            case "changeScoreValue": {
-                let quesObject = state.questionList[action.currentIdx];
-
-                quesObject.options[action.optionIdx].score = action.score;
-
-                return { ...state };
-            }
-
-            case "setCurrentQuestionId": {
-                return {
-                    ...state,
-                    currentQuestionId: action.id,
-                };
-            }
-
-            default: {
-                return state;
-            }
-        }
-    };
-
-    const [superState, dispatch] = useReducer(reducer, {
-        quizTitle: "untitled",
-        questionList: [],
-        currentQuestionId: 0,
-        showChooseQuestionScreen: false,
-    });
+    const [superState, dispatch] = useReducer(FormReducer, InitialState);
 
     const [showTitlePopup, setShowTitlePopup] = useState(false);
     const container = useRef<HTMLDivElement>();
@@ -259,14 +65,14 @@ export const Create: React.FC<Props> = ({
             body: JSON.stringify(data),
         }).catch((error) => console.log(error));
 
-        if (superState.quizTitle.length > 0) {
+        if (superState.formTitle.length > 0) {
             setShowTitlePopup(false);
         }
     };
 
-    const handleTitleChange = (e: { target: { value: string } }) => {
-        dispatch({ type: "changeQuizTitle", title: e.target.value });
-    };
+    // const handleTitleChange = (e: { target: { value: string } }) => {
+    //     dispatch({ type: "changeQuizTitle", title: e.target.value });
+    // };
 
     const handlePublish = async () => {
         setFormPublishStatus("Publishing...");
@@ -299,7 +105,7 @@ export const Create: React.FC<Props> = ({
     };
 
     useEffect(() => {
-        superState.quizTitle === "untitled"
+        superState.formTitle === "untitled"
             ? setShowTitlePopup(true)
             : setShowTitlePopup(false);
 
@@ -312,91 +118,29 @@ export const Create: React.FC<Props> = ({
         }, 150);
     }, []);
 
-    useEffect(() => console.log(superState.questionList), [superState]);
-
-    let isCompleted = true;
+    useEffect(() => console.log(superState), [superState]);
 
     const [showLinks, setShowLinks] = useState(false);
 
+    const handleFormTitleChange = (e) => {
+        dispatch(
+            Update({ type: UpdateType.FormTitle, updatedValue: e.target.value })
+        );
+    };
+
+    const addQuestion = () => {
+        dispatch(Toggle(ToggleType.ChooseQuestion));
+    };
+
     return (
         <div ref={container}>
-            {/* Popup Start 
-            ------------------*/}
-            {showTitlePopup
-                ? // <div className={styles.quiz_title_popup}>
-                  // 	<div className={styles.container}>
-                  // 		<div className={styles.container__head}>
-                  // 			<h3 className={styles.container__head__heading}>
-                  // 				Create a New Survey
-                  // 			</h3>
-                  // 			<Link href='/dashboard'>
-                  // 				<a className={styles.container__head__close}>
-                  // 					{/* Sorry that i used unicode, it is just for temp :( - programmer2 */}
-                  // 					&#10005;
-                  // 				</a>
-                  // 			</Link>
-                  // 		</div>
-
-                  // 		<form onSubmit={handlePopupFormSubmit}>
-                  // 			<div className={styles.container__form}>
-                  // 				<label
-                  // 					className={styles.container__form__label}
-                  // 					htmlFor='quiz_title'>
-                  // 					Give it a name
-                  // 				</label>
-
-                  // 				<input
-                  // 					className={styles.container__form__input}
-                  // 					id='quiz_title'
-                  // 					type='text'
-                  // 					value={superState.quizTitle}
-                  // 					onChange={(e) =>
-                  // 						dispatch({
-                  // 							type: "changeQuizTitle",
-                  // 							title: e.target.value,
-                  // 						})
-                  // 					}
-                  // 				/>
-                  // 			</div>
-
-                  // 			<span
-                  // 				className={
-                  // 					superState.quizTitle.length === 0 ||
-                  // 					superState.quizTitle.length < 3
-                  // 						? `${styles.container__form__input__error} ${styles.show}`
-                  // 						: styles.container__form__input__error
-                  // 				}>
-                  // 				{superState.quizTitle.length < 3
-                  // 					? "Title should be a minimum 3 letters"
-                  // 					: "Title field is empty"}
-                  // 			</span>
-
-                  // 			<div className={styles.container__submit}>
-                  // 				<button
-                  // 					type='submit'
-                  // 					className={
-                  // 						superState.quizTitle.length < 3
-                  // 							? `${styles.container__submit__btn} ${styles.disabled}`
-                  // 							: styles.container__submit__btn
-                  // 					}>
-                  // 					{creatingQuiz ? "Creating..." : "Create"}
-                  // 				</button>
-                  // 			</div>
-                  // 		</form>
-                  // 	</div>
-                  // </div>
-                  null
-                : null}
-            {/* Popup end
-            ------------------*/}
-
             {/* Header Start 
             ------------------*/}
             <header className="fixed top-0 left-0 w-full  bg-white flex justify-between items-center border-b border-gray-200 z-50 md:h-px70">
                 {/* Col1
             	------------------*/}
                 <div className="col1 pl-percent5 py-4 w-2/4 max-w-xs">
-                    {!isCompleted ? (
+                    {superState.formTitle === "untitled" ? (
                         <h1 className="text-base font-medium">Pointform</h1>
                     ) : (
                         <>
@@ -419,7 +163,9 @@ export const Create: React.FC<Props> = ({
                                 <input
                                     type="text"
                                     name="forrTitle"
-                                    placeholder="Form title"
+                                    placeholder="Form title here..."
+                                    value={superState.formTitle}
+                                    onChange={handleFormTitleChange}
                                     className="px-2 py-1 w-full text-gray-800 placeholder-gray-500 border rounded border-tra transition focus:border-indigo-500"
                                 />
                             </div>
@@ -457,9 +203,12 @@ export const Create: React.FC<Props> = ({
                                 : "opacity-0"
                         } md:relative md:opacity-100 md:flex md:h-full md:top-0 md:right-0 md:border-none `}
                     >
-                        {/* Item1
+                        {/* Insert Button
 						-------------- */}
-                        <div className="flex align-center px-6 py-4 cursor-pointer group md:py-3 md:flex-col md:items-center  hover:bg-gray-100">
+                        <div
+                            className="flex align-center px-6 py-4 cursor-pointer group md:py-3 md:flex-col md:items-center  hover:bg-gray-100"
+                            onClick={addQuestion}
+                        >
                             <svg
                                 width={20}
                                 height={20}
@@ -480,7 +229,7 @@ export const Create: React.FC<Props> = ({
                             </span>
                         </div>
 
-                        {/* Item2
+                        {/* Publish button
 						-------------- */}
                         <div className="flex align-center px-6 py-4 cursor-pointer group md:py-3 md:flex-col md:items-center  hover:bg-gray-100">
                             <svg
@@ -508,7 +257,7 @@ export const Create: React.FC<Props> = ({
                 {/* Col3
             	------------------*/}
                 <div className="col3 pr-percent5">
-                    <ProfileMenu currentUsername="Nostalgia" />
+                    <ProfileMenu currentUsername={creatorData.name} />
                 </div>
             </header>
             {/* Header End
@@ -523,63 +272,63 @@ export const Create: React.FC<Props> = ({
                 <DummyContainer />
 
                 {/* Add Question Screen  */}
-                <div
-                    className={`${
-                        superState.questionList.length > 0 ? "hidden" : null
-                    } mt-10 md:mt-0`}
-                >
-                    <button
-                        className="px-5 py-4 mb-8 flex items-center text-lg text-indigo-700 bg-indigo-50 border border-indigo-50 rounded-full transition duration-100 hover:border-indigo-400 hover:bg-indigo-100 focus:border-indigo-400 focus:bg-indigo-100"
-                        onClick={() => dispatch({ type: "showChooseQuestion" })}
-                    >
-                        <svg
-                            width={24}
-                            height={24}
-                            fill="none"
-                            className="mr-4 stroke-current text-indigo-500"
+                {superState.questionList.length === 0 &&
+                superState.formTitle !== "untitled" ? (
+                    <div className={"mt-10 md:mt-0"}>
+                        <button
+                            className="px-5 py-4 mb-8 flex items-center text-lg text-indigo-700 bg-indigo-50 border border-indigo-50 rounded-full transition duration-100 hover:border-indigo-400 hover:bg-indigo-100 focus:border-indigo-400 focus:bg-indigo-100"
+                            onClick={() =>
+                                dispatch(Toggle(ToggleType.ChooseQuestion))
+                            }
                         >
-                            <path
-                                d="M12 5v14M5 12h14"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
+                            <svg
+                                width={24}
+                                height={24}
+                                fill="none"
+                                className="mr-4 stroke-current text-indigo-500"
+                            >
+                                <path
+                                    d="M12 5v14M5 12h14"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
 
-                        <p className="font-medium">Add question</p>
-                    </button>
+                            <p className="font-medium">Add question</p>
+                        </button>
 
-                    <div className="flex items-center animate-bounce">
-                        <svg
-                            width={24}
-                            height={24}
-                            fill="none"
-                            className="mr-4"
-                        >
-                            <circle cx={12} cy={12} r={12} fill="#F68B5C" />
-                            <path
-                                d="M13.64 17.14h-3.28a.11.11 0 00-.11.11v.438c0 .242.195.437.438.437h2.624a.437.437 0 00.438-.438v-.437a.11.11 0 00-.11-.11zM12 5.876a4.485 4.485 0 00-2.242 8.369v1.584c0 .242.195.438.437.438h3.61a.437.437 0 00.437-.438v-1.584A4.485 4.485 0 0012 5.875zm1.749 7.517l-.491.284v1.605h-2.516v-1.605l-.49-.284a3.5 3.5 0 113.497 0z"
-                                fill="#fff"
-                            />
-                        </svg>
+                        <div className="flex items-center animate-bounce">
+                            <svg
+                                width={24}
+                                height={24}
+                                fill="none"
+                                className="mr-4"
+                            >
+                                <circle cx={12} cy={12} r={12} fill="#F68B5C" />
+                                <path
+                                    d="M13.64 17.14h-3.28a.11.11 0 00-.11.11v.438c0 .242.195.437.438.437h2.624a.437.437 0 00.438-.438v-.437a.11.11 0 00-.11-.11zM12 5.876a4.485 4.485 0 00-2.242 8.369v1.584c0 .242.195.438.437.438h3.61a.437.437 0 00.437-.438v-1.584A4.485 4.485 0 0012 5.875zm1.749 7.517l-.491.284v1.605h-2.516v-1.605l-.49-.284a3.5 3.5 0 113.497 0z"
+                                    fill="#fff"
+                                />
+                            </svg>
 
-                        <span className="text-gray-500 font-body">
-                            Add a question to begin
-                        </span>
+                            <span className="text-gray-500 font-body">
+                                Add a question to begin
+                            </span>
+                        </div>
                     </div>
-                </div>
+                ) : null}
 
-                {/* <FirstScreen /> */}
-                {superState.questionList[superState.currentQuestionId] !==
-                undefined ? (
+                {/* First Screen */}
+                {superState.formTitle === "untitled" ? (
+                    <FirstScreen dispatch={dispatch} />
+                ) : null}
+
+                {/* Main  screen*/}
+                {superState.questionList.length > 0 &&
+                superState.formTitle !== "untitled" ? (
                     <Questionnarie
-                        questionListLen={superState.questionList.length}
-                        currentIndex={superState.currentQuestionId}
-                        currentQuestion={
-                            superState.questionList[
-                                superState.currentQuestionId
-                            ]
-                        }
+                        questionList={superState.questionList}
                         dispatch={dispatch}
                     />
                 ) : null}

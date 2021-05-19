@@ -1,8 +1,16 @@
-import { useEffect, useRef } from "react";
+import { Dispatch, useEffect, useRef } from "react";
 import gsap, { Power1 } from "gsap";
 
+import { Add, Toggle } from "@/store/form-builder/action";
+import {
+    Action,
+    AddType,
+    QuestionType,
+    ToggleType,
+} from "@/types/form-builder";
+
 interface Props {
-    dispatch: any;
+    dispatch: Dispatch<Action>;
     showScreen: boolean;
 }
 
@@ -23,10 +31,10 @@ export const Popup: React.FC<Props> = ({ dispatch, showScreen }) => {
         });
     }, [showScreen]);
 
-    const addQuestion = (type: string) => {
-        dispatch({ type: "addQuestion", questionType: type });
+    const addQuestion = (questionType: QuestionType) => {
+        dispatch(Add({ type: AddType.Question, questionType: questionType }));
 
-        dispatch({ type: "showChooseQuestion" });
+        dispatch(Toggle(ToggleType.ChooseQuestion));
     };
 
     return (
@@ -77,7 +85,7 @@ export const Popup: React.FC<Props> = ({ dispatch, showScreen }) => {
 
                     <div
                         className=" group flex items-center px-3 py-3 cursor-pointer trnasition rounded hover:bg-indigo-50"
-                        onClick={() => addQuestion("MCQ")}
+                        onClick={() => addQuestion(QuestionType.Mcq)}
                     >
                         <svg
                             width={18}
@@ -95,7 +103,7 @@ export const Popup: React.FC<Props> = ({ dispatch, showScreen }) => {
 
                     <div
                         className=" group flex items-center px-3 py-3 cursor-pointer trnasition rounded hover:bg-indigo-50"
-                        onClick={() => addQuestion("TF")}
+                        onClick={() => addQuestion(QuestionType.Tf)}
                     >
                         <svg
                             width={19}

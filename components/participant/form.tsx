@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import gsap from "gsap";
 
-import { FormButton } from "../button/FormButton";
+import { FormButton } from "../buttons/FormButton";
 import styles from "./styles/Form.module.scss";
 
 interface Props {

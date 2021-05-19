@@ -21,7 +21,9 @@
             "@/schemas/*": ["schemas/*"],
             "@/middleware/*": ["middleware/*"],
             "@/lib/*": ["lib/*"],
-            "@/context/*": ["context/*"]
+            "@/context/*": ["context/*"],
+            "@/types/*": ["types/*"],
+            "@/store/*": ["store/*"]
         }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
