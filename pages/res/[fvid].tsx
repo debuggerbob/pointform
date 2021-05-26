@@ -204,7 +204,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     try {
         data = 
-        await fetch(`participant/form`,{
+        await fetch(`/api/participant/form`,{
             method: 'POST',
             headers: {
                 accept: 'application/json'
@@ -212,7 +212,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             body: JSON.stringify({
                 fvid: context.params.fvid,
             })
-        }).then(res => res.data)
+        }).then(res => res.json())
         console.log(data.questions[0].options);
     } catch (e) {
         return {

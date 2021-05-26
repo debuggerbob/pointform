@@ -2,23 +2,54 @@ import { Dispatch, useRef } from "react";
 
 import { Action, UpdateType } from "@/types/form-builder";
 import { Update } from "@/store/form-builder/action";
+import generateFVID from "@/lib/generateFVID";
 
 interface Props {
     dispatch: Dispatch<Action>;
+    creator: {
+        uid: string;
+        email: string;
+        name: string;
+    }
 }
 
-export const FirstScreen: React.FC<Props> = ({ dispatch }) => {
-    const inputElement = useRef<HTMLInputElement>();
+export const FirstScreen: React.FC<Props> = ({ creator, dispatch }) => {
+    const titleElement = useRef<HTMLInputElement>();
+    const typeElement = useRef<HTMLSelectElement>();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        dispatch(
-            Update({
-                type: UpdateType.FormTitle,
-                updatedValue: inputElement.current.value,
-            })
-        );
+        let title = titleElement.current?.value;
+        let formType = typeElement.current.value;
+        let fvid = generateFVID();
+        localStorage.setItem(`${title}`, JSON.stringify({ fvid: fvid, formType: formType }));
+
+        let data = {
+            title: title,
+            fvid: fvid,
+            formType: formType,
+            userId: creator?.uid
+        }
+
+        await fetch(`/api/form`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => {
+            if(res.ok)
+                dispatch(
+                    Update({
+                        type: UpdateType.FormTitle,
+                        updatedValue: titleElement.current.value,
+                    })
+                )
+        })
+        .catch(error => console.log(error))
+
     };
 
     return (
@@ -39,13 +70,27 @@ export const FirstScreen: React.FC<Props> = ({ dispatch }) => {
                     </label>
 
                     <input
-                        ref={inputElement}
+                        ref={titleElement}
                         type="text"
                         id="title"
                         placeholder="Your form name"
                         className="mt-4 pb-1 w-full text-3xl font-body border-b border-gray-400 text-black placeholder-gray-300 transition focus:border-gray-600"
                         autoFocus
                     />
+
+                    <select ref={typeElement}
+                        id="type"
+                        placeholder="Choose your form type"
+                        className="mt-8 pb-1 w-full text-2xl font-body border-b border-gray-400 text-gray-300 placeholder-gray-300 transition focus:border-gray-600"
+                        autoFocus>
+                        <option value="default_form">Empty Form</option>
+                        <option value="quiz">Quiz</option>
+                        <option value="admissions">Admissions</option>
+                        <option value="survey">Survey</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="contact">Contact</option>
+                    </select>
+
                 </div>
 
                 <div className="flex items-center">

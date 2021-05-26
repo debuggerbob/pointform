@@ -63,7 +63,8 @@ export const Create: React.FC<Props> = ({
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).catch((error) => console.log(error));
+        })
+        .catch((error) => console.log(error));
 
         if (superState.formTitle.length > 0) {
             setShowTitlePopup(false);
@@ -77,12 +78,15 @@ export const Create: React.FC<Props> = ({
     const handlePublish = async () => {
         setFormPublishStatus("Publishing...");
 
-        let title = localStorage.getItem("quiz_title");
-        let fvid = localStorage.getItem(title);
+        let title = localStorage.getItem("form_title");
+        let info = localStorage.getItem(title);
+        let fvid = JSON.parse(info).fvid
+        let formType = JSON.parse(info).formType
         let uid = creatorData.uid;
         let status = "published";
         let data = {
             title: title,
+            formType: formType,
             fvid: fvid,
             userId: uid,
             questions: superState.questionList,
@@ -98,6 +102,7 @@ export const Create: React.FC<Props> = ({
         })
             .then((res) => {
                 if (res.status === 200) {
+                    localStorage.clear()
                     router.push("/dashboard");
                 }
             })
@@ -232,24 +237,26 @@ export const Create: React.FC<Props> = ({
                         {/* Publish button
 						-------------- */}
                         <div className="flex align-center px-6 py-4 cursor-pointer group md:py-3 md:flex-col md:items-center  hover:bg-gray-100">
-                            <svg
-                                width={20}
-                                height={20}
-                                fill="none"
-                                className="mr-3 md:mr-0 md:mb-1"
-                            >
-                                <path
-                                    className="stroke-current text-gray-600 transition group-hover:text-gray-900"
-                                    d="M13.213 6.768l-4.72 4.751m0 0L2.967 8.118c-.724-.446-.577-1.546.239-1.782L16.252 2.54c.742-.215 1.428.48 1.206 1.226l-3.871 13.032c-.243.816-1.33.957-1.77.23l-3.324-5.509z"
-                                    strokeWidth={1.5}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
+                            <button className="bg-transparent border-0 flex flex-col justify-center items-center" onClick={handlePublish}>
+                                <svg
+                                    width={20}
+                                    height={20}
+                                    fill="none"
+                                    className="mr-3 md:mr-0 md:mb-1"
+                                >
+                                    <path
+                                        className="stroke-current text-gray-600 transition group-hover:text-gray-900"
+                                        d="M13.213 6.768l-4.72 4.751m0 0L2.967 8.118c-.724-.446-.577-1.546.239-1.782L16.252 2.54c.742-.215 1.428.48 1.206 1.226l-3.871 13.032c-.243.816-1.33.957-1.77.23l-3.324-5.509z"
+                                        strokeWidth={1.5}
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
 
-                            <span className="text-gray-500 font-normal transition tracking-wide group-hover:text-gray-900 md:text-sm">
-                                Publish
-                            </span>
+                                <span className="text-gray-500 font-normal transition tracking-wide group-hover:text-gray-900 md:text-sm">
+                                    Publish
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -321,7 +328,7 @@ export const Create: React.FC<Props> = ({
 
                 {/* First Screen */}
                 {superState.formTitle === "untitled" ? (
-                    <FirstScreen dispatch={dispatch} />
+                    <FirstScreen creator={creatorData} dispatch={dispatch} />
                 ) : null}
 
                 {/* Main  screen*/}

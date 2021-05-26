@@ -1,6 +1,7 @@
 import { firestore as db } from '@/lib/firebaseAdmin'
 import { NextApiRequest, NextApiResponse, NextApiHandler } from "next"
 import { ObjectShape, OptionalObjectSchema } from "yup/lib/object"
+import { AdmissionFormSchema, ContactFormSchema, DefaultFormSchema, FeedbackFormSchema, QuizFormSchema, SurveyFormSchema } from '@/schemas/Form'
 
 export async function findUserNameByCID(userId) {
     let data
@@ -90,13 +91,37 @@ export async function createResponse(participant) {
     await db.collection(process.env.HAKUNA_MATATA_TS).add(participant)
 }
 
+function validateSchema(formType) {
+    switch(formType) {
+        case "default_form": {
+            return DefaultFormSchema
+        }
+        case "quiz": {
+            return QuizFormSchema
+        }
+        case "admissions": {
+            return AdmissionFormSchema
+        }
+        case "survey": {
+            return SurveyFormSchema
+        }
+        case "feedback": {
+            return FeedbackFormSchema
+        }
+        case "contact": {
+            return ContactFormSchema
+        }
+    }
+}
+
 export function validateForm(
-    schema: OptionalObjectSchema<ObjectShape>,
     handler: NextApiHandler
 ) {
     return async (req: NextApiRequest, res: NextApiResponse) => {
         if(req.method === "POST") {
             try {
+                const formType = req.body.formType
+                const schema = validateSchema(formType)
                 req.body = await schema
                     .camelCase()
                     .validate(req.body, { abortEarly: false, stripUnknown: true })
@@ -106,11 +131,13 @@ export function validateForm(
         }
         else if(req.method === "PATCH") {
             try {
+                const formType = req.body.formType
+                const schema = validateSchema(formType)
                 req.body = await schema
                     .camelCase()
                     .validate(req.body, { abortEarly: false, stripUnknown: true })
             } catch(error) {
-                return res.status(400).json(error)
+                return res.status(400).json({ message: error })
             }
         }
         await handler(req, res)

@@ -1,30 +1,31 @@
-import { useRef, useState } from "react";
-import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useRef, useState } from "react"
+import Head from "next/head"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import ReCAPTCHA from "react-google-recaptcha"
 
 // Auth
-import { useAuth } from "@/context/AuthContext";
-import Alert from "@/components/alert";
+import { useAuth } from "@/context/AuthContext"
+import Alert from "@/components/alert"
 
 export default function Login() {
-    const router = useRouter();
-    const emailRef = useRef<HTMLInputElement>(null);
-    const passRef = useRef<HTMLInputElement>(null);
-    const [message, setMessage] = useState<any>(null);
-    const [loading, setLoading] = useState(false);
-    const recaptchaRef = useRef<ReCAPTCHA>();
+    const router = useRouter()
+    const emailRef = useRef<HTMLInputElement>(null)
+    const passRef = useRef<HTMLInputElement>(null)
+    const [message, setMessage] = useState<any>(null)
+    const [loading, setLoading] = useState(false)
+    const [providerLoading, setProviderLoading] = useState(false)
+    const recaptchaRef = useRef<ReCAPTCHA>()
 
-    const { login, loginWithGoogle } = useAuth();
+    const { login, loginWithGoogle } = useAuth()
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const token = await recaptchaRef.current.executeAsync();
-        recaptchaRef.current.reset();
+        const token = await recaptchaRef.current.executeAsync()
+        recaptchaRef.current.reset()
 
-        setLoading(true);
+        setLoading(true)
 
         await fetch("/api/auth", {
             method: "POST",
@@ -35,16 +36,29 @@ export default function Login() {
                     await login(emailRef.current?.value, passRef.current?.value)
                         .then(() => router.push("/dashboard"))
                         .catch((error) => {
-                            setLoading(false);
-                            setMessage(error.message);
-                        });
+                            setLoading(false)
+                            setMessage(error.message)
+                        })
                 }
             })
             .catch((error) => {
-                setLoading(false);
-                setMessage(error.message);
-            });
-    };
+                setLoading(false)
+                setMessage(error.message)
+            })
+    }
+
+    const handleProvider = async (e) => {
+        e.preventDefault()
+
+        setProviderLoading(true)
+
+        await loginWithGoogle("/dashboard")
+            .then(setProviderLoading(false))
+            .catch((error) => {
+                setProviderLoading(false)
+                setMessage(error.message)
+            })
+    }
 
     return (
         <>
@@ -149,14 +163,14 @@ export default function Login() {
                     <div className="mt-8 border-t border-gray-300">
                         <button
                             type="button"
-                            onClick={() => loginWithGoogle("/dashboard")}
+                            onClick={handleProvider}
                             className="mt-8 w-full bg-gray-800 text-white p-4 rounded-md hover:bg-gray-900 delay-75 font-semibold"
                         >
-                            {loading ? "Logging in..." : "Log in with Google"}
+                            {providerLoading ? "Logging in..." : "Log in with Google"}
                         </button>
                     </div>
                 </div>
             </div>
         </>
-    );
+    )
 }
