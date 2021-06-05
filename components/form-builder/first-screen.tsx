@@ -16,12 +16,14 @@ interface Props {
 export const FirstScreen: React.FC<Props> = ({ creator, dispatch }) => {
     const titleElement = useRef<HTMLInputElement>();
     const typeElement = useRef<HTMLSelectElement>();
+    const categoryElement = useRef<HTMLInputElement>();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         let title = titleElement.current?.value;
         let formType = typeElement.current.value;
+        let customCategory = categoryElement.current.value;
         let fvid = generateFVID();
         localStorage.setItem(`${title}`, JSON.stringify({ fvid: fvid, formType: formType }));
 
@@ -29,6 +31,7 @@ export const FirstScreen: React.FC<Props> = ({ creator, dispatch }) => {
             title: title,
             fvid: fvid,
             formType: formType,
+            category: customCategory,
             userId: creator?.uid
         }
 
@@ -74,7 +77,7 @@ export const FirstScreen: React.FC<Props> = ({ creator, dispatch }) => {
                         type="text"
                         id="title"
                         placeholder="Your form name"
-                        className="mt-4 pb-1 w-full text-3xl font-body border-b border-gray-400 text-black placeholder-gray-300 transition focus:border-gray-600"
+                        className="mt-4 pb-1 w-full text-2xl font-body border-b border-gray-400 text-black placeholder-gray-300 transition focus:border-gray-600"
                         autoFocus
                     />
 
@@ -90,6 +93,15 @@ export const FirstScreen: React.FC<Props> = ({ creator, dispatch }) => {
                         <option value="feedback">Feedback</option>
                         <option value="contact">Contact</option>
                     </select>
+
+                    <input
+                        ref={categoryElement}
+                        type="text"
+                        id="category"
+                        placeholder="Choose a Category like 'Second Year'"
+                        className="mt-8 pb-1 w-full text-2xl font-body border-b border-gray-400 text-black placeholder-gray-300 transition focus:border-gray-600"
+                        autoFocus
+                    />
 
                 </div>
 

@@ -4,6 +4,7 @@ const common = {
     title: string().required().min(3).max(500),
     fvid: string().required(),
     formType: string().required(),
+    category: string().default("Form"),
     userId: string().required(),
     status: string().default('pending').oneOf(['pending', 'published']),
     timestamps: date().default(() => new Date())
