@@ -19,11 +19,7 @@ import { Create } from "@/components/form-builder";
 import { Settings } from "@/components/dashboard/settings";
 
 /* Common Components */
-import { Header } from "@/dashboard/common/Header";
 import { Sidebar } from "@/components/dashboard/common/sidebar";
-
-/* Styles */
-import styles from "@/styles/dashboard/index.module.scss";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
@@ -116,9 +112,10 @@ export default function Dashboard(
 
                     {/* <Header styles={styles} creator={user.data} /> */}
 
-                    <main className={styles.main}>
-                        <Sidebar />
-                        <div className={styles.content}>
+                    <main className="md:flex">
+                        <Sidebar creatorName={user.data.name} />
+
+                        <div className="main_content_wrapper overflow-auto md:h-screen md:ml-auto">
                             {currentActivePage === "Dashboard" ? (
                                 <Home creatorData={user.data} />
                             ) : currentActivePage === "Settings" ? (
@@ -132,6 +129,16 @@ export default function Dashboard(
             ) : (
                 <Create creatorData={user.data} userAgent={userAgent} />
             )}
+
+            <style jsx>
+                {`
+                    @media (min-width: 768px) {
+                        .main_content_wrapper {
+                            width: calc(100vw - 250px);
+                        }
+                    }
+                `}
+            </style>
         </>
     );
 }
