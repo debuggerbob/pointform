@@ -1,11 +1,26 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
     purge: [],
     darkMode: false, // or 'media' or 'class'
     theme: {
-        fontFamily: {
-            body: ["Pontano Sans"],
+        colors: {
+            transparent: "transparent",
+            current: "currentColor",
+            gray: colors.trueGray,
+            red: colors.red,
+            blue: colors.lightBlue,
+            indigo: colors.indigo,
+        },
+
+        minWidth: {
+            0: "0",
+            "1/4": "25%",
+            "1/2": "50%",
+            "3/4": "75%",
+            full: "100%",
+            250: "250px",
         },
 
         screens: {

@@ -1,192 +1,186 @@
+import { ProfileMenu } from "@/components/profileMenu";
 import Link from "next/link";
 
-export const Sidebar = ({ styles, currentActivePage }) => {
-	return (
-		<>
-			<div className={styles.sidebar}>
-				<div className={styles.sidebar__links}>
-					<ul
-						className={
-							currentActivePage === "Dashboard"
-								? `${styles.link_container} ${styles.active__home}`
-								: currentActivePage === "Responses"
-								? `${styles.link_container} ${styles.active__quiz}`
-								: `${styles.link_container} ${styles.active__create}`
-						}>
-						<span className={styles.link_container__line}></span>
+export const Sidebar = () => {
+    return (
+        <>
+            <aside className="md:h-screen md:min-w-250 md:bg-gray-100">
+                <div className="flex items-center justify-between border-b border-gray-300 px-6 py-5 md:px-0 md:pt-8 md:mx-7 md:mb-5 ">
+                    <h1 className="text-xl font-semibold md:hidden">
+                        Pointform
+                    </h1>
 
-						<li className={styles.link_container__page_link}>
-							<Link href='/dashboard'>
-								<a>
-									{currentActivePage === "Dashboard" ? (
-										<svg
-											width='24'
-											height='24'
-											viewBox='0 0 24 24'
-											fill='none'>
-											<path
-												fillRule='evenodd'
-												clipRule='evenodd'
-												d='M9.15722 20.7714V17.7047C9.1572 16.9246 9.79312 16.2908 10.581 16.2856H13.4671C14.2587 16.2856 14.9005 16.9209 14.9005 17.7047V20.7809C14.9003 21.4432 15.4343 21.9845 16.103 22H18.0271C19.9451 22 21.5 20.4607 21.5 18.5618V9.83784C21.4898 9.09083 21.1355 8.38935 20.538 7.93303L13.9577 2.6853C12.8049 1.77157 11.1662 1.77157 10.0134 2.6853L3.46203 7.94256C2.86226 8.39702 2.50739 9.09967 2.5 9.84736V18.5618C2.5 20.4607 4.05488 22 5.97291 22H7.89696C8.58235 22 9.13797 21.4499 9.13797 20.7714'
-												fill='#213DF0'
-												stroke='#213DF0'
-											/>
-										</svg>
-									) : (
-										<svg
-											width='24'
-											height='24'
-											viewBox='0 0 24 24'
-											fill='none'>
-											<path
-												d='M9.15722 20.7714V17.7047C9.1572 16.9246 9.79312 16.2908 10.581 16.2856H13.4671C14.2587 16.2856 14.9005 16.9209 14.9005 17.7047V17.7047V20.7809C14.9003 21.4432 15.4343 21.9845 16.103 22H18.0271C19.9451 22 21.5 20.4607 21.5 18.5618V18.5618V9.83784C21.4898 9.09083 21.1355 8.38935 20.538 7.93303L13.9577 2.6853C12.8049 1.77157 11.1662 1.77157 10.0134 2.6853L3.46203 7.94256C2.86226 8.39702 2.50739 9.09967 2.5 9.84736V18.5618C2.5 20.4607 4.05488 22 5.97291 22H7.89696C8.58235 22 9.13797 21.4499 9.13797 20.7714V20.7714'
-												stroke='#6C6C6C'
-												strokeWidth='1.5'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-											/>
-										</svg>
-									)}
-									<span className={styles.desc_text}>
-										Dashboard
-									</span>
-								</a>
-							</Link>
-						</li>
+                    <div className="pointer-events-none">
+                        <ProfileMenu currentUsername="rutyas" />
+                    </div>
+                </div>
 
-						<li className={styles.link_container__page_link}>
-							<Link href='/dashboard/responses'>
-								<a>
-									{currentActivePage === "Responses" ? (
-										<svg
-											width='24'
-											height='24'
-											viewBox='0 0 24 24'
-											fill='none'>
-											<path
-												fillRule='evenodd'
-												clipRule='evenodd'
-												d='M7.33037 2.0004H16.6694C20.0704 2.0004 21.9904 3.9294 22.0004 7.3304V16.6704C22.0004 20.0704 20.0704 22.0004 16.6694 22.0004H7.33037C3.92937 22.0004 2.00037 20.0704 2.00037 16.6704V7.3304C2.00037 3.9294 3.92937 2.0004 7.33037 2.0004ZM12.0494 17.8604C12.4804 17.8604 12.8394 17.5404 12.8794 17.1104V6.9204C12.9194 6.6104 12.7704 6.2994 12.5004 6.1304C12.2194 5.9604 11.8794 5.9604 11.6104 6.1304C11.3394 6.2994 11.1904 6.6104 11.2194 6.9204V17.1104C11.2704 17.5404 11.6294 17.8604 12.0494 17.8604ZM16.6504 17.8604C17.0704 17.8604 17.4294 17.5404 17.4804 17.1104V13.8304C17.5094 13.5094 17.3604 13.2104 17.0894 13.0404C16.8204 12.8704 16.4804 12.8704 16.2004 13.0404C15.9294 13.2104 15.7804 13.5094 15.8204 13.8304V17.1104C15.8604 17.5404 16.2194 17.8604 16.6504 17.8604ZM8.21937 17.1104C8.17937 17.5404 7.82037 17.8604 7.38937 17.8604C6.95937 17.8604 6.59937 17.5404 6.56037 17.1104V10.2004C6.53037 9.8894 6.67937 9.5804 6.95037 9.4104C7.21937 9.2404 7.56037 9.2404 7.83037 9.4104C8.09937 9.5804 8.25037 9.8894 8.21937 10.2004V17.1104Z'
-												fill='#213DF0'
-											/>
-										</svg>
-									) : (
-										<svg
-											width='24'
-											height='24'
-											viewBox='0 0 24 24'
-											fill='none'>
-											<path
-												d='M22.0004 7.3304L22.6504 7.3304L22.6504 7.32849L22.0004 7.3304ZM12.8794 17.1104L13.5266 17.1706L13.5294 17.1406V17.1104H12.8794ZM12.8794 6.9204L12.2347 6.83722L12.2294 6.87863V6.9204H12.8794ZM12.5004 6.1304L12.8453 5.57936L12.8368 5.57425L12.5004 6.1304ZM11.6104 6.1304L11.9543 6.68195L11.9576 6.67987L11.6104 6.1304ZM11.2194 6.9204H11.8694V6.89006L11.8665 6.85985L11.2194 6.9204ZM11.2194 17.1104H10.5694V17.1488L10.5739 17.187L11.2194 17.1104ZM17.4804 17.1104L18.1258 17.187L18.1304 17.1488V17.1104H17.4804ZM17.4804 13.8304L16.833 13.7719L16.8304 13.8011V13.8304H17.4804ZM17.0894 13.0404L16.7421 13.5899L16.744 13.591L17.0894 13.0404ZM16.2004 13.0404L15.863 12.4847L15.855 12.4898L16.2004 13.0404ZM15.8204 13.8304H16.4704V13.7901L16.4654 13.75L15.8204 13.8304ZM15.8204 17.1104H15.1704V17.1406L15.1732 17.1706L15.8204 17.1104ZM8.21937 17.1104L8.86657 17.1706L8.86937 17.1406V17.1104H8.21937ZM6.56037 17.1104H5.91037V17.1398L5.91302 17.1691L6.56037 17.1104ZM6.56037 10.2004H7.21037V10.1691L7.20736 10.138L6.56037 10.2004ZM6.95037 9.4104L7.29578 9.96103L7.29762 9.95987L6.95037 9.4104ZM7.83037 9.4104L8.17762 8.86093L8.17669 8.86035L7.83037 9.4104ZM8.21937 10.2004L7.57257 10.1359L7.56937 10.1681V10.2004H8.21937ZM16.6694 1.3504H7.33037V2.6504H16.6694V1.3504ZM22.6504 7.32849C22.645 5.50819 22.1263 3.99174 21.0664 2.93066C20.006 1.86917 18.4911 1.3504 16.6694 1.3504V2.6504C18.2487 2.6504 19.3942 3.09613 20.1466 3.84939C20.8994 4.60305 21.3457 5.7516 21.3504 7.33231L22.6504 7.32849ZM22.6504 16.6704V7.3304H21.3504V16.6704H22.6504ZM16.6694 22.6504C18.491 22.6504 20.0083 22.1314 21.0698 21.07C22.1314 20.0086 22.6504 18.4916 22.6504 16.6704H21.3504C21.3504 18.2492 20.9044 19.3971 20.1507 20.1507C19.3969 20.9044 18.2488 21.3504 16.6694 21.3504V22.6504ZM7.33037 22.6504H16.6694V21.3504H7.33037V22.6504ZM1.35037 16.6704C1.35037 18.4915 1.86905 20.0086 2.93034 21.07C3.99164 22.1314 5.50876 22.6504 7.33037 22.6504V21.3504C5.75097 21.3504 4.60309 20.9044 3.84964 20.1508C3.09618 19.3972 2.65037 18.2493 2.65037 16.6704H1.35037ZM1.35037 7.3304V16.6704H2.65037V7.3304H1.35037ZM7.33037 1.3504C5.50885 1.3504 3.99171 1.86906 2.93037 2.9304C1.86903 3.99174 1.35037 5.50888 1.35037 7.3304H2.65037C2.65037 5.75092 3.0962 4.60305 3.84961 3.84964C4.60302 3.09623 5.75088 2.6504 7.33037 2.6504V1.3504ZM12.2322 17.0502C12.2239 17.1387 12.1521 17.2104 12.0494 17.2104V18.5104C12.8087 18.5104 13.4548 17.9421 13.5266 17.1706L12.2322 17.0502ZM12.2294 6.9204V17.1104H13.5294V6.9204H12.2294ZM12.1555 6.68137C12.2152 6.71872 12.2415 6.78466 12.2347 6.83722L13.524 7.00358C13.5972 6.43613 13.3256 5.88008 12.8452 5.57943L12.1555 6.68137ZM11.9576 6.67987C12.01 6.64673 12.0851 6.63886 12.1639 6.68654L12.8368 5.57425C12.3536 5.28194 11.7487 5.27406 11.2631 5.58093L11.9576 6.67987ZM11.8665 6.85985C11.8601 6.79079 11.8955 6.71861 11.9543 6.68194L11.2664 5.57886C10.7832 5.88018 10.5207 6.43 10.5722 6.98094L11.8665 6.85985ZM11.8694 17.1104V6.9204H10.5694V17.1104H11.8694ZM12.0494 17.2104C11.9661 17.2104 11.8779 17.1442 11.8648 17.0338L10.5739 17.187C10.6628 17.9366 11.2926 18.5104 12.0494 18.5104V17.2104ZM16.8349 17.0338C16.8218 17.1442 16.7336 17.2104 16.6504 17.2104V18.5104C17.4071 18.5104 18.0369 17.9366 18.1258 17.187L16.8349 17.0338ZM16.8304 13.8304V17.1104H18.1304V13.8304H16.8304ZM16.744 13.591C16.8078 13.6311 16.84 13.6947 16.833 13.7719L18.1277 13.8889C18.1788 13.3241 17.913 12.7897 17.4348 12.4898L16.744 13.591ZM16.5377 13.596C16.6147 13.5493 16.6893 13.5565 16.7421 13.5899L17.4366 12.4909C16.9514 12.1843 16.346 12.1915 15.863 12.4848L16.5377 13.596ZM16.4654 13.75C16.4577 13.6887 16.481 13.6317 16.5458 13.591L15.855 12.4898C15.3778 12.7891 15.103 13.3301 15.1754 13.9108L16.4654 13.75ZM16.4704 17.1104V13.8304H15.1704V17.1104H16.4704ZM16.6504 17.2104C16.5477 17.2104 16.4758 17.1387 16.4676 17.0502L15.1732 17.1706C15.2449 17.9421 15.8911 18.5104 16.6504 18.5104V17.2104ZM7.38937 18.5104C8.14867 18.5104 8.79481 17.9421 8.86657 17.1706L7.57216 17.0502C7.56393 17.1387 7.49206 17.2104 7.38937 17.2104V18.5104ZM5.91302 17.1691C5.98318 17.9426 6.63186 18.5104 7.38937 18.5104V17.2104C7.28688 17.2104 7.21556 17.1382 7.20771 17.0517L5.91302 17.1691ZM5.91037 10.2004V17.1104H7.21037V10.2004H5.91037ZM6.60495 8.85977C6.12443 9.1612 5.85986 9.70808 5.91337 10.2628L7.20736 10.138C7.20087 10.0707 7.2343 9.99959 7.29578 9.96102L6.60495 8.85977ZM8.17669 8.86035C7.69543 8.55733 7.08461 8.55664 6.60312 8.86093L7.29762 9.95987C7.35413 9.92415 7.4253 9.92346 7.48404 9.96045L8.17669 8.86035ZM8.86616 10.2649C8.92185 9.7062 8.65222 9.16086 8.17762 8.86093L7.48312 9.95987C7.54651 9.99993 7.57888 10.0726 7.57257 10.1359L8.86616 10.2649ZM8.86937 17.1104V10.2004H7.56937V17.1104H8.86937Z'
-												fill='#6C6C6C'
-											/>
-										</svg>
-									)}
+                <nav className="hidden md:block">
+                    <ul>
+                        <li className="mx-4 my-0 cursor-pointer">
+                            <Link href="/">
+                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                    <svg
+                                        width={20}
+                                        height={20}
+                                        fill="none"
+                                        className="mr-3.5 text-gray-500 stroke-current group-hover:text-indigo-700"
+                                    >
+                                        <path
+                                            d="M7.631 17.31v-2.556c0-.65.53-1.178 1.187-1.183h2.405c.66 0 1.194.53 1.194 1.183v2.563a1.02 1.02 0 001.002 1.016h1.604c1.598 0 2.894-1.282 2.894-2.865v-7.27a2.033 2.033 0 00-.802-1.587l-5.483-4.373a2.65 2.65 0 00-3.287 0l-5.46 4.38c-.5.38-.795.965-.802 1.588v7.262c0 1.583 1.296 2.865 2.894 2.865h1.604c.571 0 1.034-.458 1.034-1.023"
+                                            strokeWidth={1.2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
 
-									<span className={styles.desc_text}>
-										Responses
-									</span>
-								</a>
-							</Link>
-						</li>
+                                    <span className="text-gray-700 group-hover:text-indigo-700">
+                                        Dashboard
+                                    </span>
+                                </a>
+                            </Link>
+                        </li>
 
-						<li className={styles.link_container__page_link}>
-							<Link href='/dashboard/settings'>
-								<a>
-									{currentActivePage === "Settings" ? (
-										<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#3d38a9">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-										</svg>
-									) : (
-										<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#6c6c6c">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-										</svg>
-									)}
+                        <li className="mx-4 my-0 cursor-pointer">
+                            <Link href="/dashboard/settings">
+                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                    <svg
+                                        width={20}
+                                        height={20}
+                                        fill="none"
+                                        className="mr-3.5 text-gray-500 stroke-current group-hover:text-indigo-700"
+                                    >
+                                        <path
+                                            clipRule="evenodd"
+                                            d="M17.339 6.353l-.519-.9a1.594 1.594 0 00-2.174-.587v0a1.587 1.587 0 01-2.174-.565 1.526 1.526 0 01-.213-.763v0a1.594 1.594 0 00-1.594-1.64H9.62a1.587 1.587 0 00-1.587 1.595v0a1.594 1.594 0 01-1.594 1.571 1.526 1.526 0 01-.763-.214v0a1.594 1.594 0 00-2.174.588l-.557.915c-.438.76-.179 1.733.58 2.174v0a1.594 1.594 0 010 2.761v0a1.587 1.587 0 00-.58 2.166v0l.527.908a1.594 1.594 0 002.174.618v0a1.579 1.579 0 012.166.58c.137.23.21.494.213.763v0c0 .88.714 1.594 1.595 1.594h1.045c.877 0 1.59-.71 1.594-1.587v0a1.587 1.587 0 011.594-1.594c.268.007.53.08.763.213v0c.76.439 1.732.18 2.174-.58v0l.549-.915a1.587 1.587 0 00-.58-2.173v0a1.587 1.587 0 01-.58-2.174c.139-.242.339-.442.58-.58v0a1.594 1.594 0 00.58-2.166v0-.008z"
+                                            strokeWidth={1.2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                        <circle
+                                            cx={10.146}
+                                            cy={9.907}
+                                            strokeWidth={1.2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            r={2.197}
+                                        />
+                                    </svg>
 
-									<span className={styles.desc_text}>
-										Settings
-									</span>
-								</a>
-							</Link>
-						</li>
+                                    <span className="text-gray-700 group-hover:text-indigo-700">
+                                        Settings
+                                    </span>
+                                </a>
+                            </Link>
+                        </li>
+                    </ul>
 
-						<li className={styles.link_container__page_link}>
-							{/* ---Link to be worked on--- */}
-							<Link href='/dashboard/create'>
-								<a>
-									{currentActivePage === "Create" ? (
-										<svg
-											width='24'
-											height='24'
-											viewBox='0 0 24 24'
-											fill='none'>
-											<path
-												d='M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z'
-												stroke='#213DF0'
-												strokeWidth='1.5'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												fill='#213DF0'
-											/>
-											<path
-												d='M12 8V16'
-												stroke='#FFFFFF'
-												strokeWidth='1.5'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												fill='#FFFFFF'
-											/>
-											<path
-												d='M8 12H16'
-												stroke='#FFFFFF'
-												strokeWidth='1.5'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												fill='#FFFFFF'
-											/>
-										</svg>
-									) : (
-										<svg
-											width='24'
-											height='24'
-											viewBox='0 0 24 24'
-											fill='none'>
-											<path
-												d='M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z'
-												stroke='#6C6C6C'
-												strokeWidth='1.5'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-											/>
-											<path
-												d='M12 8V16'
-												stroke='#6C6C6C'
-												strokeWidth='1.5'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-											/>
-											<path
-												d='M8 12H16'
-												stroke='#6C6C6C'
-												strokeWidth='1.5'
-												strokeLinecap='round'
-												strokeLinejoin='round'
-											/>
-										</svg>
-									)}
+                    <div>
+                        <h3 className="mx-7 mt-12 mb-4 font-semibold">
+                            Get in touch
+                        </h3>
 
-									<span className={styles.desc_text}>
-										Create
-									</span>
-								</a>
-							</Link>
-						</li>
-					</ul>
-				</div>
-				<div className={styles.sidebar__need_help}></div>
-			</div>
-		</>
-	);
+                        <ul>
+                            <li className="mx-4 my-0 cursor-pointer">
+                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                    <svg
+                                        width={20}
+                                        height={20}
+                                        fill="none"
+                                        className="mr-3.5 text-gray-500 stroke-current group-hover:text-indigo-700"
+                                    >
+                                        <path
+                                            d="M10 13.333a3.333 3.333 0 100-6.666 3.333 3.333 0 000 6.666z"
+                                            strokeWidth={1.2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                        <path
+                                            d="M13.333 6.667v4.166a2.5 2.5 0 005 0V10a8.333 8.333 0 10-3.266 6.617"
+                                            strokeWidth={1.2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+
+                                    <span className="text-gray-700 group-hover:text-indigo-700">
+                                        Send us an email
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li className="mx-4 my-0 cursor-pointer">
+                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                    <svg
+                                        width={20}
+                                        height={20}
+                                        fill="none"
+                                        className="mr-3.5 text-gray-500 stroke-current group-hover:text-indigo-700"
+                                    >
+                                        <path
+                                            d="M19.167 2.5a9.083 9.083 0 01-2.617 1.275 3.733 3.733 0 00-6.55 2.5v.833a8.883 8.883 0 01-7.5-3.775s-3.333 7.5 4.167 10.834a9.7 9.7 0 01-5.834 1.666C8.333 20 17.5 15.833 17.5 6.25c0-.232-.023-.464-.067-.692A6.433 6.433 0 0019.167 2.5v0z"
+                                            strokeWidth={1.2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+
+                                    <span className="text-gray-700 group-hover:text-indigo-700">
+                                        Follow us on Twitter
+                                    </span>
+                                </a>
+                            </li>
+
+                            <li className="mx-4 my-0 cursor-pointer">
+                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                    <svg
+                                        width={20}
+                                        height={20}
+                                        fill="none"
+                                        className="mr-3.5 text-gray-500 stroke-current group-hover:text-indigo-700"
+                                    >
+                                        <path
+                                            d="M17.5 9.583a6.983 6.983 0 01-.75 3.167 7.084 7.084 0 01-6.333 3.917 6.983 6.983 0 01-3.167-.75L2.5 17.5l1.583-4.75a6.983 6.983 0 01-.75-3.167A7.083 7.083 0 017.25 3.25a6.983 6.983 0 013.167-.75h.416A7.066 7.066 0 0117.5 9.167v.416z"
+                                            strokeWidth={1.2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                    </svg>
+
+                                    <span className="text-gray-700 group-hover:text-indigo-700">
+                                        Join us on Slack
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div className="hidden">
+                    <button className="flex items-center">
+                        <svg width={20} height={20} fill="none">
+                            <path
+                                d="M9.167 14.167L5 10l4.167-4.167"
+                                stroke="#888"
+                                strokeWidth={1.2}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M15 14.167L10.833 10 15 5.833"
+                                stroke="#888"
+                                strokeWidth={1.5}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+
+                        <span className="ml-3.5text-gray-700 ">
+                            Contract Menu
+                        </span>
+                    </button>
+                </div>
+            </aside>
+        </>
+    );
 };

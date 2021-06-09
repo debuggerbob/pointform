@@ -4,50 +4,19 @@
 
 @import "./variables";
 @import "./fonts";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 * {
-	margin: 0;
-	padding: 0;
-	outline: none;
-	box-sizing: border-box;
-	font-family: $jakarta;
-	outline: none !important;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    outline: none !important;
 }
 
 html,
 body {
-	scroll-behavior: smooth !important;
-	text-rendering: optimizeLegibility;
-}
-h1,
-h2,
-h3,
-h4 {
-	font-family: $jakarta;
-	font-weight: 600;
-}
-
-a,
-p,
-span,
-input,
-label {
-	font-family: $jakarta;
-	font-weight: 400;
-}
-
-h1 {
-	font-size: 2.25em;
-}
-
-h2 {
-	font-size: 1.5em;
-}
-
-p {
-	font-size: 1em;
-}
-
-ul {
-	list-style: none;
+    scroll-behavior: smooth !important;
+    text-rendering: optimizeLegibility;
 }

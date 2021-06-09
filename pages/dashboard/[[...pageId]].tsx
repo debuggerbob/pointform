@@ -20,7 +20,7 @@ import { Settings } from "@/components/dashboard/settings";
 
 /* Common Components */
 import { Header } from "@/dashboard/common/Header";
-import { Sidebar } from "@/dashboard/common/Sidebar";
+import { Sidebar } from "@/components/dashboard/common/sidebar";
 
 /* Styles */
 import styles from "@/styles/dashboard/index.module.scss";
@@ -93,7 +93,7 @@ export default function Dashboard(
             {currentActivePage != "Create" ? (
                 <>
                     {/* Email Verification */}
-                    {verificationPending ? (
+                    {/* {verificationPending ? (
                         <div className="flex justify-center h-20 md:h-10 lg:h-10 py-6 px-4 w-full items-center bg-gradient-to-r from-indigo-300 via-indigo-600 to-indigo-900 text-white">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -112,15 +112,12 @@ export default function Dashboard(
                         </div>
                     ) : (
                         <></>
-                    )}
+                    )} */}
 
-                    <Header styles={styles} creator={user.data} />
+                    {/* <Header styles={styles} creator={user.data} /> */}
 
                     <main className={styles.main}>
-                        <Sidebar
-                            styles={styles}
-                            currentActivePage={currentActivePage}
-                        />
+                        <Sidebar />
                         <div className={styles.content}>
                             {currentActivePage === "Dashboard" ? (
                                 <Home creatorData={user.data} />
