@@ -1,15 +1,16 @@
-import { ProfileMenu } from "@/components/profileMenu";
-import Link from "next/link";
+import Link from 'next/link'
+
+import { ProfileMenu } from '@/components/profileMenu'
 
 interface Props {
-    creatorName: string;
+    creatorName: string
 }
 
 export const Sidebar: React.FC<Props> = ({ creatorName }) => {
     return (
         <>
             <aside className="sidebar md:h-screen md:min-w-250 md:bg-gray-100">
-                <div className="flex items-center justify-between border-b border-gray-300 px-6 py-5 md:px-0 md:pt-8 md:mx-7 md:mb-5 ">
+                <div className="flex items-center justify-between border-b border-gray-300 px-6 py-5 md:px-0 md:pt-8 md:mx-7 md:mb-5">
                     <h1 className="text-xl font-semibold md:hidden">
                         Pointform
                     </h1>
@@ -196,5 +197,5 @@ export const Sidebar: React.FC<Props> = ({ creatorName }) => {
                 `}
             </style>
         </>
-    );
-};
+    )
+}

@@ -1,93 +1,68 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import Link from "next/link";
-import { gsap } from "gsap";
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { gsap } from 'gsap'
+import useSWR from 'swr'
+import Link from 'next/link'
 
 interface Props {
     creatorData: {
-        uid: string;
-        email: string;
-        name: string;
-    };
+        uid: string
+        email: string
+        name: string
+    }
+}
+
+type FormsData = {
+    title: string
+    category: string
+    fvid: string
+    status: string
+    responses: number
+    updatedAt: Date
 }
 
 export const Home: React.FC<Props> = ({ creatorData }) => {
-    const router = useRouter();
-    const [forms, setForms] = useState([]);
+    const router = useRouter()
+    const [forms, setForms] = useState<Array<FormsData>>([])
+    const [showHelp, setShowHelp] = useState(false)
 
-    const [showHelp, setShowHelp] = useState(false);
-    const [greeting, setGreeting] = useState<string>("");
+    console.log(creatorData)
 
-    console.log(creatorData);
-
-    const fetcher = (args) => fetch(args).then((res) => res.json());
+    const fetcher = (args) => fetch(args).then((res) => res.json())
     const { data: form, error } = useSWR(
         `/api/forms/${creatorData?.uid}`,
         fetcher
-    );
+    )
 
-    console.log(form);
+    console.log(form)
 
     const refreshData = () => {
-        router.replace(router.asPath);
-    };
+        router.replace(router.asPath)
+    }
+
+    useEffect(() => {
+        if (form) {
+            setForms(form.data)
+            console.log(forms)
+            refreshData()
+        }
+    }, [form])
 
     useEffect(() => {
         if (showHelp) {
-            gsap.to("body", { overflow: "hidden" });
+            gsap.to('body', { overflow: 'hidden' })
         } else {
-            gsap.to("body", { overflow: "auto" });
+            gsap.to('body', { overflow: 'auto' })
         }
-    }, [showHelp]);
+    }, [showHelp])
 
     return (
         <>
-            {/* <h1 className="text-2xl text-gray-800 mb-6">{greeting}</h1>
-			<h2 aria-hidden='true' className="sr-only">
-				Recent
-			</h2>
-			<h3 className="text-xl text-gray-600 mb-4">Recent</h3>
-
-			<div className="flex items-center justify-between pr-4 md:pr-0 lg:pr-0 lg:justify-start md:justify-start flex-wrap w-full">
-				<NewFormCard />
-				{forms && forms.length > 0
-					? forms.map((item) => (
-							<RegularFormCard
-								key={item.fvid}
-								fvid={item.fvid}
-								quizTitle={item.title}
-								responses={item.responses}
-								refreshData={refreshData}
-								updatedAt={item.lastUpdated}
-							/>
-						))
-					: ""}
-			</div>
-
-			<div className={styles.quiz_list}>
-				<h3 className={styles.quiz_list__heading}>Your Forms</h3>
-
-				<ul className={styles.quiz_list__content}>
-					{forms && forms.length > 0
-						? forms.map((item) => (
-								<FormsList
-									key={item._id}
-									quizTitle={item.title}
-									updatedAt={item.lastUpdated}
-									responses={item.responses}
-									acceptingResponses={item.acceptingResponses}
-								/>
-						  ))
-						: "No forms found!"}
-				</ul>
-			</div> */}
-
             <section className="border-b border-gray-200 mb-6 md:border-none md:mb-8">
                 <div className="flex items-center justify-between p-6 border-b border-gray-200 md:mx-10 md:px-0 md:pt-10 lg:mx-16">
                     <h2 className="text-2xl font-bold md:text-3xl">My Forms</h2>
 
-                    <button className="text-indigo-600 bg-indigo-400 bg-opacity-30 p-2 rounded transition hover:bg-opacity-20">
+                    <button className="text-indigo-600 bg-indigo-400 bg-opacity-30 p-2 px-4 rounded transition hover:bg-opacity-20">
                         Create Form
                     </button>
                 </div>
@@ -129,13 +104,10 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
             <section>
                 {forms && forms.length > 0 ? (
                     forms.map((item) => (
-                        <div>
-                            <Link href="/">
-                                <a
-                                    key={item._id}
-                                    className="block mx-6 my-2 py-4 rounded-md hover:bg-gray-100 md:px-6 md:mx-4 md:mb-0 lg:mx-10"
-                                >
-                                    <span className="inline-block text-xs font-medium px-3 py-1 mb-3 rounded-3xl bg-red-500 bg-opacity-20 text-red-500">
+                        <div key={item.fvid}>
+                            <Link href={`/forms/${item.fvid}`}>
+                                <a className="block mx-6 my-2 py-4 rounded-md hover:bg-gray-100 md:px-6 md:mx-4 md:mb-0 lg:mx-10">
+                                    <span className="inline-block text-xs font-medium px-3 py-1 mb-2 rounded-3xl bg-red-500 bg-opacity-20 text-red-500">
                                         hashtag
                                     </span>
 
@@ -145,9 +117,8 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                                         </h4>
                                         <p className="flex items-center flex-wrap text-gray-500 text-sm">
                                             <span>
-                                                {item.responses === undefined ||
-                                                item.responses === ""
-                                                    ? "No responses yet"
+                                                {item.responses === undefined
+                                                    ? 'No responses yet'
                                                     : item.responses}
                                             </span>
                                             <span className="block w-1 h-1 rounded-full bg-gray-500 mx-2"></span>
@@ -163,12 +134,13 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                 )}
             </section>
 
+            {/* Floating Mobile buttons */}
             <div className="fixed bottom-12 right-6 flex flex-col md:hidden">
-                <div className="mb-3 relative" style={{ textAlign: "end" }}>
+                <div className="mb-3 relative" style={{ textAlign: 'end' }}>
                     {/* Help button */}
                     <button
                         onClick={() => {
-                            setShowHelp((prevState) => !prevState);
+                            setShowHelp((prevState) => !prevState)
                         }}
                     >
                         <svg width={30} height={30} fill="none">
@@ -191,14 +163,14 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
 
                     <div
                         className={`${
-                            showHelp ? "block" : "hidden"
+                            showHelp ? 'block' : 'hidden'
                         } fixed w-screen h-screen top-0 right-0 z-0`}
                         onClick={() => setShowHelp(false)}
                     ></div>
 
                     <ul
                         className={`${
-                            showHelp ? "block" : "hidden"
+                            showHelp ? 'block' : 'hidden'
                         } help_mobile absolute right-0 p-2 bg-gray-50 bottom-12 min-w-max rounded z-50`}
                     >
                         <li>
@@ -285,17 +257,19 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                 </div>
 
                 <div>
-                    <a className="create_btn w-11 h-11 bg-indigo-600 flex items-center justify-center rounded-full">
-                        <svg width={24} height={24} fill="none">
-                            <path
-                                d="M12 5v14M5 12h14"
-                                stroke="#fff"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </a>
+                    <Link href="/create">
+                        <a className="create_btn w-11 h-11 bg-indigo-600 flex items-center justify-center rounded-full">
+                            <svg width={24} height={24} fill="none">
+                                <path
+                                    d="M12 5v14M5 12h14"
+                                    stroke="#fff"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </a>
+                    </Link>
                 </div>
             </div>
 
@@ -313,5 +287,5 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                 `}
             </style>
         </>
-    );
-};
+    )
+}
