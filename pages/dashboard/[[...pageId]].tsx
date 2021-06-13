@@ -13,7 +13,7 @@ import { findUserNameByCID } from '@/lib/db'
 import { useAuth } from '@/context/AuthContext'
 
 /* Main Components */
-import { Home } from '@/dashboard/home'
+import { Home } from '@/components/dashboard/home'
 import { Responses } from '@/components/dashboard/responses'
 import { Create } from '@/components/form-builder'
 import { Settings } from '@/components/dashboard/settings'

@@ -62,9 +62,11 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                 <div className="flex items-center justify-between p-6 border-b border-gray-200 md:mx-10 md:px-0 md:pt-10 lg:mx-16">
                     <h2 className="text-2xl font-bold md:text-3xl">My Forms</h2>
 
-                    <button className="text-indigo-600 bg-indigo-400 bg-opacity-30 p-2 px-4 rounded transition hover:bg-opacity-20">
-                        Create Form
-                    </button>
+                    <Link href="/dashboard/create">
+                        <a className="text-indigo-600 bg-indigo-400 bg-opacity-30 p-2 px-4 rounded transition hover:bg-opacity-20">
+                            Create Form
+                        </a>
+                    </Link>
                 </div>
 
                 <div className="mx-6 py-5 md:mx-10 md:py-6 lg:mx-16">
