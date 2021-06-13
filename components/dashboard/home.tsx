@@ -58,8 +58,8 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
 
     return (
         <>
-            <section className="border-b border-gray-200 mb-6 md:border-none md:mb-8">
-                <div className="flex items-center justify-between p-6 border-b border-gray-200 md:mx-10 md:px-0 md:pt-10 lg:mx-16">
+            <div className="border-b border-gray-200 mb-6 md:border-none md:mb-8">
+                <div className="flex items-center justify-between p-6 border-b border-gray-200 md:p-0 md:pb-6">
                     <h2 className="text-2xl font-bold md:text-3xl">My Forms</h2>
 
                     <Link href="/dashboard/create">
@@ -69,7 +69,7 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                     </Link>
                 </div>
 
-                <div className="mx-6 py-5 md:mx-10 md:py-6 lg:mx-16">
+                <div className="p-6 md:p-0 md:py-6">
                     <form className="search flex items-center border border-gray-300 rounded bg-gray-100 p-2 max-w-xs focus-within:bg-gray-50">
                         <svg
                             width={16}
@@ -101,15 +101,15 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                         />
                     </form>
                 </div>
-            </section>
+            </div>
 
-            <section>
+            <div className="px-6 pb-28 md:px-0">
                 {forms && forms.length > 0 ? (
                     forms.map((item) => (
                         <div key={item.fvid}>
-                            <Link href={`/forms/${item.fvid}`}>
-                                <a className="block mx-6 my-2 py-4 rounded-md hover:bg-gray-100 md:px-6 md:mx-4 md:mb-0 lg:mx-10">
-                                    <span className="inline-block text-xs font-medium px-3 py-1 mb-2 rounded-3xl bg-red-500 bg-opacity-20 text-red-500">
+                            <Link href={`/forms/${item.fvid}/responses`}>
+                                <a className="block my-2 py-4 rounded-md hover:bg-gray-100 md:px-6 md:-mx-6 md:mb-0">
+                                    <span className="inline-block text-xs font-medium px-2.5 py-0.5 mb-2 rounded-3xl bg-red-500 bg-opacity-20 text-red-500">
                                         hashtag
                                     </span>
 
@@ -134,7 +134,7 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                 ) : (
                     <h2 className="text-center">No forms found</h2>
                 )}
-            </section>
+            </div>
 
             {/* Floating Mobile buttons */}
             <div className="fixed bottom-12 right-6 flex flex-col md:hidden">
@@ -145,7 +145,12 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                             setShowHelp((prevState) => !prevState)
                         }}
                     >
-                        <svg width={30} height={30} fill="none">
+                        <svg
+                            width={30}
+                            height={30}
+                            fill="none"
+                            className="bg-gray-50"
+                        >
                             <path
                                 d="M15 27.5c6.904 0 12.5-5.596 12.5-12.5S21.904 2.5 15 2.5 2.5 8.096 2.5 15 8.096 27.5 15 27.5z"
                                 stroke="#71717A"

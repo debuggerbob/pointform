@@ -1,11 +1,8 @@
-import { useEffect, useState } from 'react'
 import nookies from 'nookies'
 import { useRouter } from 'next/router'
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-
 import { UAParser } from 'ua-parser-js'
+import Head from 'next/head'
 
 // Auth
 import { firestore, auth } from '@/lib/firebaseAdmin'
@@ -19,7 +16,7 @@ import { Create } from '@/components/form-builder'
 import { Settings } from '@/components/dashboard/settings'
 
 /* Common Components */
-import { Sidebar } from '@/components/dashboard/common/sidebar'
+import { Sidebar } from '@/components/dashboard/sidebar'
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
@@ -78,7 +75,7 @@ export default function Dashboard(
                     <main className="md:flex">
                         <Sidebar creatorName={user.data.name} />
 
-                        <div className="main_content_wrapper overflow-auto md:h-screen md:ml-auto">
+                        <section className="main_content_wrapper">
                             {currentActivePage === 'Dashboard' ? (
                                 <Home creatorData={user.data} />
                             ) : currentActivePage === 'Settings' ? (
@@ -86,7 +83,7 @@ export default function Dashboard(
                             ) : (
                                 <Responses creatorData={user.data} />
                             )}
-                        </div>
+                        </section>
                     </main>
                 </>
             ) : (
@@ -97,7 +94,8 @@ export default function Dashboard(
                 {`
                     @media (min-width: 768px) {
                         .main_content_wrapper {
-                            width: calc(100vw - 250px);
+                            padding: 3.5rem 3.5rem 3.5rem calc(250px + 3.5rem);
+                            flex: 1 1 0%;
                         }
                     }
                 `}

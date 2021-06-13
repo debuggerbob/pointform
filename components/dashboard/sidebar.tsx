@@ -9,8 +9,8 @@ interface Props {
 export const Sidebar: React.FC<Props> = ({ creatorName }) => {
     return (
         <>
-            <aside className="sidebar md:h-screen md:min-w-250 md:bg-gray-100">
-                <div className="flex items-center justify-between border-b border-gray-300 px-6 py-5 md:px-0 md:pt-8 md:mx-7 md:mb-5">
+            <aside className="sidebar md:fixed md:top-0 md:left-0 md:h-full md:bg-gray-100">
+                <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5 md:px-0 md:pt-8 md:mx-7 md:mb-5">
                     <h1 className="text-xl font-semibold md:hidden">
                         Pointform
                     </h1>
@@ -23,8 +23,8 @@ export const Sidebar: React.FC<Props> = ({ creatorName }) => {
                 <nav className="hidden md:block">
                     <ul>
                         <li className="mx-4 my-0 cursor-pointer">
-                            <Link href="/">
-                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                            <Link href="/dashboard">
+                                <a className="flex items-center px-3 py-2 rounded group transition duration-100 hover:bg-indigo-600 hover:bg-opacity-10">
                                     <svg
                                         width={20}
                                         height={20}
@@ -48,7 +48,7 @@ export const Sidebar: React.FC<Props> = ({ creatorName }) => {
 
                         <li className="mx-4 my-0 cursor-pointer">
                             <Link href="/dashboard/settings">
-                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                <a className="flex items-center px-3 py-2 rounded group transition duration-100 hover:bg-indigo-600 hover:bg-opacity-10">
                                     <svg
                                         width={20}
                                         height={20}
@@ -87,7 +87,7 @@ export const Sidebar: React.FC<Props> = ({ creatorName }) => {
 
                         <ul>
                             <li className="mx-4 my-0 cursor-pointer">
-                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                <a className="flex items-center px-3 py-2 rounded group transition duration-100 hover:bg-indigo-600 hover:bg-opacity-10">
                                     <svg
                                         width={20}
                                         height={20}
@@ -115,7 +115,7 @@ export const Sidebar: React.FC<Props> = ({ creatorName }) => {
                             </li>
 
                             <li className="mx-4 my-0 cursor-pointer">
-                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                <a className="flex items-center px-3 py-2 rounded group transition duration-100 hover:bg-indigo-600 hover:bg-opacity-10">
                                     <svg
                                         width={20}
                                         height={20}
@@ -137,7 +137,7 @@ export const Sidebar: React.FC<Props> = ({ creatorName }) => {
                             </li>
 
                             <li className="mx-4 my-0 cursor-pointer">
-                                <a className="flex items-center px-3 py-2 rounded group hover:bg-indigo-600 hover:bg-opacity-10">
+                                <a className="flex items-center px-3 py-2 rounded group transition duration-100 hover:bg-indigo-600 hover:bg-opacity-10">
                                     <svg
                                         width={20}
                                         height={20}
@@ -191,7 +191,7 @@ export const Sidebar: React.FC<Props> = ({ creatorName }) => {
                 {`
                     @media (min-width: 768px) {
                         .sidebar {
-                            width: 250px;
+                            min-width: 250px;
                         }
                     }
                 `}
