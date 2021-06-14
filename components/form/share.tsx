@@ -1,4 +1,4 @@
-export const Share = () => {
+export const Share: React.FC = () => {
     return (
         <>
             <section className="mt-14 pb-28">
@@ -36,8 +36,9 @@ export const Share = () => {
                     <div className="mt-5 flex flex-wrap items-center">
                         <input
                             type="text"
+                            readOnly
                             value="https://pointform.com/in9Sinik"
-                            className="w-full max-w-xs mt-3 px-4 py-2 border border-opacity-80 rounded border-gray-300 shadow text-gray-900"
+                            className="w-full max-w-xs mt-3 px-4 py-2 border border-opacity-80 rounded border-gray-300 shadow text-gray-900 focus:border-gray-900"
                         />
 
                         <button className="ml-auto mt-3 px-4 py-2 bg-gray-900 text-gray-50 rounded sm:ml-4">
