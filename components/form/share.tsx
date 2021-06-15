@@ -1,4 +1,24 @@
+import { useRef } from 'react'
+
 export const Share: React.FC = () => {
+    const handleCopiedStatus = (target) => {
+        target.innerText = 'Copied...'
+
+        setTimeout(() => {
+            target.innerText = 'Copy Link'
+        }, 3000)
+    }
+
+    const copyToClipBoard = (e) => {
+        const target = e.target
+        const text = (document.getElementById('formLink') as HTMLInputElement)
+            .value
+
+        navigator.clipboard.writeText(text).then(() => {
+            handleCopiedStatus(target)
+        })
+    }
+
     return (
         <>
             <section className="mt-14 pb-28">
@@ -35,13 +55,17 @@ export const Share: React.FC = () => {
 
                     <div className="mt-5 flex flex-wrap items-center">
                         <input
+                            id="formLink"
                             type="text"
                             readOnly
                             value="https://pointform.com/in9Sinik"
                             className="w-full max-w-xs mt-3 px-4 py-2 border border-opacity-80 rounded border-gray-300 shadow text-gray-900 focus:border-gray-900"
                         />
 
-                        <button className="ml-auto mt-3 px-4 py-2 bg-gray-900 text-gray-50 rounded sm:ml-4">
+                        <button
+                            onClick={copyToClipBoard}
+                            className="ml-auto mt-3 px-4 py-2 bg-gray-900 text-gray-50 rounded transition sm:ml-4"
+                        >
                             Copy link
                         </button>
                     </div>

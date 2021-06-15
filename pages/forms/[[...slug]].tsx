@@ -63,7 +63,7 @@ export default function Form({ formData }: Props) {
                                 {formData.title}
                             </span>
 
-                            <Link href="/dashboard/create">
+                            <Link href={`/create/${formData.fvid}`}>
                                 <a className="min-w-max text-indigo-600 bg-indigo-400 bg-opacity-30 p-2 px-4 rounded transition hover:bg-opacity-20">
                                     Edit Form
                                 </a>
