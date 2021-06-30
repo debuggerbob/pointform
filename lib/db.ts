@@ -3,6 +3,8 @@ import { NextApiRequest, NextApiResponse, NextApiHandler } from "next"
 import { ObjectShape, OptionalObjectSchema } from "yup/lib/object"
 import { AdmissionFormSchema, ContactFormSchema, DefaultFormSchema, FeedbackFormSchema, QuizFormSchema, SurveyFormSchema } from '@/schemas/Form'
 
+import { validator } from "@/lib/validators"
+
 export async function findUserNameByCID(userId) {
     let data
     const user = await db.collection(process.env.HAKUNA_MATATA_SJ).where('uid', '==', userId).get()
@@ -118,27 +120,11 @@ export function validateForm(
     handler: NextApiHandler
 ) {
     return async (req: NextApiRequest, res: NextApiResponse) => {
-        if(req.method === "POST") {
-            try {
-                const formType = req.body.formType
-                const schema = validateSchema(formType)
-                req.body = await schema
-                    .camelCase()
-                    .validate(req.body, { abortEarly: false, stripUnknown: true })
-            } catch(error) {
-                return res.status(400).json(error)
-            }
-        }
-        else if(req.method === "PATCH") {
-            try {
-                const formType = req.body.formType
-                const schema = validateSchema(formType)
-                req.body = await schema
-                    .camelCase()
-                    .validate(req.body, { abortEarly: false, stripUnknown: true })
-            } catch(error) {
-                return res.status(400).json({ message: error })
-            }
+        if(req.method === "PATCH") {
+            let questions = req.body.questions
+            const validated = validator(questions)
+            if(!validated)
+                return res.status(400).json({ message: "Invalid data" })
         }
         await handler(req, res)
     }
