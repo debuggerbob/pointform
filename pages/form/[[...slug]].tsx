@@ -70,8 +70,9 @@ export default function Form({ formData }: Props) {
                             </Link>
                         </div>
 
-                        <div className="relative flex overflow-auto">
-                            <Link href={`/forms/${formData.fvid}/responses`}>
+                        {/* Navigation Links */}
+                        <div className="relative flex overflow-auto z-0">
+                            <Link href={`/form/${formData.fvid}/responses`}>
                                 <a
                                     className={`${
                                         query.slug[1] === 'responses'
@@ -83,7 +84,7 @@ export default function Form({ formData }: Props) {
                                 </a>
                             </Link>
 
-                            <Link href={`/forms/${formData.fvid}/share`}>
+                            <Link href={`/form/${formData.fvid}/share`}>
                                 <a
                                     className={`${
                                         query.slug[1] === 'share'
@@ -95,7 +96,7 @@ export default function Form({ formData }: Props) {
                                 </a>
                             </Link>
 
-                            <Link href={`/forms/${formData.fvid}/settings`}>
+                            <Link href={`/form/${formData.fvid}/settings`}>
                                 <a
                                     className={`${
                                         query.slug[1] === 'settings'
@@ -114,7 +115,10 @@ export default function Form({ formData }: Props) {
                     ) : currentPage === 'share' ? (
                         <Share />
                     ) : (
-                        <Settings />
+                        <Settings
+                            fvid={formData.fvid}
+                            formName={formData.title}
+                        />
                     )}
                 </section>
             </main>

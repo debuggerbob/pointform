@@ -107,7 +107,7 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
                 {forms && forms.length > 0 ? (
                     forms.map((item) => (
                         <div key={item.fvid}>
-                            <Link href={`/forms/${item.fvid}/responses`}>
+                            <Link href={`/form/${item.fvid}/responses`}>
                                 <a className="block my-2 py-4 rounded-md hover:bg-gray-100 md:px-6 md:-mx-6 md:mb-0">
                                     <span className="inline-block text-xs font-medium px-2.5 py-0.5 mb-2 rounded-3xl bg-red-500 bg-opacity-20 text-red-500">
                                         hashtag

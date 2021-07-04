@@ -1,5 +1,5 @@
 export const Responses = () => {
-    const skeletonClass = 'w-24 bg-gray-300 text-opacity-0'
+    const skeletonClass = 'w-24 bg-gray-200 text-opacity-0'
     let loading = true
 
     return (

@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react'
+import { DeleteFormPopup } from './delete-form-popup'
 
-export const Settings: React.FC = () => {
+interface Props {
+    fvid: string
+    formName: string
+}
+
+export const Settings: React.FC<Props> = ({ fvid, formName }) => {
     const [closeResponses, setCloseResponses] = useState(false)
+    const [showDeletePopup, setShowDeletePopup] = useState(false)
     const [limitResponses, setLimitResponses] = useState({
         status: false,
         limitValue: 0,
@@ -24,6 +31,18 @@ export const Settings: React.FC = () => {
     const handleCloseResponses = () => {
         setCloseResponses((prevState) => !prevState)
     }
+
+    const handleShowDeletePopup = () => {
+        setShowDeletePopup(true)
+    }
+
+    useEffect(() => {
+        if (showDeletePopup) {
+            document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+        } else if (!showDeletePopup) {
+            document.getElementsByTagName('body')[0].style.overflow = 'auto'
+        }
+    }, [showDeletePopup])
 
     return (
         <>
@@ -102,7 +121,25 @@ export const Settings: React.FC = () => {
                         </div>
                     ) : null}
                 </div>
+
+                <div className="mt-12">
+                    <button
+                        className="px-4 py-2 bg-red-400 bg-opacity-30 text-red-700 border-2 rounded border-transparent transition hover:bg-red-500 hover:bg-opacity-30 focus:border-red-500 focus:border-opacity-70"
+                        onClick={handleShowDeletePopup}
+                    >
+                        Delete this Pointform
+                    </button>
+                </div>
             </section>
+
+            {showDeletePopup ? (
+                <DeleteFormPopup
+                    fvid={fvid}
+                    formName={formName}
+                    showForm={showDeletePopup}
+                    handleShowForm={setShowDeletePopup}
+                />
+            ) : null}
 
             <style jsx>
                 {`
