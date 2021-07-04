@@ -34,6 +34,22 @@ const handle = async (req, res) => {
         }
     }
     
+    if(req.method === 'PUT') {
+        try {
+            let form = req.body
+            let fvid = req.body.fvid
+            const exists = await findFormByFVID(fvid)
+            if(!exists) {
+                res.status(400).json({ status: "error", message: "Form does not exist", errorType: "ResourceError" })
+            } else {
+                await updateForm(fvid, form)
+                res.status(200).json({ status: "success", message: "Form has been updated successfully!" })   
+            }
+        } catch (error) {
+            res.status(400).json(error)
+        }
+    }
+
     if(req.method === 'DELETE') {
         try {
             let fvid = req.body.fvid
