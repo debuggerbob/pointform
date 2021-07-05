@@ -5,8 +5,7 @@ import { UAParser } from 'ua-parser-js'
 import Head from 'next/head'
 
 // Auth
-import { firestore, auth } from '@/lib/firebaseAdmin'
-import { findUserNameByCID } from '@/lib/db'
+import { auth } from '@/lib/firebaseAdmin'
 import { useAuth } from '@/context/AuthContext'
 
 /* Main Components */
