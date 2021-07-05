@@ -7,6 +7,7 @@ import {
     useEffect,
 } from 'react'
 import { useRouter } from 'next/router'
+import { baseApiUrl } from '@/lib/config'
 
 interface Props {
     fvid: string
@@ -41,7 +42,7 @@ export const DeleteFormPopup: React.FC<Props> = ({
         if (InputBox.current.value === formName) {
             setShowError(false)
 
-            fetch('/api/form', {
+            fetch(`${baseApiUrl}/form`, {
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',

@@ -10,6 +10,7 @@ import nookies from 'nookies'
 import { auth } from '@/lib/firebaseAdmin'
 import { useAuth } from "@/context/AuthContext"
 import Alert from "@/components/alert"
+import { baseApiUrl } from "@/lib/config"
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
@@ -61,7 +62,7 @@ export default function Login() {
 
         setLoading(true)
 
-        await fetch("/api/auth", {
+        await fetch(`${baseApiUrl}/auth`, {
             method: "POST",
             body: JSON.stringify({ userToken: token }),
         })

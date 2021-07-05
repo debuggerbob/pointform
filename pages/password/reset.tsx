@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 
 // Components
 import Alert from "@/components/alert";
+import { baseApiUrl } from "@/lib/config";
 
 export default function Reset() {
     const emailRef = useRef<HTMLInputElement>(null);
@@ -25,7 +26,7 @@ export default function Reset() {
 
         setLoading(true);
 
-        await fetch("/api/auth", {
+        await fetch(`${baseApiUrl}/auth`, {
             method: "POST",
             body: JSON.stringify({ userToken: token }),
         })

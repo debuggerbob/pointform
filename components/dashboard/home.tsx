@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { gsap } from 'gsap'
 import useSWR from 'swr'
 import Link from 'next/link'
+import { baseApiUrl } from '@/lib/config'
 
 interface Props {
     creatorData: {
@@ -30,7 +31,7 @@ export const Home: React.FC<Props> = ({ creatorData }) => {
 
     const fetcher = (args) => fetch(args).then((res) => res.json())
     const { data: form, error } = useSWR(
-        `/api/forms/${creatorData?.uid}`,
+        `${baseApiUrl}/forms/${creatorData?.uid}`,
         fetcher
     )
 

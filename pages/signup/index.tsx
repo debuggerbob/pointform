@@ -14,6 +14,7 @@ import styles from '../../styles/auth/signup.module.scss'
 // Components
 import { Checkbox } from '../../components/checkbox'
 import Alert from '@/components/alert'
+import { baseApiUrl } from '@/lib/config'
 
 export default function Signup() {
     const router = useRouter()
@@ -34,7 +35,7 @@ export default function Signup() {
 
         setLoading(true)
 
-        await fetch('/api/auth', {
+        await fetch(`${baseApiUrl}/auth`, {
             method: 'POST',
             body: JSON.stringify({ userToken: token }),
         })

@@ -5,7 +5,7 @@ import Head from "next/head";
 import { UserForm } from "@/components/participant/form";
 import { Quiz } from "@/components/participant/Quiz";
 import { FinalPage } from "@/components/participant/FinalPage";
-import { baseurl } from "@/lib/config";
+import { baseApiUrl } from "@/lib/config";
 
 type ApiResData = {
     _id: string;
@@ -205,7 +205,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     try {
         data = 
-        await fetch(`${baseurl}/api/participant/form`, {
+        await fetch(`${baseApiUrl}/participant/form`, {
             method: 'POST',
             headers: {
                 accept: 'application/json'

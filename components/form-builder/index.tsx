@@ -17,6 +17,7 @@ import styles from "@/styles/createForm/index.module.scss";
 import { ToggleType, UpdateType } from "@/types/form-builder";
 import { Toggle, Update } from "@/store/form-builder/action";
 import { FormReducer, InitialState } from "@/store/form-builder/reducer";
+import { baseApiUrl } from "@/lib/config";
 
 interface Props {
     quizTitle?: string;
@@ -57,7 +58,7 @@ export const Create: React.FC<Props> = ({
             userId: uid,
         };
 
-        await fetch(`/api/form`, {
+        await fetch(`${baseApiUrl}/form`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -93,7 +94,7 @@ export const Create: React.FC<Props> = ({
             status: status,
         };
 
-        await fetch(`/api/form`, {
+        await fetch(`${baseApiUrl}/form`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

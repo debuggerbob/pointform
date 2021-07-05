@@ -3,6 +3,7 @@ import { Dispatch, useRef } from "react";
 import { Action, UpdateType } from "@/types/form-builder";
 import { Update } from "@/store/form-builder/action";
 import generateFVID from "@/lib/generateFVID";
+import { baseApiUrl } from "@/lib/config";
 
 interface Props {
     dispatch: Dispatch<Action>;
@@ -35,7 +36,7 @@ export const FirstScreen: React.FC<Props> = ({ creator, dispatch }) => {
             userId: creator?.uid
         }
 
-        await fetch(`/api/form`, {
+        await fetch(`${baseApiUrl}/form`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

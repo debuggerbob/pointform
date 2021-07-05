@@ -8,7 +8,7 @@ import { Sidebar } from '@/components/dashboard/sidebar'
 import { Responses } from '@/components/form/responses'
 import { Share } from '@/components/form/share'
 import { Settings } from '@/components/form/settings'
-import { baseurl } from '@/lib/config'
+import { baseApiUrl } from '@/lib/config'
 
 type Question = {
     question: string
@@ -143,7 +143,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     try {
         resData = await fetch(
-            `${baseurl}/api/form/${context.params.slug[0]}`,
+            `${baseApiUrl}/form/${context.params.slug[0]}`,
             {
                 method: 'GET',
             }

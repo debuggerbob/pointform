@@ -3,6 +3,7 @@ import gsap from "gsap";
 
 // import styles from "./styles/Finalpage.module.scss";
 import styles from "./styles/FinalPage.module.scss";
+import { baseApiUrl } from "@/lib/config";
 interface Props {
     finalData: {
         participantId: string;
@@ -21,7 +22,7 @@ export const FinalPage: React.FC<Props> = ({ finalData }) => {
     console.log("Final Data", finalData);
 
     const submitData = async () => {
-            await fetch(`/api/participant/submit`, {
+            await fetch(`${baseApiUrl}/participant/submit`, {
                 method: 'POST',
                 headers: {
                     accept: 'application/json'
