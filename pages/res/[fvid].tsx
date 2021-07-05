@@ -5,6 +5,7 @@ import Head from "next/head";
 import { UserForm } from "@/components/participant/form";
 import { Quiz } from "@/components/participant/Quiz";
 import { FinalPage } from "@/components/participant/FinalPage";
+import { baseurl } from "@/lib/config";
 
 type ApiResData = {
     _id: string;
@@ -204,7 +205,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     try {
         data = 
-        await fetch(`/api/participant/form`,{
+        await fetch(`${baseurl}/api/participant/form`, {
             method: 'POST',
             headers: {
                 accept: 'application/json'
@@ -213,8 +214,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 fvid: context.params.fvid,
             })
         }).then(res => res.json())
-        console.log(data.questions[0].options);
+        console.log(data);
     } catch (e) {
+        console.log(e)
         return {
             redirect: {
                 destination: "/404",
