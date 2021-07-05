@@ -1,12 +1,46 @@
 import { useRef, useState } from "react"
 import Head from "next/head"
 import Link from "next/link"
+import { GetServerSidePropsContext } from 'next'
 import { useRouter } from "next/router"
 import ReCAPTCHA from "react-google-recaptcha"
+import nookies from 'nookies'
 
 // Auth
+import { auth } from '@/lib/firebaseAdmin'
 import { useAuth } from "@/context/AuthContext"
 import Alert from "@/components/alert"
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    try {
+        const cookies = nookies.get(ctx)
+        const rawToken = cookies.token
+        if(rawToken) {
+            const token = await auth.verifyIdToken(rawToken)
+            const { uid, email } = token
+            if(uid && email) {
+                return {
+                    redirect: {
+                        permanent: false,
+                        destination: '/dashboard',
+                    },
+                    props: {} as never,
+                }
+            }
+        }
+        return {
+            props: {} as never
+        }
+    } catch (err) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: '/404',
+            },
+            props: {} as never,
+        }
+    }
+}
 
 export default function Login() {
     const router = useRouter()
