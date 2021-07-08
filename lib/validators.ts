@@ -1,9 +1,4 @@
-/*
-* Helper validation functions
-*/
-const isString = (str) => {
-    return Object.prototype.toString.call(str) === "[object String]"
-}
+import Helper from "@/lib/helpers"
 
 /*
 * Validated the questions array for input types, lengths and options object depending on the questionType
@@ -11,6 +6,7 @@ const isString = (str) => {
 */
 export const validator = (questions) => {
     let isValidated = false
+    const helper = new Helper()
 
     if(Array.isArray(questions)) {
         if(questions.length <= 0)
@@ -37,7 +33,7 @@ export const validator = (questions) => {
                     }
                     if(question.questionType === "TF") {
                         let options = question.options
-                        if(!Array.isArray(options) && options !== null && !isString(options)) {
+                        if(!Array.isArray(options) && options !== null && !helper.isString(options)) {
                             if(options.value === "" || options.value === null || options.value === undefined) {
                                 isValidated = false
                             }
