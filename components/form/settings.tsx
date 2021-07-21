@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext, ReactNode } from 'react'
 
-import { ModalContext, ModalContextProvider } from '@/context/modal-context'
+import { ModalContextProvider } from '@/context/modal-context'
 
 // Modals
 import { DeleteFormModal } from '@/components/ui/modals/delete-form'

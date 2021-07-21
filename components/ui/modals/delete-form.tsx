@@ -40,16 +40,18 @@ const ErrorBox = ({ formName }: { formName: string }) => {
     )
 }
 
+/**
+ * Main Delete component
+ * */
 export const DeleteFormModal: React.FC<DeleteFormModalProps> = ({
     fvid,
     formName,
 }) => {
-    const { showModal, setShowModal } = useContext(ModalContext)
     const router = useRouter()
+    const { showModal, setShowModal } = useContext(ModalContext)
     const [showError, setShowError] = useState(false)
     const InputBox = useRef<HTMLInputElement>()
 
-    // Events
     const hidePopup = () => {
         if (showModal) {
             setShowModal(false)
@@ -104,7 +106,8 @@ export const DeleteFormModal: React.FC<DeleteFormModalProps> = ({
 
                 <div className="mb-2">
                     <p className="mb-3">
-                        Enter your pointform name to confirm:
+                        Enter <b className="text-gray-700">{formName}</b> to
+                        confirm:
                     </p>
 
                     <input
@@ -133,6 +136,7 @@ export const DeleteFormModal: React.FC<DeleteFormModalProps> = ({
                 </button>
 
                 <button
+                    id="submitBtn"
                     type="submit"
                     className="text-xs font-medium w-1/2 uppercase text-center py-6 transition hover:bg-red-300 hover:bg-opacity-30 hover:text-red-700"
                 >

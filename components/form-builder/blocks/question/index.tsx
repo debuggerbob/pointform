@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch, useState } from 'react'
 
 import {
     Action,
@@ -6,18 +6,19 @@ import {
     Question,
     ToggleType,
     UpdateType,
-} from "@/types/form-builder";
-import { Delete, Toggle } from "@/store/form-builder/action";
-import { AddSVG, DeleteSVG, TwoRowMenuSVG } from "@/components/svgs";
+} from '@/types/form-builder'
+import { Delete, Toggle } from '@/store/form-builder/action'
+import { AddSVG, DeleteSVG, TwoRowMenuSVG } from '@/components/svgs'
 
-import { ContentEditable } from "../content-editable";
-import { McqOption } from "../options/mcq";
-import { FloatingSettings } from "./floating-settings";
+import { ContentEditable } from '../content-editable'
+import { McqOption } from '../options/mcq'
+import { FloatingSettings } from './floating-settings'
+import { TFOption } from '../options/tf'
 
 interface Props {
-    question: Question;
-    questionIndex: number;
-    dispatch: Dispatch<Action>;
+    question: Question
+    questionIndex: number
+    dispatch: Dispatch<Action>
 }
 
 export const FormQuestion: React.FC<Props> = ({
@@ -29,21 +30,21 @@ export const FormQuestion: React.FC<Props> = ({
         showSettings: false,
         topPos: 0,
         leftPos: 0,
-    });
+    })
 
     const showQuestionSettings = (e) => {
-        let rect = e.currentTarget.getBoundingClientRect();
+        let rect = e.currentTarget.getBoundingClientRect()
 
         setQuestionSettings(() => ({
             showSettings: true,
             topPos: rect.top,
             leftPos: rect.left,
-        }));
-    };
+        }))
+    }
 
     const AddQuestion = () => {
-        dispatch(Toggle(ToggleType.ChooseQuestion, questionIndex));
-    };
+        dispatch(Toggle(ToggleType.ChooseQuestion, questionIndex))
+    }
 
     const DeleteQuestion = () => {
         dispatch(
@@ -51,8 +52,8 @@ export const FormQuestion: React.FC<Props> = ({
                 type: DeleteType.Question,
                 questionId: question.questionId,
             })
-        );
-    };
+        )
+    }
 
     return (
         <>
@@ -63,10 +64,10 @@ export const FormQuestion: React.FC<Props> = ({
                     <div
                         className={`absolute bg-white flex justify-end ${
                             questionSettings.showSettings
-                                ? "opacity-1"
-                                : "  md:opacity-0"
+                                ? 'opacity-1'
+                                : '  md:opacity-0'
                         } transition duration-150 group-hover:opacity-100`}
-                        style={{ width: "100px", left: "-100px" }}
+                        style={{ width: '100px', left: '-100px' }}
                     >
                         {/* Delete Button */}
                         <div
@@ -118,12 +119,12 @@ export const FormQuestion: React.FC<Props> = ({
 
                 {/* Options Block */}
                 <div className="options">
-                    {question.questionType === "MCQ" ? (
+                    {question.questionType === 'MCQ' ? (
                         <>
                             {question.options.map((item) => {
                                 let index = question.options.findIndex(
                                     (obj) => obj.optionId === item.optionId
-                                );
+                                )
 
                                 return (
                                     <McqOption
@@ -135,7 +136,7 @@ export const FormQuestion: React.FC<Props> = ({
                                         isAddOptionBtn={false}
                                         dispatch={dispatch}
                                     />
-                                );
+                                )
                             })}
 
                             <McqOption
@@ -146,7 +147,7 @@ export const FormQuestion: React.FC<Props> = ({
                             />
                         </>
                     ) : (
-                        "tf option"
+                        <TFOption />
                     )}
                 </div>
             </div>
@@ -164,5 +165,5 @@ export const FormQuestion: React.FC<Props> = ({
                 />
             ) : null}
         </>
-    );
-};
+    )
+}
