@@ -49,6 +49,7 @@ export default function Login() {
     const passRef = useRef<HTMLInputElement>(null)
     const [message, setMessage] = useState<any>(null)
     const [loading, setLoading] = useState(false)
+    const [showCaptcha, setShowCaptcha] = useState(false)
     const [providerLoading, setProviderLoading] = useState(false)
     const recaptchaRef = useRef<ReCAPTCHA>()
 
@@ -56,30 +57,45 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        const workEnv = process.env.NODE_ENV
 
-        const token = await recaptchaRef.current.executeAsync()
-        recaptchaRef.current.reset()
+        // Disable the stupid captcha during development
+        if(workEnv === "development") {
+            await login(emailRef.current?.value, passRef.current?.value)
+            .then(() => router.push("/dashboard"))
+            .catch((error) => {
+                setLoading(false)
+                setMessage(error.message)
+            })
+        }
 
-        setLoading(true)
+        // Enable it during production and testing
+        if(workEnv === "production" || workEnv === "test") {
+            const token = await recaptchaRef.current.executeAsync()
+            recaptchaRef.current.reset()
 
-        await fetch(`${baseApiUrl}/auth`, {
-            method: "POST",
-            body: JSON.stringify({ userToken: token }),
-        })
+            setShowCaptcha(true)
+            setLoading(true)
+
+            await fetch(`${baseApiUrl}/auth`, {
+                method: "POST",
+                body: JSON.stringify({ userToken: token }),
+            })
             .then(async (res) => {
                 if (res.ok) {
                     await login(emailRef.current?.value, passRef.current?.value)
-                        .then(() => router.push("/dashboard"))
-                        .catch((error) => {
-                            setLoading(false)
-                            setMessage(error.message)
-                        })
+                    .then(() => router.push("/dashboard"))
+                    .catch((error) => {
+                        setLoading(false)
+                        setMessage(error.message)
+                    })
                 }
             })
             .catch((error) => {
                 setLoading(false)
                 setMessage(error.message)
             })
+        }
     }
 
     const handleProvider = async (e) => {
@@ -101,11 +117,14 @@ export default function Login() {
                 <title>Login - Pointform</title>
             </Head>
 
-            <ReCAPTCHA
+            {
+                showCaptcha ?
+                <ReCAPTCHA
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
                 size="invisible"
                 ref={recaptchaRef}
-            />
+                /> : null
+            }
 
             <div className="bg-white h-screen flex flex-col justify-center align-center text-center">
                 <div className="text-left px-6 lg:w-1/3 md:w-9/12 lg:mx-auto lg:px-0 md:mx-auto">
