@@ -7,7 +7,7 @@ import ReCAPTCHA from "react-google-recaptcha"
 import nookies from 'nookies'
 
 // Auth
-import { auth } from '@/lib/firebaseAdmin'
+import { auth } from '@/firebase/firebaseAdmin'
 import { useAuth } from "@/context/AuthContext"
 import Alert from "@/components/alert"
 import { baseApiUrl } from "@/lib/config"

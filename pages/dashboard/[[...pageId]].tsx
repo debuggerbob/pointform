@@ -5,7 +5,7 @@ import { UAParser } from 'ua-parser-js'
 import Head from 'next/head'
 
 // Auth
-import { auth } from '@/lib/firebaseAdmin'
+import { auth } from '@/firebase/firebaseAdmin'
 import { useAuth } from '@/context/AuthContext'
 
 /* Main Components */

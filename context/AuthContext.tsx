@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, createContext } from "react";
-import firebase, { auth } from "@/lib/firebase";
+import firebase, { auth } from "@/firebase/firebase";
 import nookies from "nookies";
 import Router from "next/router";
 

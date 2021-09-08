@@ -1,4 +1,4 @@
-import { auth } from '@/lib/firebaseAdmin'
+import { auth } from '@/firebase/firebaseAdmin'
 
 export function withAuth(handler) {
     return async (req, res) => {

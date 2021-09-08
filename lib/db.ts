@@ -1,9 +1,4 @@
-import { firestore as db } from '@/lib/firebaseAdmin'
-import { NextApiRequest, NextApiResponse, NextApiHandler } from "next"
-import { ObjectShape, OptionalObjectSchema } from "yup/lib/object"
-import { AdmissionFormSchema, ContactFormSchema, DefaultFormSchema, FeedbackFormSchema, QuizFormSchema, SurveyFormSchema } from '@/schemas/Form'
-
-import { validator } from "@/lib/validators"
+import { firestore as db } from '@/firebase/firebaseAdmin'
 
 export async function findUserNameByCID(userId) {
     let data
@@ -91,59 +86,4 @@ export async function deleteForm(fvid) {
 
 export async function createResponse(participant) {
     await db.collection(process.env.HAKUNA_MATATA_TS).add(participant)
-}
-
-function validateSchema(formType) {
-    switch(formType) {
-        case "default_form": {
-            return DefaultFormSchema
-        }
-        case "quiz": {
-            return QuizFormSchema
-        }
-        case "admissions": {
-            return AdmissionFormSchema
-        }
-        case "survey": {
-            return SurveyFormSchema
-        }
-        case "feedback": {
-            return FeedbackFormSchema
-        }
-        case "contact": {
-            return ContactFormSchema
-        }
-    }
-}
-
-export function validateForm(
-    handler: NextApiHandler
-) {
-    return async (req: NextApiRequest, res: NextApiResponse) => {
-        if(req.method === "PATCH") {
-            let questions = req.body.questions
-            const validated = validator(questions)
-            if(!validated)
-                return res.status(400).json({ message: "Invalid data" })
-        }
-        await handler(req, res)
-    }
-}
-
-export function validateFormResponse(
-    schema: OptionalObjectSchema<ObjectShape>,
-    handler: NextApiHandler
-) {
-    return async (req: NextApiRequest, res: NextApiResponse) => {
-        if(req.method === "POST") {
-            try {
-                req.body = await schema
-                    .camelCase()
-                    .validate(req.body, { abortEarly: false, stripUnknown: true })
-            } catch(error) {
-                return res.status(400).json(error)
-            }
-        }
-        await handler(req, res)
-    }
 }
