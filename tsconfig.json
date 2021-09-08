@@ -21,6 +21,7 @@
             "@/schemas/*": ["schemas/*"],
             "@/middleware/*": ["middleware/*"],
             "@/lib/*": ["lib/*"],
+            "@/firebase/*": ["firebase/*"],
             "@/context/*": ["context/*"],
             "@/types/*": ["types/*"],
             "@/store/*": ["store/*"]
