@@ -22,23 +22,42 @@ export default function Signup() {
     const emailRef = useRef<HTMLInputElement>(null)
     const passRef = useRef<HTMLInputElement>(null)
     const [message, setMessage] = useState<any>(null)
+    const [showCaptcha, setShowCaptcha] = useState(false)
     const [loading, setLoading] = useState(false)
     const recaptchaRef = useRef<ReCAPTCHA>()
 
     const { signup } = useAuth()
 
+    const workEnv = process.env.NODE_ENV
+
+    if(workEnv === "production" || workEnv === "test")
+        setShowCaptcha(true)
+
     const formSubmit = async (e) => {
         e.preventDefault()
 
-        const token = await recaptchaRef.current.executeAsync()
-        recaptchaRef.current.reset()
-
-        setLoading(true)
-
-        await fetch(`${baseApiUrl}/auth`, {
-            method: 'POST',
-            body: JSON.stringify({ userToken: token }),
-        })
+        if(workEnv === "development") {
+            await signup(
+                usernameRef.current?.value,
+                emailRef.current?.value,
+                passRef.current?.value
+            )
+            .then(() => router.push('/dashboard'))
+            .catch((error) => {
+                setLoading(false)
+                setMessage(error.message)
+            })
+        }
+        
+        if(workEnv === "production" || workEnv === "test") {
+            const token = await recaptchaRef.current.executeAsync()
+            recaptchaRef.current.reset()
+            setLoading(true)
+    
+            await fetch(`${baseApiUrl}/auth`, {
+                method: 'POST',
+                body: JSON.stringify({ userToken: token }),
+            })
             .then(async (res) => {
                 if (res.ok) {
                     await signup(
@@ -57,6 +76,7 @@ export default function Signup() {
                 setLoading(false)
                 setMessage(error.message)
             })
+        }
     }
 
     return (
@@ -83,11 +103,14 @@ export default function Signup() {
                         </p>
                     </div>
 
-                    <ReCAPTCHA
-                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                        size="invisible"
-                        ref={recaptchaRef}
-                    />
+                    {
+                        showCaptcha ?
+                        <ReCAPTCHA
+                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                            size="invisible"
+                            ref={recaptchaRef}
+                        /> : null
+                    }
 
                     {message ? (
                         <Alert alertText={message} alertType="error" />

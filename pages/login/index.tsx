@@ -55,10 +55,13 @@ export default function Login() {
 
     const { login, loginWithGoogle } = useAuth()
 
+    const workEnv = process.env.NODE_ENV
+
+    if(workEnv === "production" || workEnv === "test")
+        setShowCaptcha(true)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const workEnv = process.env.NODE_ENV
-
         // Disable the stupid captcha during development
         if(workEnv === "development") {
             await login(emailRef.current?.value, passRef.current?.value)
@@ -73,8 +76,6 @@ export default function Login() {
         if(workEnv === "production" || workEnv === "test") {
             const token = await recaptchaRef.current.executeAsync()
             recaptchaRef.current.reset()
-
-            setShowCaptcha(true)
             setLoading(true)
 
             await fetch(`${baseApiUrl}/auth`, {
