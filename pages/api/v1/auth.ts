@@ -1,3 +1,5 @@
+import { handle200, handle400, handle404 } from "@/lib/handler"
+
 /* IMPORTANT */
 /* --------------------
 /* This page is only for checking if the user is human or not */
@@ -8,13 +10,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const userToken = req.body.token;
     const response = await validateHuman(userToken);
     if (response != 200) {
-        res.status(400);
-        res.json({ error: "Please try again." });
-        return;
+        handle400(res, { message: "Please try again" })
     }
 
-    res.status(200);
-    res.json({ message: "Verified" });
+    handle200(res, { message: "Verified" })
 };
 
 const validateHuman = async (userToken): Promise<number> => {

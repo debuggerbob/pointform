@@ -1,17 +1,22 @@
 import { getFormByFVID } from "@/lib/db"
+import { handle200, handle400, handle404 } from "@/lib/handler"
 
 const handle = async (req, res) => {
     if(req.method === 'GET') {
         try {
             let fvid = req.query.fvid[0]
-            const form = await getFormByFVID(fvid)
-            if(form) {
-                res.status(200).json({ status: "success", data: form })
+            if(fvid) {
+                const form = await getFormByFVID(fvid)
+                if(form) {
+                    handle200(res, { message: form })
+                } else {
+                    handle404(res, { message: "Form doesn't exist" })
+                }
             } else {
-                res.status(404).json({ status: "error", data: "Resource Not Found!", errorType: "ResourceError" })
+                handle404(res, { message: "Form doesn't exist" })
             }
         } catch (error) {
-            res.status(400).json(error)
+            handle400(res)
         }
     }
 }

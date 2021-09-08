@@ -1,4 +1,6 @@
 import { addUserInfo } from '@/lib/db'
+import { handle200, handle400, handle404 } from "@/lib/handler"
+
 // I have to find someway to add a middleware to this api route, as the api is being used during signup the auth cookie isn't created yet but this api is being called causing an unauthorized access error
 import { withAuth } from '@/middleware/withAuth'
 
@@ -10,9 +12,9 @@ const handle = async (req, res) => {
                 uid: req.body.uid,
                 name: req.body.name
             })
-            return res.status(200).json({ status: "success", message: "Registered successfully!" })
+            handle200(res, { message: "Registered successfully" })
         } catch (error) {
-            console.log(error)
+            handle400(res)
         }
     }
 }

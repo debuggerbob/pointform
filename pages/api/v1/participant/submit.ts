@@ -1,22 +1,20 @@
-import { ParticipantSchema } from "@/schemas/Participant";
-import {
-	validateFormResponse,
-	createResponse,
-} from "@/lib/db";
+import { createResponse } from "@/lib/db"
+import { handle200, handle400, handle404 } from "@/lib/handler"
 
 const handle = async (req, res) => {
 	if (req.method === "POST") {
 		try {
-			let participant = req.body;
-			await createResponse(participant)
-			res.status(200).json({
-				status: "success",
-				message: "Hurray! Your submission has been received",
-			});
+			let participant = req.body
+			if(participant) {
+				await createResponse(participant)
+				handle200(res, { message: "Hurray! Your submission has been received" })
+			} else {
+				handle400(res)
+			}
 		} catch (err) {
-			res.json(err);
+			res.json(err)
 		}
 	}
-};
+}
 
-export default validateFormResponse(ParticipantSchema, handle);
+export default handle

@@ -1,75 +1,126 @@
-import { validateForm, createForm, updateForm, deleteForm, findFormByFVID } from "@/lib/db"
+import { createForm, updateForm, deleteForm, findFormByFVID } from "@/lib/db"
+import { handle200, handle400, handle404, handle409 } from "@/lib/handler"
 import { withAuth } from "@/middleware/withAuth"
 
 const handle = async (req, res) => {
+    /*
+    POST Request || Create a New Form
+    - Before the form object is used, it must be validated for required fields and strict types
+    - After Fields and Type Validation
+        1. check if form exists with the specified fvid
+        2. if yes - handle409()
+        3. if no - call createForm() by passing form object into it
+        4. if successful - handle200()
+        5. else - handle400()
+    */
     if(req.method === 'POST') {
         try {
             let form = req.body
             let fvid = req.body.fvid
-            const exists = await findFormByFVID(fvid)
-            if(exists) {
-                res.status(400).json({ status: "error", message: "Form already exists", errorType: "ResourceError" })
+            if(fvid) {
+                let exists = await findFormByFVID(fvid)
+                if(exists) {
+                    handle409(res, { message: "Form already exists" })
+                } else {
+                    console.log(form)
+                    await createForm(form)
+                    handle200(res, { message: "Form has been created" })
+                }
             } else {
-                await createForm(form)
-                res.status(200).json({ status: "success", message: "Form has been created successfully!" })   
+                handle400(res, { message: "Invalid Form Fields" })
             }
         } catch (error) {
-            res.status(400).json(error)
+            handle400(res)
         }
     }
 
+
+    /*
+    PATCH Request || Update a Form
+    - Before the form object is used, it must be validated for required fields and strict types
+    - After Fields and Type Validation
+        1. check if form exists with the specified fvid
+        2. if yes - call updateForm() by passing form object to it
+        3. if no - call handle404()
+        4. if successful - handle200()
+        5. else - handle400()
+    */
     if(req.method === 'PATCH') {
         try {
             let form = req.body
             let fvid = req.body.fvid
-            const exists = await findFormByFVID(fvid)
-            if(!exists) {
-                res.status(400).json({ status: "error", message: "Form does not exist", errorType: "ResourceError" })
+            if(fvid) {
+                const exists = await findFormByFVID(fvid)
+                if(!exists) {
+                    handle404(res, { message: "Form does not exist" })
+                } else {
+                    await updateForm(fvid, form)
+                    handle200(res, { message: "Form has been updated" })
+                }
             } else {
-                await updateForm(fvid, form)
-                res.status(200).json({ status: "success", message: "Form has been updated successfully!" })   
+                handle400(res, { message: "Invalid Form Fields" })
             }
         } catch (error) {
-            res.status(400).json(error)
+            handle400(res)
         }
     }
-    
+
+    /*
+    PUT Request || Update a Form
+    - Before the form object is used, it must be validated for required fields and strict types
+    - After Fields and Type Validation
+        1. check if form exists with the specified fvid
+        2. if yes - call updateForm() by passing form object to it
+        3. if no - call handle404()
+        4. if successful - handle200()
+        5. else - handle400()
+    */
     if(req.method === 'PUT') {
         try {
             let form = req.body
             let fvid = req.body.fvid
-            const exists = await findFormByFVID(fvid)
-            if(!exists) {
-                res.status(400).json({ status: "error", message: "Form does not exist", errorType: "ResourceError" })
+            if(fvid) {
+                const exists = await findFormByFVID(fvid)
+                if(!exists) {
+                    handle404(res, { message: "Form does not exist" })
+                } else {
+                    await updateForm(fvid, form)
+                    handle200(res, { message: "Form has been updated" })
+                }
             } else {
-                await updateForm(fvid, form)
-                res.status(200).json({ status: "success", message: "Form has been updated successfully!" })   
+                handle400(res, { message: "Invalid Form Fields" })
             }
         } catch (error) {
-            res.status(400).json(error)
+            handle400(res)
         }
     }
 
+    /*
+    Delete Request || Delete a Form
+        1. check if form exists with the specified fvid
+        2. if yes - call deleteForm() by passing form object to it
+        3. if no - call handle404()
+        4. if successful - handle200()
+        5. else - handle400()
+    */
     if(req.method === 'DELETE') {
         try {
             let fvid = req.body.fvid
-            const exists = await findFormByFVID(fvid)
-            if(!exists) {
-                res.status(400).json({ status: "error", message: "Form does not exist", errorType: "ResourceError" })
+            if(fvid) {
+                const exists = await findFormByFVID(fvid)
+                if(!exists) {
+                    handle404(res, { message: "Form does not exist" })
+                } else {
+                    await deleteForm(fvid)
+                    handle200(res, { message: "Form has been deleted successfully!" })   
+                }
             } else {
-                await deleteForm(fvid)
-                res.status(200).json({ status: "success", message: "Form has been deleted successfully!" })   
+                handle400(res, { message: "Invalid Form Fields" })
             }
         } catch (error) {
-            res.status(400).json(error)
+            handle400(res)
         }
     }
 }
 
-export const config = {
-    api: {
-      externalResolver: true,
-    },
-}
-
-export default validateForm(withAuth(handle))
+export default withAuth(handle)

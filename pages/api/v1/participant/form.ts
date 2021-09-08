@@ -1,4 +1,5 @@
 import { getFormByFVID } from "@/lib/db"
+import { handle200, handle400, handle404 } from "@/lib/handler"
 
 const handle = async (req, res) => {
     if(req.method === 'POST') {
@@ -12,12 +13,12 @@ const handle = async (req, res) => {
                     fvid: exists.fvid,
                     title: exists.title
                 }
-                res.status(200).json({ status: "success", data: data })
+                handle200(res, { message: data })
             } else {
-                res.status(404).json({ status: "error", data: "Resource Not Found!", errorType: "ResourceError" })
+                handle404(res, { message: "Form doesn't exist" })
             }
         } catch (error) {
-            res.status(400).json(error)
+            handle400(res)
         }
     }
 }
