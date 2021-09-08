@@ -25,14 +25,14 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 
         const username = await auth
             .getUser(uid)
-            .then((record) => record.displayName)
+            .then((record) => record.displayName) ?? email.split("@")[0]
 
         return {
             props: {
                 data: {
                     uid: uid,
                     email: email,
-                    name: username,
+                    name: username
                 },
             },
         }
