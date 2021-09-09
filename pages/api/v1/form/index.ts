@@ -1,5 +1,7 @@
 import { createForm, updateForm, deleteForm, findFormByFVID } from "@/lib/db"
 import { handle200, handle400, handle404, handle409 } from "@/lib/handler"
+import { sanitizer } from "@/lib/helpers"
+import { alphaValidator, betaValidator } from "@/lib/validators"
 import { withAuth } from "@/middleware/withAuth"
 
 const handle = async (req, res) => {
@@ -16,20 +18,38 @@ const handle = async (req, res) => {
     if(req.method === 'POST') {
         try {
             let form = req.body
-            let fvid = req.body.fvid
-            if(fvid) {
-                let exists = await findFormByFVID(fvid)
-                if(exists) {
+
+            // Initial Sanitization - should be moved to individual sanitizing functions
+            let toSanitize = Object.values(form)
+
+            let sanitized = []
+
+            toSanitize.forEach(element => {
+                sanitized.push(sanitizer(element))
+            });
+
+            let alphaResponse = await alphaValidator(form)
+            console.log(alphaResponse)
+            if(alphaResponse.validated) {
+                let form = alphaResponse.form
+                let fvid = form.fvid
+                let formExists = await findFormByFVID(fvid)
+                let betaResponse = betaValidator(form)
+                console.log(betaResponse)
+                if(formExists) {
                     handle409(res, { message: "Form already exists" })
-                } else {
-                    console.log(form)
+                    return
+                }
+                if(betaResponse.validated) {
                     await createForm(form)
                     handle200(res, { message: "Form has been created" })
+                    return
                 }
-            } else {
-                handle400(res, { message: "Invalid Form Fields" })
             }
+
+            handle400(res, { message: "Invalid Form Fields" })
         } catch (error) {
+            console.log(error)
             handle400(res)
         }
     }
