@@ -11,4 +11,9 @@ const HTTP_STATUS_CODES = {
     HTTP_BAD_GATEWAY: 502 
 }
 
+export const QUESTION_TYPES = {
+    MCQ: "MCQ",
+    TF: "TF"
+}
+
 export default HTTP_STATUS_CODES
