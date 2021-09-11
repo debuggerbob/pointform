@@ -1,7 +1,7 @@
 import { createForm, updateForm, deleteForm, findFormByFVID } from "@/lib/db"
 import { handle200, handle400, handle404, handle409 } from "@/lib/handler"
-import { sanitizer } from "@/lib/helpers"
 import { alphaValidator, betaValidator } from "@/lib/validators"
+import { safayi } from "@/lib/sanitizers"
 import { withAuth } from "@/middleware/withAuth"
 
 const handle = async (req, res) => {
@@ -18,38 +18,30 @@ const handle = async (req, res) => {
     if(req.method === 'POST') {
         try {
             let form = req.body
-
-            // Initial Sanitization - should be moved to individual sanitizing functions
-            let toSanitize = Object.values(form)
-
-            let sanitized = []
-
-            toSanitize.forEach(element => {
-                sanitized.push(sanitizer(element))
-            });
-
+            // Initial Object Sanitization
+            form = safayi(form)
+            // Alpha Validation
             let alphaResponse = await alphaValidator(form)
-            console.log(alphaResponse)
             if(alphaResponse.validated) {
-                let form = alphaResponse.form
-                let fvid = form.fvid
+                let finalForm = alphaResponse.form
+                // Primary Object Sanitization
+                finalForm = safayi(finalForm)
+                let fvid = finalForm.fvid
                 let formExists = await findFormByFVID(fvid)
-                let betaResponse = betaValidator(form)
-                console.log(betaResponse)
+                // Beta Validation
+                let betaResponse = betaValidator(finalForm)
                 if(formExists) {
                     handle409(res, { message: "Form already exists" })
                     return
                 }
                 if(betaResponse.validated) {
-                    await createForm(form)
+                    await createForm(finalForm)
                     handle200(res, { message: "Form has been created" })
-                    return
                 }
             }
 
             handle400(res, { message: "Invalid Form Fields" })
         } catch (error) {
-            console.log(error)
             handle400(res)
         }
     }
@@ -68,18 +60,28 @@ const handle = async (req, res) => {
     if(req.method === 'PATCH') {
         try {
             let form = req.body
-            let fvid = req.body.fvid
-            if(fvid) {
-                const exists = await findFormByFVID(fvid)
-                if(!exists) {
-                    handle404(res, { message: "Form does not exist" })
-                } else {
+            // Initial Object Sanitization
+            form = safayi(form)
+            // Alpha Validation
+            let alphaResponse = await alphaValidator(form)
+            if(alphaResponse.validated) {
+                let finalForm = alphaResponse.form
+                // Primary Object Sanitization
+                finalForm = safayi(finalForm)
+                let fvid = finalForm.fvid
+                let formExists = await findFormByFVID(fvid)
+                // Beta Validation
+                let betaResponse = betaValidator(finalForm)
+                if(formExists) {
                     await updateForm(fvid, form)
                     handle200(res, { message: "Form has been updated" })
+                    return
+                } else {
+                    handle404(res, { message: "Form doesn't exist" })
+                    return
                 }
-            } else {
-                handle400(res, { message: "Invalid Form Fields" })
-            }
+            } 
+            handle400(res, { message: "Invalid Form Fields" })
         } catch (error) {
             handle400(res)
         }
@@ -103,12 +105,15 @@ const handle = async (req, res) => {
                 const exists = await findFormByFVID(fvid)
                 if(!exists) {
                     handle404(res, { message: "Form does not exist" })
+                    return
                 } else {
                     await updateForm(fvid, form)
                     handle200(res, { message: "Form has been updated" })
+                    return
                 }
             } else {
                 handle400(res, { message: "Invalid Form Fields" })
+                return
             }
         } catch (error) {
             handle400(res)
@@ -130,12 +135,15 @@ const handle = async (req, res) => {
                 const exists = await findFormByFVID(fvid)
                 if(!exists) {
                     handle404(res, { message: "Form does not exist" })
+                    return
                 } else {
                     await deleteForm(fvid)
-                    handle200(res, { message: "Form has been deleted successfully!" })   
+                    handle200(res, { message: "Form has been deleted successfully!" }) 
+                    return  
                 }
             } else {
                 handle400(res, { message: "Invalid Form Fields" })
+                return
             }
         } catch (error) {
             handle400(res)
