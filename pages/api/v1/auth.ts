@@ -11,9 +11,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const response = await validateHuman(userToken);
     if (response != 200) {
         handle400(res, { message: "Please try again" })
+        return
     }
 
     handle200(res, { message: "Verified" })
+    return
 };
 
 const validateHuman = async (userToken): Promise<number> => {

@@ -43,6 +43,7 @@ const handle = async (req, res) => {
             handle400(res, { message: "Invalid Form Fields" })
         } catch (error) {
             handle400(res)
+            return
         }
     }
 
@@ -84,6 +85,7 @@ const handle = async (req, res) => {
             handle400(res, { message: "Invalid Form Fields" })
         } catch (error) {
             handle400(res)
+            return
         }
     }
 
@@ -117,6 +119,7 @@ const handle = async (req, res) => {
             }
         } catch (error) {
             handle400(res)
+            return
         }
     }
 
@@ -147,6 +150,7 @@ const handle = async (req, res) => {
             }
         } catch (error) {
             handle400(res)
+            return
         }
     }
 }
