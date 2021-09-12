@@ -1,6 +1,11 @@
 import { isString, isEmpty, isNotEmpty, isNotObject, isArrayNotEmpty, isArray, isObject, isNotArray, sanitizer } from "@/lib/helpers"
 import { QUESTION_TYPES } from "@/lib/constants"
 
+/* CHANGES TO BE MADE AFTER BASIC FLOW IS DONE
+    - strict type checks
+    - merge validations into primaryValidator which implements sub-validators
+*/
+
 /*
 * AlphaValidator
 *   - Empty and Type checks
