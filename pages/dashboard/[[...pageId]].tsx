@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { InferGetServerSidePropsType, GetServerSidePropsContext } from 'next'
 import { UAParser } from 'ua-parser-js'
 import Head from 'next/head'
+import useSWR from 'swr'
 
 // Auth
 import { auth } from '@/firebase/firebaseAdmin'
@@ -16,6 +17,8 @@ import { Settings } from '@/components/dashboard/settings'
 
 /* Common Components */
 import { Sidebar } from '@/components/dashboard/sidebar'
+import { baseApiUrl } from '@/lib/config'
+import { handle400 } from '@/lib/handler'
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     try {
@@ -27,12 +30,21 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
             .getUser(uid)
             .then((record) => record.displayName) ?? email.split("@")[0]
 
+        const formData = await fetch(`${baseApiUrl}/forms/${uid}`, {
+            method: 'GET'
+        }).then(res => res.json()).catch(err => handle400(err))
+
         return {
             props: {
                 data: {
-                    uid: uid,
-                    email: email,
-                    name: username
+                    formsData: {
+                        forms: formData
+                    },
+                    userData: {
+                        uid: uid,
+                        email: email,
+                        name: username
+                    }
                 },
             },
         }
@@ -48,7 +60,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
 }
 
 export default function Dashboard(
-    user: InferGetServerSidePropsType<typeof getServerSideProps>
+    commonData: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
     const { pageId } = useRouter().query
     const userAgent = new UAParser().getDevice().type
@@ -72,21 +84,21 @@ export default function Dashboard(
             {currentActivePage != 'Create' ? (
                 <>
                     <main className="md:flex">
-                        <Sidebar creatorName={user.data.name} />
+                        <Sidebar creatorName={commonData.data.userData.name} />
 
                         <section className="main_content_wrapper">
                             {currentActivePage === 'Dashboard' ? (
-                                <Home creatorData={user.data} />
+                                <Home creatorData={commonData.data.userData} formsData={commonData.data.formsData} />
                             ) : currentActivePage === 'Settings' ? (
-                                <Settings creatorData={user.data} />
+                                <Settings creatorData={commonData.data.userData} />
                             ) : (
-                                <Responses creatorData={user.data} />
+                                <Responses creatorData={commonData.data.userData} />
                             )}
                         </section>
                     </main>
                 </>
             ) : (
-                <Create creatorData={user.data} userAgent={userAgent} />
+                <Create creatorData={commonData.data.userData} userAgent={userAgent} />
             )}
 
             <style jsx>

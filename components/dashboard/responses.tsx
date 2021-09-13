@@ -29,7 +29,7 @@ export const Responses: React.FC<Props> = ({ creatorData }) => {
 
     useEffect(() => {
         if (form) {
-            setForms(form.data);
+            setForms(form.message);
             refreshData();
         }
     }, [form]);

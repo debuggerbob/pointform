@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { gsap } from 'gsap'
-import useSWR from 'swr'
 import Link from 'next/link'
-import { baseApiUrl } from '@/lib/config'
 
 interface Props {
     creatorData: {
@@ -11,6 +9,7 @@ interface Props {
         email: string
         name: string
     }
+    formsData : any
 }
 
 type FormsData = {
@@ -22,38 +21,19 @@ type FormsData = {
     updatedAt: Date
 }
 
-export const Home: React.FC<Props> = ({ creatorData }) => {
+export const Home: React.FC<Props> = ({ creatorData, formsData }) => {
     const router = useRouter()
     const [forms, setForms] = useState<Array<any>>([])
     const [showHelp, setShowHelp] = useState(false)
 
-    // console.log(creatorData)
-
-    const fetcher = (args) => fetch(args).then((res) => res.json())
-    const { data, error } = useSWR(
-        `${baseApiUrl}/forms/${creatorData?.uid}`,
-        fetcher
-    )
-
-    const refreshData = () => {
-        router.replace(router.asPath)
-    }
-
     useEffect(() => {
-        if (data) {
-            setForms(data.message)
-            console.log(data.message)
-            refreshData()
-        }
-    }, [forms])
-
-    useEffect(() => {
+        setForms(formsData.forms.message)
         if (showHelp) {
             gsap.to('body', { overflow: 'hidden' })
         } else {
             gsap.to('body', { overflow: 'auto' })
         }
-    }, [showHelp])
+    }, [formsData, showHelp])
 
     return (
         <>

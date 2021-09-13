@@ -167,7 +167,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     } else {
         return {
             props: {
-                formData: resData.data,
+                formData: resData.message,
             },
         }
     }
