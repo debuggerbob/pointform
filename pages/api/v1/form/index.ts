@@ -38,6 +38,7 @@ const handle = async (req, res) => {
             }
 
             handle400(res, { message: "Invalid Form Fields" })
+            return
         } catch (error) {
             handle400(res)
             return
@@ -153,4 +154,4 @@ const handle = async (req, res) => {
     }
 }
 
-export default withAuth(handle)
+export default (handle)
