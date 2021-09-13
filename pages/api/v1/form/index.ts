@@ -28,13 +28,10 @@ const handle = async (req, res) => {
                 finalForm = safayi(finalForm)
                 let fvid = finalForm.fvid
                 let formExists = await findFormByFVID(fvid)
-                // Beta Validation
-                let betaResponse = betaValidator(finalForm)
                 if(formExists) {
                     handle409(res, { message: "Form already exists" })
                     return
-                }
-                if(betaResponse.validated) {
+                } else {
                     await createForm(finalForm)
                     handle200(res, { message: "Form has been created" })
                 }
@@ -83,6 +80,7 @@ const handle = async (req, res) => {
                 }
             } 
             handle400(res, { message: "Invalid Form Fields" })
+            return
         } catch (error) {
             handle400(res)
             return
