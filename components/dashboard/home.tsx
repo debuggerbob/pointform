@@ -24,30 +24,28 @@ type FormsData = {
 
 export const Home: React.FC<Props> = ({ creatorData }) => {
     const router = useRouter()
-    const [forms, setForms] = useState<Array<FormsData>>([])
+    const [forms, setForms] = useState<Array<any>>([])
     const [showHelp, setShowHelp] = useState(false)
 
-    console.log(creatorData)
+    // console.log(creatorData)
 
     const fetcher = (args) => fetch(args).then((res) => res.json())
-    const { data: form, error } = useSWR(
+    const { data, error } = useSWR(
         `${baseApiUrl}/forms/${creatorData?.uid}`,
         fetcher
     )
-
-    console.log(form)
 
     const refreshData = () => {
         router.replace(router.asPath)
     }
 
     useEffect(() => {
-        if (form) {
-            setForms(form.data)
-            console.log(forms)
+        if (data) {
+            setForms(data.message)
+            console.log(data.message)
             refreshData()
         }
-    }, [form])
+    }, [forms])
 
     useEffect(() => {
         if (showHelp) {

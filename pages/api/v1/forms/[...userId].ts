@@ -1,17 +1,23 @@
-import { getFormByCID } from "@/lib/db"
-import { withAuth } from "@/middleware/withAuth"
-import { handle200, handle400, handle404 } from "@/lib/handler"
-import { arrayClipper } from "@/lib/clippers"
-import { sanitizer } from "@/lib/helpers"
+import { getFormByCID } from '@/lib/db'
+import { withAuth } from '@/middleware/withAuth'
+import { handle200, handle400, handle404 } from '@/lib/handler'
+import { arrayClipper } from '@/lib/clippers'
+import { sanitizer } from '@/lib/helpers'
 
 const handle = async (req, res) => {
-    if(req.method === 'GET') {
+    if (req.method === 'GET') {
         try {
             let userId = req.query.userId[0]
             userId = sanitizer(userId)
             let formsData = await getFormByCID(userId)
-            let forms = arrayClipper(formsData, ['title', 'fvid', 'status', 'category', 'formType'])
-            if(forms) {
+            let forms = arrayClipper(formsData, [
+                'title',
+                'fvid',
+                'status',
+                'category',
+                'formType',
+            ])
+            if (forms) {
                 handle200(res, { message: forms })
                 return
             } else {
@@ -25,4 +31,4 @@ const handle = async (req, res) => {
     }
 }
 
-export default withAuth(handle)
+export default handle
